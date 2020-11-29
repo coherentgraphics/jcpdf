@@ -1,2 +1,2 @@
 #Try it out
-java -cp . -Djava.library.path=. HelloWorld.java
+java -cp . -Djava.library.path=. Jcpdf.java

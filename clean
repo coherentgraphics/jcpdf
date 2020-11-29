@@ -1,1 +1,1 @@
-rm -f HelloWorld.h libctest.dylib
+rm -f Jcpdf.h libjcpdf.dylib

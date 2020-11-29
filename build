@@ -1,4 +1,4 @@
 #Make headers
-javah -cp . HelloWorld
+javah -cp . Jcpdf
 #Build shared library
-gcc -shared -fpic -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin ctest.c -o libctest.dylib
+gcc -shared -fpic -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin jcpdfwrapper.c -o libjcpdf.dylib
