@@ -1,1 +1,1 @@
-rm HelloWorld.h libctest.dylib
+rm -f HelloWorld.h libctest.dylib
