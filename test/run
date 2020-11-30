@@ -1,0 +1,2 @@
+#Try it out
+java -cp . -Djava.library.path=. test.java
