@@ -1,6 +1,6 @@
 #Make headers
 javah -cp . Jcpdf
 #Build shared library
-gcc -shared -fpic -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin jcpdfwrapper.c -o libjcpdf.dylib
+cc -shared -fpic -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin jcpdfwrapper.c -o libjcpdf.dylib
 #Copy shipping component to test/
 cp libjcpdf.dylib test/
