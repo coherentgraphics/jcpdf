@@ -1,1 +1,1 @@
-rm -f Jcpdf.h libjcpdf.dylib
+rm -f Jcpdf.h Jcpdf.class libjcpdf.dylib jcpdf.dll test/libjcpdf.dylib test/jcpdf.dll
