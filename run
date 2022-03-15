@@ -1,2 +1,2 @@
 #Try it out
-java -cp . -Djava.library.path=. Jcpdf.java
+CAMLPDF_REPRODUCIBLE_IDS=true CPDF_REPRODUCIBLE_DATES=true java -cp . -Djava.library.path=. Jcpdf.java
