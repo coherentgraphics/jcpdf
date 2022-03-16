@@ -15,7 +15,6 @@ JNIEXPORT void JNICALL Java_Jcpdf_startup
 JNIEXPORT jstring JNICALL Java_Jcpdf_version
   (JNIEnv * env, jobject jobj)
 {
-    jstring result;
     return (*env)->NewStringUTF(env, cpdf_version()); //No need to check for null, since last statement in function.
 }
 
@@ -66,3 +65,31 @@ JNIEXPORT int JNICALL Java_Jcpdf_blankDocumentPaper
     int pdf = cpdf_blankDocumentPaper(papersize, pages);
     return pdf;
 }
+
+JNIEXPORT int JNICALL Java_Jcpdf_startEnumeratePDFs
+  (JNIEnv * env, jobject jobj)
+{
+    int n = cpdf_startEnumeratePDFs();
+    return n;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_enumeratePDFsKey
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    int i = cpdf_enumeratePDFsKey(n);
+    return i;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_enumeratePDFsInfo
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    return (*env)->NewStringUTF(env, cpdf_enumeratePDFsInfo(n));
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endEnumeratePDFs
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    cpdf_endEnumeratePDFs();
+    return;
+}
+

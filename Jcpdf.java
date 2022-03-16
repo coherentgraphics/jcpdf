@@ -9,7 +9,10 @@ public class Jcpdf {
     native int fromFileLazy(String filename, String userpw);
     native int blankDocument(double w, double h, int pages);
     native int blankDocumentPaper(int papersize, int pages);
-
+    native int startEnumeratePDFs();
+    native int enumeratePDFsKey(int n);
+    native String enumeratePDFsInfo(int n);
+    native void endEnumeratePDFs();
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -64,7 +67,7 @@ public class Jcpdf {
         for (int x = 0; x < n; x++)
         {
             int key = jcpdf.enumeratePDFsKey(x);
-            string info = jcpdf.enumeratePDFsInfo(x);
+            String info = jcpdf.enumeratePDFsInfo(x);
         }
         jcpdf.endEnumeratePDFs();
         /*
