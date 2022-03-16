@@ -185,5 +185,86 @@ public class Jcpdf {
         Cpdf.decryptPdf(pdf10, "");
         System.out.println("---cpdf_decryptPdfOwner()");
         Cpdf.decryptPdfOwner(pdf10, "");*/
+        
+        /* CHAPTER 3. Pages */
+        System.out.println("***** CHAPTER 3. Pages");
+        int pagespdf1 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf8 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf9 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf12 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf13 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf14 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf15 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf18 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pagespdf19 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        /*{
+            Console.WriteLine("---cpdf_scalePages()");
+            Cpdf.scalePages(pagespdf1, Cpdf.all(pagespdf1), 1.5, 1.8);
+            Cpdf.toFile(pagespdf1, "testoutputs/03scalepages.pdf", false, false);
+            Console.WriteLine("---cpdf_scaleToFit()");
+            Cpdf.scaleToFit(pagespdf2, Cpdf.all(pagespdf2), 1.5, 1.8, 0.9);
+            Cpdf.toFile(pagespdf2, "testoutputs/03scaletofit.pdf", false, false);
+            Console.WriteLine("---cpdf_scaleToFitPaper()");
+            Cpdf.scaleToFitPaper(pagespdf3, Cpdf.all(pagespdf3), Cpdf.Papersize.A4portrait, 0.8);
+            Cpdf.toFile(pagespdf3, "testoutputs/03scaletofitpaper.pdf", false, false);
+            Console.WriteLine("---cpdf_scaleContents()");
+            Cpdf.Position position = new Cpdf.Position (Cpdf.Anchor.TopLeft, 20.0, 20.0);
+            Cpdf.scaleContents(pagespdf4, Cpdf.all(pagespdf4), position, 2.0);
+            Cpdf.toFile(pagespdf4, "testoutputs/03scalecontents.pdf", false, false);
+            Console.WriteLine("---cpdf_shiftContents()");
+            Cpdf.shiftContents(pagespdf5, Cpdf.all(pagespdf5), 1.5, 1.25);
+            Cpdf.toFile(pagespdf5, "testoutputs/03shiftcontents.pdf", false, false);
+            Console.WriteLine("---cpdf_rotate()");
+            Cpdf.rotate(pagespdf6, Cpdf.all(pagespdf6), 90);
+            Cpdf.toFile(pagespdf6, "testoutputs/03rotate.pdf", false, false);
+            Console.WriteLine("---cpdf_rotateBy()");
+            Cpdf.rotateBy(pagespdf7, Cpdf.all(pagespdf7), 90);
+            Cpdf.toFile(pagespdf7, "testoutputs/03rotateby.pdf", false, false);
+            Console.WriteLine("---cpdf_rotateContents()");
+            Cpdf.rotateContents(pagespdf8, Cpdf.all(pagespdf8), 35.0);
+            Cpdf.toFile(pagespdf8, "testoutputs/03rotatecontents.pdf", false, false);
+            Console.WriteLine("---cpdf_upright()");
+            Cpdf.upright(pagespdf9, Cpdf.all(pagespdf9));
+            Cpdf.toFile(pagespdf9, "testoutputs/03upright.pdf", false, false);
+            Console.WriteLine("---cpdf_hFlip()");
+            Cpdf.hFlip(pagespdf10, Cpdf.all(pagespdf10));
+            Cpdf.toFile(pagespdf10, "testoutputs/03hflip.pdf", false, false);
+            Console.WriteLine("---cpdf_vFlip()");
+            Cpdf.vFlip(pagespdf11, Cpdf.all(pagespdf11));
+            Cpdf.toFile(pagespdf11, "testoutputs/03vflip.pdf", false, false);
+            Console.WriteLine("---cpdf_crop()");
+            Cpdf.crop(pagespdf12, Cpdf.all(pagespdf12), 0.0, 0.0, 400.0, 500.0);
+            Cpdf.toFile(pagespdf12, "testoutputs/03crop.pdf", false, false);
+            Console.WriteLine("---cpdf_trimMarks()");
+            Cpdf.trimMarks(pagespdf13, Cpdf.all(pagespdf13));
+            Cpdf.toFile(pagespdf13, "testoutputs/03trim_marks.pdf", false, false);
+            Console.WriteLine("---cpdf_showBoxes()");
+            Cpdf.showBoxes(pagespdf14, Cpdf.all(pagespdf14));
+            Cpdf.toFile(pagespdf14, "testoutputs/03show_boxes.pdf", false, false);
+            Console.WriteLine("---cpdf_hardBox()");
+            Cpdf.hardBox(pagespdf15, Cpdf.all(pagespdf15), "/MediaBox");
+            Cpdf.toFile(pagespdf15, "testoutputs/03hard_box.pdf", false, false);
+            Console.WriteLine("---cpdf_removeCrop()");
+            Cpdf.removeCrop(pagespdf16, Cpdf.all(pagespdf16));
+            Cpdf.toFile(pagespdf16, "testoutputs/03remove_crop.pdf", false, false);
+            Console.WriteLine("---cpdf_removeTrim()");
+            Cpdf.removeTrim(pagespdf17, Cpdf.all(pagespdf17));
+            Cpdf.toFile(pagespdf17, "testoutputs/03remove_trim.pdf", false, false);
+            Console.WriteLine("---cpdf_removeArt()");
+            Cpdf.removeArt(pagespdf18, Cpdf.all(pagespdf18));
+            Cpdf.toFile(pagespdf18, "testoutputs/03remove_art.pdf", false, false);
+            Console.WriteLine("---cpdf_removeBleed()");
+            Cpdf.removeBleed(pagespdf19, Cpdf.all(pagespdf19));
+            Cpdf.toFile(pagespdf19, "testoutputs/03remove_bleed.pdf", false, false);*/
     }
 }
