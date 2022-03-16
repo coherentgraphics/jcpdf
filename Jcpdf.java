@@ -37,6 +37,9 @@ public class Jcpdf {
     native int pages(int pdf);
     native int pagesFast(String userpw, String filename);
     native void toFile(int pdf, String filename, boolean linearize, boolean make_id);
+    native void toFileExt(int pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm);
+    native boolean isEncrypted(int pdf);
+    native boolean isLinearized(String filename);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -74,6 +77,9 @@ public class Jcpdf {
         int pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_fromFileLazy()");
         int pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
+
+        //FIXME: Implement in/out to memory
+        
         /*Console.WriteLine("---cpdf_toMemory()");
         byte[] mempdf = Cpdf.toMemory(pdf, false, false);
         Console.WriteLine("---cpdf_fromMemory()");
@@ -147,33 +153,34 @@ public class Jcpdf {
         System.out.format("Pages = %d\n", pagesfast);
         System.out.println("---cpdf_toFile()");
         jcpdf.toFile(pdf10, "testoutputs/01tofile.pdf", false, false);
-        /*System.out.println("---cpdf_toFileExt()");
-        Cpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
+
+        System.out.println("---cpdf_toFileExt()");
+        jcpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
         System.out.println("---cpdf_isEncrypted()");
-        bool isenc = Cpdf.isEncrypted(pdf10);
-        System.out.println($"isencrypted:{(isenc ? 1 : 0)}");
+        boolean isenc = jcpdf.isEncrypted(pdf10);
+        System.out.format("isencrypted: %b\n", isenc);
         System.out.println("---cpdf_isLinearized()");
-        bool lin = Cpdf.isLinearized("testinputs/cpdfmanual.pdf");
-        System.out.println($"islinearized:{(lin ? 1 : 0)}");
-        using (Cpdf.Pdf pdf400 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
-        using (Cpdf.Pdf pdf401 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
-        {
-            List<Cpdf.Permission> permissions = new List<Cpdf.Permission> {Cpdf.Permission.NoEdit};
-            System.out.println("---cpdf_toFileEncrypted()");
-            Cpdf.toFileEncrypted(pdf400, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
-            System.out.println("---cpdf_toFileEncryptedExt()");
-            Cpdf.toFileEncryptedExt(pdf401, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");
-            System.out.println("---cpdf_hasPermission()");
-        }
-        using (Cpdf.Pdf pdfenc = Cpdf.fromFile("testoutputs/01encrypted.pdf", "user"))
-        {
-            bool hasnoedit = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoEdit);
-            bool hasnocopy = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoCopy);
-            System.out.println($"Haspermission {(hasnoedit ? 1 : 0)}, {(hasnocopy ? 1 : 0)}");
-            System.out.println("---cpdf_encryptionKind()");
-            int enckind = Cpdf.encryptionKind(pdfenc);
-            System.out.println($"encryption kind is {enckind}");
-        }
+        boolean lin = jcpdf.isLinearized("testinputs/cpdfmanual.pdf");
+        System.out.format("islinearized: %b\n", lin);
+
+        int pdf400 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pdf401 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+
+        //FIXME: Implement arrays/lists
+        
+        /*List<Cpdf.Permission> permissions = new List<Cpdf.Permission> {Cpdf.Permission.NoEdit};
+        System.out.println("---cpdf_toFileEncrypted()");
+        Cpdf.toFileEncrypted(pdf400, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
+        System.out.println("---cpdf_toFileEncryptedExt()");
+        Cpdf.toFileEncryptedExt(pdf401, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");*/
+        /*System.out.println("---cpdf_hasPermission()");
+        int pdfenc = Cpdf.fromFile("testoutputs/01encrypted.pdf", "user")
+        bool hasnoedit = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoEdit);
+        bool hasnocopy = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoCopy);
+        System.out.println($"Haspermission {(hasnoedit ? 1 : 0)}, {(hasnocopy ? 1 : 0)}");
+        System.out.println("---cpdf_encryptionKind()");
+        int enckind = Cpdf.encryptionKind(pdfenc);
+        System.out.println($"encryption kind is {enckind}");
         System.out.println("---cpdf_decryptPdf()");
         Cpdf.decryptPdf(pdf10, "");
         System.out.println("---cpdf_decryptPdfOwner()");

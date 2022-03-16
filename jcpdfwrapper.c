@@ -263,3 +263,26 @@ JNIEXPORT void JNICALL Java_Jcpdf_toFile
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_toFile(pdf, str_filename, linearize, make_id);
 }
+
+JNIEXPORT void JNICALL Java_Jcpdf_toFileExt
+  (JNIEnv * env, jobject jobj, jint pdf, jstring filename, jboolean linearize, jboolean make_id, jboolean preserve_objstm, jboolean create_objstm, jboolean compress_objstm)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_toFileExt(pdf, str_filename, linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
+}
+
+JNIEXPORT jboolean JNICALL Java_Jcpdf_isEncrypted
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jint result = cpdf_isEncrypted(pdf);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL Java_Jcpdf_isLinearized
+  (JNIEnv * env, jobject jobj, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    jboolean result = cpdf_isLinearized(str_filename);
+    return result;
+}
+
