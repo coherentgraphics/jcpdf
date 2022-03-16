@@ -6,6 +6,27 @@ public class Jcpdf {
     native void setFast();
     native void setSlow();
     native int fromFile(String filename, String userpw);
+    native int fromFileLazy(String filename, String userpw);
+    native int blankDocument(double w, double h, int pages);
+    native int blankDocumentPaper(int papersize, int pages);
+
+    int a0portrait = 0;
+    int a1portrait = 1;
+    int a2portrait = 2;
+    int a3portrait = 3;
+    int a4portrait = 4;
+    int a5portrait = 5;
+    int a0landscape = 6;
+    int a1landscape = 7;
+    int a2landscape = 8;
+    int a3landscape = 9;
+    int a4landscape = 10;
+    int a5landscape = 11;
+    int usletterportrait = 12;
+    int usletterlandscape = 13;
+    int uslegalportrait = 14;
+    int uslegallandscape = 15;
+
     static public void main(String argv[]) {
         System.loadLibrary("cpdf");
         System.loadLibrary("jcpdf");
@@ -24,9 +45,9 @@ public class Jcpdf {
         System.out.println("***** CHAPTER 1. Basics");
         System.out.println("---cpdf_fromFile()");
         int pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        /*Console.WriteLine("---cpdf_fromFileLazy()");
-        Cpdf.Pdf pdf2 = Cpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
-        Console.WriteLine("---cpdf_toMemory()");
+        System.out.println("---cpdf_fromFileLazy()");
+        int pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
+        /*Console.WriteLine("---cpdf_toMemory()");
         byte[] mempdf = Cpdf.toMemory(pdf, false, false);
         Console.WriteLine("---cpdf_fromMemory()");
         Cpdf.Pdf frommem = Cpdf.fromMemory(mempdf, "");
@@ -35,17 +56,18 @@ public class Jcpdf {
         IntPtr ptr = Marshal.AllocHGlobal(mempdf.Length);
         Marshal.Copy(mempdf, 0, ptr, mempdf.Length);
         Cpdf.Pdf frommemlazy = Cpdf.fromMemoryLazy(ptr, mempdf.Length, "");
-        Cpdf.toFile(frommemlazy, "testoutputs/01fromMemoryLazy.pdf", false, false);
-        Cpdf.Pdf pdf3 = Cpdf.blankDocument(153.5, 234.2, 50);
-        Cpdf.Pdf pdf4 = Cpdf.blankDocumentPaper(Cpdf.Papersize.A4landscape, 50);
-        Console.WriteLine("---cpdf: enumerate PDFs");
-        int n = Cpdf.startEnumeratePDFs();
+        Cpdf.toFile(frommemlazy, "testoutputs/01fromMemoryLazy.pdf", false, false);*/
+        int pdf3 = jcpdf.blankDocument(153.5, 234.2, 50);
+        int pdf4 = jcpdf.blankDocumentPaper(jcpdf.a4landscape, 50);
+        System.out.println("---cpdf: enumerate PDFs");
+        int n = jcpdf.startEnumeratePDFs();
         for (int x = 0; x < n; x++)
         {
-            int key = Cpdf.enumeratePDFsKey(x);
-            string info = Cpdf.enumeratePDFsInfo(x);
+            int key = jcpdf.enumeratePDFsKey(x);
+            string info = jcpdf.enumeratePDFsInfo(x);
         }
-        Cpdf.endEnumeratePDFs();
+        jcpdf.endEnumeratePDFs();
+        /*
         Console.WriteLine("---cpdf_ptOfIn()");
         Console.WriteLine($"One inch is {Cpdf.ptOfIn(1.0):0.000000} points");
         Console.WriteLine("---cpdf_ptOfCm()");

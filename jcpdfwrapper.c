@@ -1,4 +1,5 @@
 //Check "modified UTF8" not a problem for us
+//Check all of chapter 10: traps and pitfalls in Java book
 #include <jni.h>
 #include <stdio.h>
 #include "cpdflibwrapper.h"
@@ -38,5 +39,30 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromFile
     int pdf = cpdf_fromFile(str_filename, str_userpw);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    return pdf;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_fromFileLazy
+  (JNIEnv * env, jobject jobj, jstring filename, jstring userpw)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
+    int pdf = cpdf_fromFileLazy(str_filename, str_userpw);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    return pdf;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_blankDocument
+  (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint pages)
+{
+    int pdf = cpdf_blankDocument(w, h, pages);
+    return pdf;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_blankDocumentPaper
+  (JNIEnv * env, jobject jobj, jint papersize, jint pages)
+{
+    int pdf = cpdf_blankDocumentPaper(papersize, pages);
     return pdf;
 }
