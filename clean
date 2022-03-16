@@ -1,1 +1,3 @@
-rm -f Jcpdf.h Jcpdf.class libjcpdf.dylib jcpdf.dll test/libjcpdf.dylib test/jcpdf.dll libcpdf.dylib foo foo2
+rm -f Jcpdf.h Jcpdf.class libjcpdf.dylib jcpdf.dll test/libjcpdf.dylib test/jcpdf.dll libcpdf.dylib foo foo2 foo.diff
+rm -rf testoutputs/*.pdf testoutputs/*.json testoutputs/*.txt
+rm -f merged.pdf

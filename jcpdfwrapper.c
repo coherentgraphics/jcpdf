@@ -240,3 +240,26 @@ JNIEXPORT jint JNICALL Java_Jcpdf_blankRange
     jint result = cpdf_blankRange();
     return result;
 }
+
+JNIEXPORT jint JNICALL Java_Jcpdf_pages
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jint result = cpdf_pages(pdf);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_pagesFast
+  (JNIEnv * env, jobject jobj, jstring userpw, jstring filename)
+{
+    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    jint result = cpdf_pagesFast(str_userpw, str_filename);
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_toFile
+  (JNIEnv * env, jobject jobj, jint pdf, jstring filename, jboolean linearize, jboolean make_id)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_toFile(pdf, str_filename, linearize, make_id);
+}

@@ -34,6 +34,9 @@ public class Jcpdf {
     native boolean validatePagespec(String pagespec);
     native String stringOfPagespec(int pdf, int r);
     native int blankRange();
+    native int pages(int pdf);
+    native int pagesFast(String userpw, String filename);
+    native void toFile(int pdf, String filename, boolean linearize, boolean make_id);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -125,7 +128,6 @@ public class Jcpdf {
         int rangeadd = jcpdf.rangeAdd(even, 20);
         System.out.println("---cpdf_isInRange()");
         boolean isin = jcpdf.isInRange(even, 2);
-
         System.out.println("---cpdf_parsePagespec()");
         int r = jcpdf.parsePagespec(pdf3, "1-5");
         System.out.println("---cpdf_validatePagespec()");
@@ -136,16 +138,16 @@ public class Jcpdf {
         System.out.format("String of pagespec is %s\n", ps);
         System.out.println("---cpdf_blankRange()");
         int b = jcpdf.blankRange();
-        /*Cpdf.Pdf pdf10 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pdf10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_pages()");
-        int _pages = Cpdf.pages(pdf10);
-        System.out.println($"Pages = {_pages}");
+        int pages = jcpdf.pages(pdf10);
+        System.out.format("Pages = %d\n", pages);
         System.out.println("---cpdf_pagesFast()");
-        int pagesfast = Cpdf.pagesFast("", "testinputs/cpdflibmanual.pdf");
-        System.out.println($"Pages = {_pages}");
+        int pagesfast = jcpdf.pagesFast("", "testinputs/cpdflibmanual.pdf");
+        System.out.format("Pages = %d\n", pagesfast);
         System.out.println("---cpdf_toFile()");
-        Cpdf.toFile(pdf10, "testoutputs/01tofile.pdf", false, false);
-        System.out.println("---cpdf_toFileExt()");
+        jcpdf.toFile(pdf10, "testoutputs/01tofile.pdf", false, false);
+        /*System.out.println("---cpdf_toFileExt()");
         Cpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
         System.out.println("---cpdf_isEncrypted()");
         bool isenc = Cpdf.isEncrypted(pdf10);
