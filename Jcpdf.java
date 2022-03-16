@@ -13,6 +13,12 @@ public class Jcpdf {
     native int enumeratePDFsKey(int n);
     native String enumeratePDFsInfo(int n);
     native void endEnumeratePDFs();
+    native double ptOfCm(double f);
+    native double ptOfMm(double f);
+    native double ptOfIn(double f);
+    native double cmOfPt(double f);
+    native double mmOfPt(double f);
+    native double inOfPt(double f);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -70,20 +76,20 @@ public class Jcpdf {
             String info = jcpdf.enumeratePDFsInfo(x);
         }
         jcpdf.endEnumeratePDFs();
+        System.out.println("---cpdf_ptOfIn()");
+        System.out.format("One inch is %f points\n", jcpdf.ptOfIn(1.0));
+        System.out.println("---cpdf_ptOfCm()");
+        System.out.format("One centimetre is %f points\n", jcpdf.ptOfCm(1.0));
+        System.out.println("---cpdf_ptOfMm()");
+        System.out.format("One millimetre is %f points\n", jcpdf.ptOfMm(1.0));
+        System.out.println("---cpdf_inOfPt()");
+        System.out.format("One point is %f inches\n", jcpdf.inOfPt(1.0));
+        System.out.println("---cpdf_cmOfPt()");
+        System.out.format("One point is %f centimetres\n", jcpdf.cmOfPt(1.0));
+        System.out.println("---cpdf_mmOfPt()");
+        System.out.format("One point is %f millimetres\n", jcpdf.mmOfPt(1.0));
+        System.out.println("---cpdf_range()");
         /*
-        Console.WriteLine("---cpdf_ptOfIn()");
-        Console.WriteLine($"One inch is {Cpdf.ptOfIn(1.0):0.000000} points");
-        Console.WriteLine("---cpdf_ptOfCm()");
-        Console.WriteLine($"One centimetre is {Cpdf.ptOfCm(1.0):0.000000} points");
-        Console.WriteLine("---cpdf_ptOfMm()");
-        Console.WriteLine($"One millimetre is {Cpdf.ptOfMm(1.0):0.000000} points");
-        Console.WriteLine("---cpdf_inOfPt()");
-        Console.WriteLine($"One point is {Cpdf.inOfPt(1.0):0.000000} inches");
-        Console.WriteLine("---cpdf_cmOfPt()");
-        Console.WriteLine($"One point is {Cpdf.cmOfPt(1.0):0.000000} centimetres");
-        Console.WriteLine("---cpdf_mmOfPt()");
-        Console.WriteLine($"One point is {Cpdf.mmOfPt(1.0):0.000000} millimetres");
-        Console.WriteLine("---cpdf_range()");
         List<int> _range = Cpdf.range(1, 10);
         Console.WriteLine("---cpdf_all()");
         List<int> _all = Cpdf.all(pdf3);

@@ -93,3 +93,44 @@ JNIEXPORT void JNICALL Java_Jcpdf_endEnumeratePDFs
     return;
 }
 
+JNIEXPORT jdouble JNICALL Java_Jcpdf_ptOfCm
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_ptOfCm(f);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_ptOfMm
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_ptOfMm(f);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_ptOfIn
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_ptOfIn(f);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_inOfPt
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_inOfPt(f);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_cmOfPt
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_cmOfPt(f);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_mmOfPt
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_mmOfPt(f);
+    return result;
+}
