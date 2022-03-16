@@ -286,3 +286,21 @@ JNIEXPORT jboolean JNICALL Java_Jcpdf_isLinearized
     return result;
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_scalePages
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble sx, jdouble sy)
+{
+    cpdf_scalePages(pdf, range, sx, sy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_scaleToFit
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble w, jdouble h, jdouble scale)
+{
+    cpdf_scaleToFit(pdf, range, w, h, scale);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_scaleToFitPaper
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint papersize, jdouble scale)
+{
+    cpdf_scaleToFitPaper(pdf, range, papersize, scale);
+}
+
