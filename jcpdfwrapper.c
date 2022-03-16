@@ -211,3 +211,32 @@ JNIEXPORT jboolean JNICALL Java_Jcpdf_isInRange
     jboolean result = cpdf_isInRange(r, n);
     return result;
 }
+
+JNIEXPORT jint JNICALL Java_Jcpdf_parsePagespec
+  (JNIEnv * env, jobject jobj, jint pdf, jstring pagespec)
+{
+    const char *str_pagespec = (*env)->GetStringUTFChars(env, pagespec, 0);
+    jint result = cpdf_parsePagespec(pdf, str_pagespec);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_validatePagespec
+  (JNIEnv * env, jobject jobj, jstring pagespec)
+{
+    const char *str_pagespec = (*env)->GetStringUTFChars(env, pagespec, 0);
+    jboolean result = cpdf_validatePagespec(str_pagespec);
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_stringOfPagespec
+  (JNIEnv * env, jobject jobj, jint pdf, jint r)
+{
+    return (*env)->NewStringUTF(env, cpdf_stringOfPagespec(pdf, r));
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_blankRange
+  (JNIEnv * env, jobject jobj)
+{
+    jint result = cpdf_blankRange();
+    return result;
+}

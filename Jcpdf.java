@@ -30,6 +30,10 @@ public class Jcpdf {
     native int rangeGet(int r, int n);
     native int rangeAdd(int r, int n);
     native boolean isInRange(int r, int n);
+    native int parsePagespec(int pdf, String pagespec);
+    native boolean validatePagespec(String pagespec);
+    native String stringOfPagespec(int pdf, int r);
+    native int blankRange();
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -121,17 +125,18 @@ public class Jcpdf {
         int rangeadd = jcpdf.rangeAdd(even, 20);
         System.out.println("---cpdf_isInRange()");
         boolean isin = jcpdf.isInRange(even, 2);
-        /*System.out.println("---cpdf_parsePagespec()");
-        List<int> r = Cpdf.parsePagespec(pdf3, "1-5");
+
+        System.out.println("---cpdf_parsePagespec()");
+        int r = jcpdf.parsePagespec(pdf3, "1-5");
         System.out.println("---cpdf_validatePagespec()");
-        bool valid = Cpdf.validatePagespec("1-4,5,6");
-        System.out.println($"Validating pagespec gives {(valid ? 1 : 0)}");
+        boolean valid = jcpdf.validatePagespec("1-4,5,6");
+        System.out.format("Validating pagespec gives %b\n", valid);
         System.out.println("---cpdf_stringOfPagespec()");
-        string ps = Cpdf.stringOfPagespec(pdf3, r);
-        System.out.println($"String of pagespec is {ps}");
+        String ps = jcpdf.stringOfPagespec(pdf3, r);
+        System.out.format("String of pagespec is %s\n", ps);
         System.out.println("---cpdf_blankRange()");
-        List<int> b = Cpdf.blankRange();
-        Cpdf.Pdf pdf10 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int b = jcpdf.blankRange();
+        /*Cpdf.Pdf pdf10 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_pages()");
         int _pages = Cpdf.pages(pdf10);
         System.out.println($"Pages = {_pages}");
