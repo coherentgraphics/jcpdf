@@ -134,3 +134,80 @@ JNIEXPORT jdouble JNICALL Java_Jcpdf_mmOfPt
     jdouble result = cpdf_mmOfPt(f);
     return result;
 }
+
+JNIEXPORT jint JNICALL Java_Jcpdf_range
+  (JNIEnv * env, jobject jobj, jint f, jint t)
+{
+    jint result = cpdf_range(f, t);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_all
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jint result = cpdf_all(pdf);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_even
+  (JNIEnv * env, jobject jobj, jint r)
+{
+    jint result = cpdf_even(r);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_odd
+  (JNIEnv * env, jobject jobj, jint r)
+{
+    jint result = cpdf_odd(r);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_rangeUnion
+  (JNIEnv * env, jobject jobj, jint r, jint s)
+{
+    jint result = cpdf_rangeUnion(r, s);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_difference
+  (JNIEnv * env, jobject jobj, jint r, jint s)
+{
+    jint result = cpdf_difference(r, s);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_removeDuplicates
+  (JNIEnv * env, jobject jobj, jint r)
+{
+    jint result = cpdf_removeDuplicates(r);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_rangeLength
+  (JNIEnv * env, jobject jobj, jint r)
+{
+    jint result = cpdf_rangeLength(r);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_rangeGet
+  (JNIEnv * env, jobject jobj, jint r, jint n)
+{
+    jint result = cpdf_rangeGet(r, n);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_rangeAdd
+  (JNIEnv * env, jobject jobj, jint r, jint n)
+{
+    jint result = cpdf_rangeAdd(r, n);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL Java_Jcpdf_isInRange
+  (JNIEnv * env, jobject jobj, jint r, jint n)
+{
+    jboolean result = cpdf_isInRange(r, n);
+    return result;
+}

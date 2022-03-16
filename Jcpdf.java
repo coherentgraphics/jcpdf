@@ -19,6 +19,17 @@ public class Jcpdf {
     native double cmOfPt(double f);
     native double mmOfPt(double f);
     native double inOfPt(double f);
+    native int range(int from, int to);
+    native int all(int pdf);
+    native int odd(int r);
+    native int even(int r);
+    native int rangeUnion(int r, int s);
+    native int difference(int r, int s);
+    native int removeDuplicates(int r);
+    native int rangeLength(int r);
+    native int rangeGet(int r, int n);
+    native int rangeAdd(int r, int n);
+    native boolean isInRange(int r, int n);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -89,84 +100,76 @@ public class Jcpdf {
         System.out.println("---cpdf_mmOfPt()");
         System.out.format("One point is %f millimetres\n", jcpdf.mmOfPt(1.0));
         System.out.println("---cpdf_range()");
-        /*
-        List<int> _range = Cpdf.range(1, 10);
-        Console.WriteLine("---cpdf_all()");
-        List<int> _all = Cpdf.all(pdf3);
-        Console.WriteLine("---cpdf_even()");
-        List<int> _even = Cpdf.even(_all);
-        Console.WriteLine("---cpdf_odd()");
-        List<int> _odd = Cpdf.odd(_all);
-        Console.WriteLine("---cpdf_rangeUnion()");
-        List<int> union = Cpdf.rangeUnion(_even, _odd);
-        Console.WriteLine("---cpdf_difference()");
-        List<int> diff = Cpdf.difference(_even, _odd);
-        Console.WriteLine("---cpdf_removeDuplicates()");
-        List<int> revdup = Cpdf.removeDuplicates(_even);
-        Console.WriteLine("---cpdf_rangeLength()");
-        int length = Cpdf.rangeLength(_even);
-        Console.WriteLine("---cpdf_rangeGet()");
-        int rangeget = Cpdf.rangeGet(_even, 1);
-        Console.WriteLine("---cpdf_rangeAdd()");
-        List<int> rangeadd = Cpdf.rangeAdd(_even, 20);
-        Console.WriteLine("---cpdf_isInRange()");
-        bool isin = Cpdf.isInRange(_even, 2);
-        Console.WriteLine("---cpdf_parsePagespec()");
+        int range = jcpdf.range(1, 10);
+        System.out.println("---cpdf_all()");
+        int all = jcpdf.all(pdf3);
+        System.out.println("---cpdf_even()");
+        int even = jcpdf.even(all);
+        System.out.println("---cpdf_odd()");
+        int odd = jcpdf.odd(all);
+        System.out.println("---cpdf_rangeUnion()");
+        int union = jcpdf.rangeUnion(even, odd);
+        System.out.println("---cpdf_difference()");
+        int diff = jcpdf.difference(even, odd);
+        System.out.println("---cpdf_removeDuplicates()");
+        int revdup = jcpdf.removeDuplicates(even);
+        System.out.println("---cpdf_rangeLength()");
+        int length = jcpdf.rangeLength(even);
+        System.out.println("---cpdf_rangeGet()");
+        int rangeget = jcpdf.rangeGet(even, 1);
+        System.out.println("---cpdf_rangeAdd()");
+        int rangeadd = jcpdf.rangeAdd(even, 20);
+        System.out.println("---cpdf_isInRange()");
+        boolean isin = jcpdf.isInRange(even, 2);
+        /*System.out.println("---cpdf_parsePagespec()");
         List<int> r = Cpdf.parsePagespec(pdf3, "1-5");
-        Console.WriteLine("---cpdf_validatePagespec()");
+        System.out.println("---cpdf_validatePagespec()");
         bool valid = Cpdf.validatePagespec("1-4,5,6");
-        Console.WriteLine($"Validating pagespec gives {(valid ? 1 : 0)}");
-        Console.WriteLine("---cpdf_stringOfPagespec()");
+        System.out.println($"Validating pagespec gives {(valid ? 1 : 0)}");
+        System.out.println("---cpdf_stringOfPagespec()");
         string ps = Cpdf.stringOfPagespec(pdf3, r);
-        Console.WriteLine($"String of pagespec is {ps}");
-        Console.WriteLine("---cpdf_blankRange()");
+        System.out.println($"String of pagespec is {ps}");
+        System.out.println("---cpdf_blankRange()");
         List<int> b = Cpdf.blankRange();
         Cpdf.Pdf pdf10 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        Console.WriteLine("---cpdf_pages()");
+        System.out.println("---cpdf_pages()");
         int _pages = Cpdf.pages(pdf10);
-        Console.WriteLine($"Pages = {_pages}");
-        Console.WriteLine("---cpdf_pagesFast()");
+        System.out.println($"Pages = {_pages}");
+        System.out.println("---cpdf_pagesFast()");
         int pagesfast = Cpdf.pagesFast("", "testinputs/cpdflibmanual.pdf");
-        Console.WriteLine($"Pages = {_pages}");
-        Console.WriteLine("---cpdf_toFile()");
+        System.out.println($"Pages = {_pages}");
+        System.out.println("---cpdf_toFile()");
         Cpdf.toFile(pdf10, "testoutputs/01tofile.pdf", false, false);
-        Console.WriteLine("---cpdf_toFileExt()");
+        System.out.println("---cpdf_toFileExt()");
         Cpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
-        Console.WriteLine("---cpdf_isEncrypted()");
+        System.out.println("---cpdf_isEncrypted()");
         bool isenc = Cpdf.isEncrypted(pdf10);
-        Console.WriteLine($"isencrypted:{(isenc ? 1 : 0)}");
-        Console.WriteLine("---cpdf_isLinearized()");
+        System.out.println($"isencrypted:{(isenc ? 1 : 0)}");
+        System.out.println("---cpdf_isLinearized()");
         bool lin = Cpdf.isLinearized("testinputs/cpdfmanual.pdf");
-        Console.WriteLine($"islinearized:{(lin ? 1 : 0)}");
+        System.out.println($"islinearized:{(lin ? 1 : 0)}");
         using (Cpdf.Pdf pdf400 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
         using (Cpdf.Pdf pdf401 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
         {
             List<Cpdf.Permission> permissions = new List<Cpdf.Permission> {Cpdf.Permission.NoEdit};
-            Console.WriteLine("---cpdf_toFileEncrypted()");
+            System.out.println("---cpdf_toFileEncrypted()");
             Cpdf.toFileEncrypted(pdf400, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
-            Console.WriteLine("---cpdf_toFileEncryptedExt()");
+            System.out.println("---cpdf_toFileEncryptedExt()");
             Cpdf.toFileEncryptedExt(pdf401, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");
-            Console.WriteLine("---cpdf_hasPermission()");
+            System.out.println("---cpdf_hasPermission()");
         }
         using (Cpdf.Pdf pdfenc = Cpdf.fromFile("testoutputs/01encrypted.pdf", "user"))
         {
             bool hasnoedit = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoEdit);
             bool hasnocopy = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoCopy);
-            Console.WriteLine($"Haspermission {(hasnoedit ? 1 : 0)}, {(hasnocopy ? 1 : 0)}");
-            Console.WriteLine("---cpdf_encryptionKind()");
+            System.out.println($"Haspermission {(hasnoedit ? 1 : 0)}, {(hasnocopy ? 1 : 0)}");
+            System.out.println("---cpdf_encryptionKind()");
             int enckind = Cpdf.encryptionKind(pdfenc);
-            Console.WriteLine($"encryption kind is {enckind}");
+            System.out.println($"encryption kind is {enckind}");
         }
-        Console.WriteLine("---cpdf_decryptPdf()");
+        System.out.println("---cpdf_decryptPdf()");
         Cpdf.decryptPdf(pdf10, "");
-        Console.WriteLine("---cpdf_decryptPdfOwner()");
-        Cpdf.decryptPdfOwner(pdf10, "");
-        frommem.Dispose();
-        frommemlazy.Dispose();
-        pdf.Dispose();
-        pdf2.Dispose();
-        pdf3.Dispose();
-        pdf4.Dispose();
-        pdf10.Dispose();*/
+        System.out.println("---cpdf_decryptPdfOwner()");
+        Cpdf.decryptPdfOwner(pdf10, "");*/
     }
 }
