@@ -539,3 +539,50 @@ JNIEXPORT int JNICALL Java_Jcpdf_combinePages
     return result;
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_impose
+  (JNIEnv * env, jobject jobj, jint pdf, jdouble x, jdouble y, jboolean fit, jboolean columns, jboolean rtl, jboolean btt, jboolean center, jdouble margin, jdouble spacing, jdouble linewidth)
+{
+    cpdf_impose(pdf, x, y, fit, columns, rtl, btt, center, margin, spacing, linewidth);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_twoUp
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_twoUp(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_twoUpStack
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_twoUpStack(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_padBefore
+  (JNIEnv * env, jobject jobj, jint pdf, int range)
+{
+    cpdf_padBefore(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_padAfter
+  (JNIEnv * env, jobject jobj, jint pdf, int range)
+{
+    cpdf_padAfter(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_padEvery
+  (JNIEnv * env, jobject jobj, jint pdf, int n)
+{
+    cpdf_padEvery(pdf, n);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_padMultiple
+  (JNIEnv * env, jobject jobj, jint pdf, int n)
+{
+    cpdf_padMultiple(pdf, n);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_padMultipleBefore
+  (JNIEnv * env, jobject jobj, jint pdf, int n)
+{
+    cpdf_padMultipleBefore(pdf, n);
+}

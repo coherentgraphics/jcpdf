@@ -80,6 +80,14 @@ public class Jcpdf {
     native void stampOn(int pdf, int pdf2, int range);
     native void stampUnder(int pdf, int pdf2, int range);
     native int combinePages(int pdf, int pdf2);
+    native void impose(int pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth);
+    native void twoUp(int pdf);
+    native void twoUpStack(int pdf);
+    native void padBefore(int pdf, int range);
+    native void padAfter(int pdf, int range);
+    native void padEvery(int pdf, int n);
+    native void padMultiple(int pdf, int n);
+    native void padMultipleBefore(int pdf, int n);
 
     int a0portrait = 0;
     int a1portrait = 1;
