@@ -496,3 +496,12 @@ JNIEXPORT void JNICALL Java_Jcpdf_endSetBookmarkInfo
 {
     cpdf_endSetBookmarkInfo(pdf);
 }
+
+JNIEXPORT void JNICALL Java_Jcpdf_tableOfContents
+  (JNIEnv * env, jobject jobj, jint pdf, jint font, jdouble fontsize, jstring title, jboolean bookmark)
+{
+    const char *str_title = (*env)->GetStringUTFChars(env, title, 0);
+    cpdf_tableOfContents(pdf, font, fontsize, str_title, bookmark);
+    (*env)->ReleaseStringUTFChars(env, title, str_title);
+}
+

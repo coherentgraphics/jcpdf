@@ -74,6 +74,7 @@ public class Jcpdf {
     native void setBookmarkOpenStatus(int serial, boolean open);
     native void setBookmarkText(int serial, String text);
     native void endSetBookmarkInfo(int pdf);
+    native void tableOfContents(int pdf, int font, double fontsize, String title, boolean bookmark);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -90,7 +91,18 @@ public class Jcpdf {
     int usletterlandscape = 13;
     int uslegalportrait = 14;
     int uslegallandscape = 15;
-
+    int timesRoman = 0;
+    int timesBold = 1;
+    int timesItalic = 2;
+    int timesBoldItalic = 3;
+    int helvetica = 4;
+    int helveticaBold = 5;
+    int helveticaOblique = 6;
+    int helveticaBoldOblique = 7;
+    int courier = 8;
+    int courierBold = 9;
+    int courierOblique = 10;
+    int courierBoldOblique = 11;
     static public void main(String argv[]) {
         System.loadLibrary("cpdf");
         System.loadLibrary("jcpdf");
@@ -172,7 +184,7 @@ public class Jcpdf {
         int r = jcpdf.parsePagespec(pdf3, "1-5");
         System.out.println("---cpdf_validatePagespec()");
         boolean valid = jcpdf.validatePagespec("1-4,5,6");
-        System.out.format("Validating pagespec gives %b\n", valid);
+        System.out.format("Validating pagespec gives %d\n", valid ? 1 : 0);
         System.out.println("---cpdf_stringOfPagespec()");
         String ps = jcpdf.stringOfPagespec(pdf3, r);
         System.out.format("String of pagespec is %s\n", ps);
@@ -192,10 +204,10 @@ public class Jcpdf {
         jcpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
         System.out.println("---cpdf_isEncrypted()");
         boolean isenc = jcpdf.isEncrypted(pdf10);
-        System.out.format("isencrypted: %b\n", isenc);
+        System.out.format("isencrypted:%d\n", isenc ? 1 : 0);
         System.out.println("---cpdf_isLinearized()");
         boolean lin = jcpdf.isLinearized("testinputs/cpdfmanual.pdf");
-        System.out.format("islinearized: %b\n", lin);
+        System.out.format("islinearized:%d\n", lin ? 1 : 0);
 
         int pdf400 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         int pdf401 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
@@ -358,7 +370,7 @@ public class Jcpdf {
             int page = jcpdf.getBookmarkPage(pdf17, b2);
             String text = jcpdf.getBookmarkText(b2);
             boolean open = jcpdf.getBookmarkOpenStatus(b2);
-            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %b\n", level, page, text, open);
+            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %d\n", level, page, text, open ? 1 : 0);
         }
         jcpdf.endGetBookmarkInfo();
         System.out.println("---cpdf: set bookmarks");
@@ -369,6 +381,7 @@ public class Jcpdf {
         jcpdf.setBookmarkText(0, "New bookmark!");
         jcpdf.endSetBookmarkInfo(pdf17);
         jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
+        //FIXME data in and out
         /*System.out.println("---jcpdf.getBookmarksJSON()");
         jcpdf.Pdf marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
@@ -376,11 +389,88 @@ public class Jcpdf {
         System.out.println("---jcpdf.setBookmarksJSON()");
         jcpdf.setBookmarksJSON(marksjson, marksdata);
         jcpdf.toFile(marksjson, "testoutputs/06jsonmarks.pdf", false, false);
-        marksjson.Dispose();
-        System.out.println("---jcpdf.tableOfContents()");
-        jcpdf.Pdf tojcpdf.= jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        jcpdf.tableOfContents(tojcpdf. jcpdf.Font.TimesRoman, 12.0, "Table of Contents", false);
-        jcpdf.toFile(tojcpdf. "testoutputs/06toc.pdf", false, false);
-        tojcpdf.Dispose();*/
+        */
+        System.out.println("---cpdf_tableOfContents()");
+        int toc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        jcpdf.tableOfContents(toc, jcpdf.timesRoman, 12.0, "Table of Contents", false);
+        jcpdf.toFile(toc, "testoutputs/06toc.pdf", false, false);
+        
+        /* CHAPTER 7. Presentations */
+        /* Not included in the library version. */
+
+        /* CHAPTER 8. Logos, Watermarks and Stamps */
+        System.out.println("***** CHAPTER 8. Logos, Watermarks and Stamps");
+        int textfile = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        //FIXME pos
+        /*Console.WriteLine("---cpdf_addText()");
+        Cpdf.Position pos = new Cpdf.Position (Cpdf.Anchor.TopLeft, 20.0, 20.0);
+        Cpdf.addText(false,
+                     textfile,
+                     Cpdf.all(textfile),
+                     "Some Text~~~~~~~~~~!",
+                     pos,
+                     1.0,
+                     1,
+                     Cpdf.Font.TimesRoman,
+                     20.0,
+                     0.5,
+                     0.5,
+                     0.5,
+                     false,
+                     false,
+                     true,
+                     0.5,
+                     Cpdf.Justification.LeftJustify,
+                     false,
+                     false,
+                     "",
+                     1.0,
+                     false);
+        Console.WriteLine("---cpdf_addTextSimple()");
+        Cpdf.addTextSimple(textfile, Cpdf.all(textfile), "The text!", pos, Cpdf.Font.TimesRoman, 50.0);
+        Cpdf.toFile(textfile, "testoutputs/08added_text.pdf", false, false);
+        */
+
+        //FIXME do noW!
+        /*Console.WriteLine("---cpdf_removeText()");
+        Cpdf.removeText(textfile, Cpdf.all(textfile));
+        Cpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
+        Console.WriteLine("---cpdf_textWidth()");
+        int w = Cpdf.textWidth(Cpdf.Font.TimesRoman, "What is the width of this?");
+        Cpdf.Pdf stamp = Cpdf.fromFile("testinputs/logo.pdf", "");
+        Cpdf.Pdf stampee = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        List<int> stamp_range = Cpdf.all(stamp);
+        Console.WriteLine("---cpdf_stampOn()");
+        Cpdf.stampOn(stamp, stampee, stamp_range);
+        Console.WriteLine("---cpdf_stampUnder()");
+        Cpdf.stampUnder(stamp, stampee, stamp_range); */
+
+        //FIXME pos
+        /*
+        Cpdf.Position spos = new Cpdf.Position (Cpdf.Anchor.TopLeft, 20.0, 20.0);
+        Console.WriteLine("---cpdf_stampExtended()");
+        Cpdf.stampExtended(stamp, stampee, stamp_range, true, true, spos, true);
+        Cpdf.toFile(stamp, "testoutputs/08stamp_after.pdf", false, false);
+        Cpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);
+        Cpdf.Pdf c1 = Cpdf.fromFile("testinputs/logo.pdf", "");
+        Cpdf.Pdf c2 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");*/
+
+        //FIXME do now!
+        /*
+        Console.WriteLine("---cpdf_combinePages()");
+        Cpdf.Pdf c3 = Cpdf.combinePages(c1, c2);
+        Cpdf.toFile(c3, "testoutputs/08c3after.pdf", false, false);
+        Console.WriteLine("---cpdf_stampAsXObject()");
+        Cpdf.Pdf undoc = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Cpdf.Pdf ulogo = Cpdf.fromFile("testinputs/logo.pdf", "");*/
+
+        // FIXME data in/out
+        /*
+        string name = Cpdf.stampAsXObject(undoc, Cpdf.all(undoc), ulogo);
+        string content = $"q 1 0 0 1 100 100 cm {name} Do Q q 1 0 0 1 300 300 cm {name} Do Q q 1 0 0 1 500 500 cm {name} Do Q";
+        Console.WriteLine("---cpdf_addContent()");
+        Cpdf.addContent(content, true, undoc, Cpdf.all(undoc));
+        Cpdf.toFile(undoc, "testoutputs/08demo.pdf", false, false);
+        */
     }
 }
