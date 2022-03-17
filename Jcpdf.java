@@ -361,7 +361,7 @@ public class Jcpdf {
             System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %b\n", level, page, text, open);
         }
         jcpdf.endGetBookmarkInfo();
-        System.out.println("---jcpdf: set bookmarks");
+        System.out.println("---cpdf: set bookmarks");
         jcpdf.startSetBookmarkInfo(1);
         jcpdf.setBookmarkLevel(0, 0);
         jcpdf.setBookmarkPage(pdf17, 0, 20);

@@ -458,3 +458,41 @@ JNIEXPORT void JNICALL Java_Jcpdf_endGetBookmarkInfo
 {
     cpdf_endGetBookmarkInfo();
 }
+
+JNIEXPORT void JNICALL Java_Jcpdf_startSetBookmarkInfo
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    cpdf_startSetBookmarkInfo(n);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setBookmarkLevel
+  (JNIEnv * env, jobject jobj, jint serial, jint level)
+{
+    cpdf_setBookmarkLevel(serial, level);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setBookmarkPage
+  (JNIEnv * env, jobject jobj, jint pdf, jint serial, jint pagenum)
+{
+    cpdf_setBookmarkPage(pdf, serial, pagenum);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setBookmarkOpenStatus
+  (JNIEnv * env, jobject jobj, jint serial, jboolean open)
+{
+    cpdf_setBookmarkOpenStatus(serial, open);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setBookmarkText
+  (JNIEnv * env, jobject jobj, jint serial, jstring text)
+{
+    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
+    cpdf_setBookmarkText(serial, str_text);
+    (*env)->ReleaseStringUTFChars(env, text, str_text);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endSetBookmarkInfo
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_endSetBookmarkInfo(pdf);
+}
