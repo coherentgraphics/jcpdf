@@ -75,6 +75,12 @@ public class Jcpdf {
     native void setBookmarkText(int serial, String text);
     native void endSetBookmarkInfo(int pdf);
     native void tableOfContents(int pdf, int font, double fontsize, String title, boolean bookmark);
+    native void removeText(int pdf, int range);
+    native int textWidth(int font, String text);
+    native void stampOn(int pdf, int pdf2, int range);
+    native void stampUnder(int pdf, int pdf2, int range);
+    native int combinePages(int pdf, int pdf2);
+
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -431,19 +437,18 @@ public class Jcpdf {
         Cpdf.toFile(textfile, "testoutputs/08added_text.pdf", false, false);
         */
 
-        //FIXME do noW!
-        /*Console.WriteLine("---cpdf_removeText()");
-        Cpdf.removeText(textfile, Cpdf.all(textfile));
-        Cpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
-        Console.WriteLine("---cpdf_textWidth()");
-        int w = Cpdf.textWidth(Cpdf.Font.TimesRoman, "What is the width of this?");
-        Cpdf.Pdf stamp = Cpdf.fromFile("testinputs/logo.pdf", "");
-        Cpdf.Pdf stampee = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        List<int> stamp_range = Cpdf.all(stamp);
-        Console.WriteLine("---cpdf_stampOn()");
-        Cpdf.stampOn(stamp, stampee, stamp_range);
-        Console.WriteLine("---cpdf_stampUnder()");
-        Cpdf.stampUnder(stamp, stampee, stamp_range); */
+        System.out.println("---cpdf_removeText()");
+        jcpdf.removeText(textfile, jcpdf.all(textfile));
+        jcpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
+        System.out.println("---cpdf_textWidth()");
+        int w = jcpdf.textWidth(jcpdf.timesRoman, "What is the width of this?");
+        int stamp = jcpdf.fromFile("testinputs/logo.pdf", "");
+        int stampee = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int stamp_range = jcpdf.all(stamp);
+        System.out.println("---cpdf_stampOn()");
+        jcpdf.stampOn(stamp, stampee, stamp_range);
+        System.out.println("---cpdf_stampUnder()");
+        jcpdf.stampUnder(stamp, stampee, stamp_range);
 
         //FIXME pos
         /*
@@ -451,18 +456,16 @@ public class Jcpdf {
         Console.WriteLine("---cpdf_stampExtended()");
         Cpdf.stampExtended(stamp, stampee, stamp_range, true, true, spos, true);
         Cpdf.toFile(stamp, "testoutputs/08stamp_after.pdf", false, false);
-        Cpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);
-        Cpdf.Pdf c1 = Cpdf.fromFile("testinputs/logo.pdf", "");
-        Cpdf.Pdf c2 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");*/
+        Cpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);*/
 
-        //FIXME do now!
-        /*
-        Console.WriteLine("---cpdf_combinePages()");
-        Cpdf.Pdf c3 = Cpdf.combinePages(c1, c2);
-        Cpdf.toFile(c3, "testoutputs/08c3after.pdf", false, false);
-        Console.WriteLine("---cpdf_stampAsXObject()");
-        Cpdf.Pdf undoc = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        Cpdf.Pdf ulogo = Cpdf.fromFile("testinputs/logo.pdf", "");*/
+        int c1 = jcpdf.fromFile("testinputs/logo.pdf", "");
+        int c2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_combinePages()");
+        int c3 = jcpdf.combinePages(c1, c2);
+        jcpdf.toFile(c3, "testoutputs/08c3after.pdf", false, false);
+        System.out.println("---cpdf_stampAsXObject()");
+        int undoc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int ulogo = jcpdf.fromFile("testinputs/logo.pdf", "");
 
         // FIXME data in/out
         /*
