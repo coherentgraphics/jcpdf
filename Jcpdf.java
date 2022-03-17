@@ -61,6 +61,19 @@ public class Jcpdf {
     native void compress(int pdf);
     native void decompress(int pdf);
     native void squeezeInMemory(int pdf);
+    native void startGetBookmarkInfo(int pdf);
+    native int numberBookmarks();
+    native int getBookmarkLevel(int serial);
+    native int getBookmarkPage(int pdf, int serial);
+    native String getBookmarkText(int serial);
+    native boolean getBookmarkOpenStatus(int serial);
+    native void endGetBookmarkInfo();
+    native void startSetBookmarkInfo(int n);
+    native void setBookmarkLevel(int serial, int level);
+    native void setBookmarkPage(int pdf, int serial, int pagenum);
+    native void setBookmarkOpenStatus(int serial, boolean open);
+    native void setBookmarkText(int serial, String text);
+    native void endSetBookmarkInfo(int pdf);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -322,33 +335,33 @@ public class Jcpdf {
         /* CHAPTER 5. Compression */
         System.out.println("***** CHAPTER 5. Compression");
         int pdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        System.out.println("---jcpdf.compress()");
+        System.out.println("---cpdf_compress()");
         jcpdf.compress(pdf16);
         jcpdf.toFile(pdf16, "testoutputs/05compressed.pdf", false, false);
-        System.out.println("---jcpdf.decompress()");
+        System.out.println("---cpdf_decompress()");
         jcpdf.decompress(pdf16);
         jcpdf.toFile(pdf16, "testoutputs/05decompressed.pdf", false, false);
-        System.out.println("---jcpdf.squeezeInMemory()");
+        System.out.println("---cpdf_squeezeInMemory()");
         jcpdf.squeezeInMemory(pdf16);
         jcpdf.toFile(pdf16, "testoutputs/05squeezedinmemory.pdf", false, false);
         
         /* CHAPTER 6. Bookmarks */
         System.out.println("***** CHAPTER 6. Bookmarks");
         int pdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        System.out.println("---jcpdf. get bookmarks");
+        System.out.println("---cpdf: get bookmarks");
         jcpdf.startGetBookmarkInfo(pdf17);
         int nb = jcpdf.numberBookmarks();
-        System.out.format("There are %d bookmarks", nb);
+        System.out.format("There are %d bookmarks\n", nb);
         for (int b2 = 0; b2 < nb; b2++)
         {
             int level = jcpdf.getBookmarkLevel(b2);
             int page = jcpdf.getBookmarkPage(pdf17, b2);
             String text = jcpdf.getBookmarkText(b2);
             boolean open = jcpdf.getBookmarkOpenStatus(b2);
-            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %b", level, page, text, open);
+            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %b\n", level, page, text, open);
         }
         jcpdf.endGetBookmarkInfo();
-        /*System.out.println("---jcpdf. set bookmarks");
+        System.out.println("---jcpdf: set bookmarks");
         jcpdf.startSetBookmarkInfo(1);
         jcpdf.setBookmarkLevel(0, 0);
         jcpdf.setBookmarkPage(pdf17, 0, 20);
@@ -356,8 +369,7 @@ public class Jcpdf {
         jcpdf.setBookmarkText(0, "New bookmark!");
         jcpdf.endSetBookmarkInfo(pdf17);
         jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
-        pdf17.Dispose();
-        System.out.println("---jcpdf.getBookmarksJSON()");
+        /*System.out.println("---jcpdf.getBookmarksJSON()");
         jcpdf.Pdf marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
         System.out.println($"Contains {marksdata.Length} bytes of data");
