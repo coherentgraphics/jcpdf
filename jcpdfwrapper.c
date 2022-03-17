@@ -304,3 +304,111 @@ JNIEXPORT void JNICALL Java_Jcpdf_scaleToFitPaper
     cpdf_scaleToFitPaper(pdf, range, papersize, scale);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_shiftContents
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble dx, jdouble dy)
+{
+    cpdf_shiftContents(pdf, range, dx, dy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_rotate
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint angle)
+{
+    cpdf_rotate(pdf, range, angle);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_rotateBy
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint angle)
+{
+    cpdf_rotateBy(pdf, range, angle);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_rotateContents
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble angle)
+{
+    cpdf_rotateContents(pdf, range, angle);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_upright
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_upright(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_hFlip
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_hFlip(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_vFlip
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_vFlip(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_crop
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble x, jdouble y, jdouble w, jdouble h)
+{
+    cpdf_crop(pdf, range, x, y, w, h);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeCrop
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeCrop(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeTrim
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeTrim(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeArt
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeArt(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeBleed
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeBleed(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_trimMarks
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_trimMarks(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_showBoxes
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_showBoxes(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_hardBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jstring box)
+{
+    const char *str_box = (*env)->GetStringUTFChars(env, box, 0);
+    cpdf_hardBox(pdf, range, str_box);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_compress
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_compress(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_decompress
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_decompress(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_squeezeInMemory
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_squeezeInMemory(pdf);
+}

@@ -58,6 +58,9 @@ public class Jcpdf {
     native void trimMarks(int pdf, int range);
     native void showBoxes(int pdf, int range);
     native void hardBox(int pdf, int range, String box);
+    native void compress(int pdf);
+    native void decompress(int pdf);
+    native void squeezeInMemory(int pdf);
     int a0portrait = 0;
     int a1portrait = 1;
     int a2portrait = 2;
@@ -204,6 +207,32 @@ public class Jcpdf {
         System.out.println("---cpdf_decryptPdfOwner()");
         Cpdf.decryptPdfOwner(pdf10, "");*/
         
+        /* CHAPTER 2. Merging and Splitting */
+        /*Console.WriteLine("***** CHAPTER 2. Merging and Splitting");
+        using (Cpdf.Pdf pdf11 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
+        {
+            List<int> selectrange = Cpdf.range(1, 3);
+            Console.WriteLine("---cpdf_mergeSimple()");
+            Cpdf.Pdf[] arr = new [] {pdf11, pdf11, pdf11};
+            List<Cpdf.Pdf> arr_list = new List<Cpdf.Pdf> {};
+            arr_list.AddRange(arr);
+            Cpdf.Pdf merged = Cpdf.mergeSimple(arr_list);
+            Cpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
+            merged.Dispose();
+            Console.WriteLine("---cpdf_merge()");
+            Cpdf.Pdf merged2 = Cpdf.merge(arr_list, false, false);
+            Cpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
+            merged2.Dispose();
+            Console.WriteLine("---cpdf_mergeSame()");
+            List<List<int>> ranges = new List<List<int>> {Cpdf.all(pdf11), Cpdf.all(pdf11), Cpdf.all(pdf11)};
+            Cpdf.Pdf merged3 = Cpdf.mergeSame(arr_list, false, false, ranges);
+            Cpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
+            merged3.Dispose();
+            Console.WriteLine("---cpdf_selectPages()");
+            Cpdf.Pdf pdf12 = Cpdf.selectPages(pdf11, selectrange);
+            Cpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
+            pdf12.Dispose();
+        }*/
         /* CHAPTER 3. Pages */
         System.out.println("***** CHAPTER 3. Pages");
         int pagespdf1 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
@@ -286,5 +315,60 @@ public class Jcpdf {
         System.out.println("---cpdf_removeBleed()");
         jcpdf.removeBleed(pagespdf19, jcpdf.all(pagespdf19));
         jcpdf.toFile(pagespdf19, "testoutputs/03remove_bleed.pdf", false, false);
+        
+        /* CHAPTER 4. Encryption */
+        /* Encryption covered under Chapter 1 in cpdflib. */
+        
+        /* CHAPTER 5. Compression */
+        System.out.println("***** CHAPTER 5. Compression");
+        int pdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---jcpdf.compress()");
+        jcpdf.compress(pdf16);
+        jcpdf.toFile(pdf16, "testoutputs/05compressed.pdf", false, false);
+        System.out.println("---jcpdf.decompress()");
+        jcpdf.decompress(pdf16);
+        jcpdf.toFile(pdf16, "testoutputs/05decompressed.pdf", false, false);
+        System.out.println("---jcpdf.squeezeInMemory()");
+        jcpdf.squeezeInMemory(pdf16);
+        jcpdf.toFile(pdf16, "testoutputs/05squeezedinmemory.pdf", false, false);
+        
+        /* CHAPTER 6. Bookmarks */
+        System.out.println("***** CHAPTER 6. Bookmarks");
+        int pdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---jcpdf. get bookmarks");
+        jcpdf.startGetBookmarkInfo(pdf17);
+        int nb = jcpdf.numberBookmarks();
+        System.out.format("There are %d bookmarks", nb);
+        for (int b2 = 0; b2 < nb; b2++)
+        {
+            int level = jcpdf.getBookmarkLevel(b2);
+            int page = jcpdf.getBookmarkPage(pdf17, b2);
+            String text = jcpdf.getBookmarkText(b2);
+            boolean open = jcpdf.getBookmarkOpenStatus(b2);
+            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %b", level, page, text, open);
+        }
+        jcpdf.endGetBookmarkInfo();
+        /*System.out.println("---jcpdf. set bookmarks");
+        jcpdf.startSetBookmarkInfo(1);
+        jcpdf.setBookmarkLevel(0, 0);
+        jcpdf.setBookmarkPage(pdf17, 0, 20);
+        jcpdf.setBookmarkOpenStatus(0, true);
+        jcpdf.setBookmarkText(0, "New bookmark!");
+        jcpdf.endSetBookmarkInfo(pdf17);
+        jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
+        pdf17.Dispose();
+        System.out.println("---jcpdf.getBookmarksJSON()");
+        jcpdf.Pdf marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
+        System.out.println($"Contains {marksdata.Length} bytes of data");
+        System.out.println("---jcpdf.setBookmarksJSON()");
+        jcpdf.setBookmarksJSON(marksjson, marksdata);
+        jcpdf.toFile(marksjson, "testoutputs/06jsonmarks.pdf", false, false);
+        marksjson.Dispose();
+        System.out.println("---jcpdf.tableOfContents()");
+        jcpdf.Pdf tojcpdf.= jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        jcpdf.tableOfContents(tojcpdf. jcpdf.Font.TimesRoman, 12.0, "Table of Contents", false);
+        jcpdf.toFile(tojcpdf. "testoutputs/06toc.pdf", false, false);
+        tojcpdf.Dispose();*/
     }
 }
