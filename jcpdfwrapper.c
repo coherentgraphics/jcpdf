@@ -505,3 +505,37 @@ JNIEXPORT void JNICALL Java_Jcpdf_tableOfContents
     (*env)->ReleaseStringUTFChars(env, title, str_title);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_removeText
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeText(pdf, range);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_textWidth
+  (JNIEnv * env, jobject jobj, jint font, jstring text)
+{
+    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
+    int w = cpdf_textWidth(font, str_text);
+    (*env)->ReleaseStringUTFChars(env, text, str_text);
+    return w;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_stampOn
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
+{
+    cpdf_stampOn(pdf, pdf2, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_stampUnder
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
+{
+    cpdf_stampUnder(pdf, pdf2, range);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_combinePages
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2)
+{
+    int result = cpdf_combinePages(pdf, pdf2);
+    return result;
+}
+
