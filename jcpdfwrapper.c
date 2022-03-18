@@ -1054,3 +1054,57 @@ JNIEXPORT jstring JNICALL Java_Jcpdf_getPageLabelStringForPage
     return (*env)->NewStringUTF(env, cpdf_getPageLabelStringForPage(pdf, n));
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_attachFile
+  (JNIEnv * env, jobject jobj, jstring filename, jint pdf)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_attachFile(str_filename, pdf);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_attachFileToPage
+  (JNIEnv * env, jobject jobj, jstring filename, jint pdf, jint pagenumber)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_attachFileToPage(str_filename, pdf, pagenumber);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeAttachedFiles
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_removeAttachedFiles(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_startGetAttachments
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_startGetAttachments(pdf);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_numberGetAttachments
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    int result = cpdf_numberGetAttachments();
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getAttachmentName
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    return (*env)->NewStringUTF(env, cpdf_getAttachmentName(serial));
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getAttachmentPage
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    int result = cpdf_getAttachmentPage(serial);
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endGetAttachments
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_endGetAttachments();
+}
+

@@ -166,6 +166,14 @@ public class Jcpdf {
     native int getAttachmentPage(int serial);
     native void endGetAttachments(); 
 
+    native int startGetImageResolution(int pdf, double res);
+    native int getImageResolutionPageNumber(int serial);
+    native String getImageResolutionImageName(int serial);
+    native int getImageResolutionXPixels(int serial);
+    native int getImageResolutionYPixels(int serial);
+    native double getImageResolutionXRes(int serial);
+    native double getImageResolutionYRes(int serial);
+    native void endGetImageResolution();
 
     int decimalArabic = 0;
     int uppercaseRoman = 1;
@@ -878,13 +886,13 @@ public class Jcpdf {
         System.out.println("---cpdf: get attachments");
         jcpdf.startGetAttachments(attachments);
         int n_a = jcpdf.numberGetAttachments();
-        System.out.format("There are {n_a} attachments to get");
+        System.out.format("There are %d attachments to get\n", n_a);
         for (int aa = 0; aa < n_a; aa++)
         {
             String a_n = jcpdf.getAttachmentName(aa);
-            System.out.format("Attachment {aa} is named {a_n}");
+            System.out.format("Attachment %d is named %s\n", aa, a_n);
             int a_page = jcpdf.getAttachmentPage(aa);
-            System.out.format("It is on page {a_page}");
+            System.out.format("It is on page %d\n", a_page);
             /*byte[] a_data = jcpdf.getAttachmentData(aa);
             System.out.println($"Contains {a_data.Length} bytes of data");*/
         }
@@ -892,5 +900,22 @@ public class Jcpdf {
         System.out.println("---cpdf_removeAttachedFiles()");
         jcpdf.removeAttachedFiles(attachments);
         jcpdf.toFile(attachments, "testoutputs/12removed_attachments.pdf", false, false);
+        
+        /* CHAPTER 13. Images. */
+        System.out.println("***** CHAPTER 13. Images");
+        System.out.println("---cpdf: get image resolution");
+        int image_pdf = jcpdf.fromFile("testinputs/image.pdf", "");
+        int im_n = jcpdf.startGetImageResolution(image_pdf, 2.0);
+        for (int im = 0; im < im_n; im++)
+        {
+            int im_p = jcpdf.getImageResolutionPageNumber(im);
+            String im_name = jcpdf.getImageResolutionImageName(im);
+            int im_xp = jcpdf.getImageResolutionXPixels(im);
+            int im_yp = jcpdf.getImageResolutionYPixels(im);
+            double im_xres = jcpdf.getImageResolutionXRes(im);
+            double im_yres = jcpdf.getImageResolutionYRes(im);
+            System.out.format("IMAGE: {im_p}, {im_name}, {im_xp}, {im_yp}, {im_xres:00.000000}, {im_yres:00.000000}");
+        }
+        jcpdf.endGetImageResolution();
     }
 }
