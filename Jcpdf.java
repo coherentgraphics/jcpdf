@@ -157,6 +157,15 @@ public class Jcpdf {
     native String getPageLabelPrefix(int n);
     native String getPageLabelStringForPage(int pdf, int n);
 
+    native void attachFile(String filename, int pdf);
+    native void attachFileToPage(String filename, int pdf, int pagenumber);
+    native void removeAttachedFiles(int pdf);
+    native void startGetAttachments(int pdf);
+    native int numberGetAttachments();
+    native String getAttachmentName(int serial);
+    native int getAttachmentPage(int serial);
+    native void endGetAttachments(); 
+
 
     int decimalArabic = 0;
     int uppercaseRoman = 1;
@@ -852,5 +861,36 @@ public class Jcpdf {
         System.out.println("---cpdf_getPageLabelStringForPage()");
         String pl = jcpdf.getPageLabelStringForPage(pdf30, 1);
         System.out.format("Label string is %s\n", pl);
+        
+        /* CHAPTER 12. File Attachments */
+        System.out.println("***** CHAPTER 12. File Attachments");
+        int attachments = jcpdf.fromFile("testinputs/has_attachments.pdf", "");
+        System.out.println("---cpdf_attachFile()");
+        jcpdf.attachFile("testinputs/image.pdf", attachments);
+        System.out.println("---cpdf_attachFileToPage()");
+        jcpdf.attachFileToPage("testinputs/image.pdf", attachments, 1);
+        System.out.println("---cpdf_attachFileFromMemory()");
+        /*byte[] empty = {};
+        jcpdf.attachFileFromMemory(empty, "metadata.txt", attachments);
+        System.out.println("---cpdf_attachFileToPageFromMemory()");
+        jcpdf.attachFileToPageFromMemory(empty, "metadata.txt", attachments, 1);*/
+        jcpdf.toFile(attachments, "testoutputs/12with_attachments.pdf", false, false);
+        System.out.println("---cpdf: get attachments");
+        jcpdf.startGetAttachments(attachments);
+        int n_a = jcpdf.numberGetAttachments();
+        System.out.format("There are {n_a} attachments to get");
+        for (int aa = 0; aa < n_a; aa++)
+        {
+            String a_n = jcpdf.getAttachmentName(aa);
+            System.out.format("Attachment {aa} is named {a_n}");
+            int a_page = jcpdf.getAttachmentPage(aa);
+            System.out.format("It is on page {a_page}");
+            /*byte[] a_data = jcpdf.getAttachmentData(aa);
+            System.out.println($"Contains {a_data.Length} bytes of data");*/
+        }
+        jcpdf.endGetAttachments();
+        System.out.println("---cpdf_removeAttachedFiles()");
+        jcpdf.removeAttachedFiles(attachments);
+        jcpdf.toFile(attachments, "testoutputs/12removed_attachments.pdf", false, false);
     }
 }
