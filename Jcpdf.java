@@ -914,7 +914,7 @@ public class Jcpdf {
             int im_yp = jcpdf.getImageResolutionYPixels(im);
             double im_xres = jcpdf.getImageResolutionXRes(im);
             double im_yres = jcpdf.getImageResolutionYRes(im);
-            System.out.format("IMAGE: {im_p}, {im_name}, {im_xp}, {im_yp}, {im_xres:00.000000}, {im_yres:00.000000}");
+            System.out.format("IMAGE: %d, %s, %d, %d, %f, %f\n", im_p, im_name, im_xp, im_yp, im_xres, im_yres);
         }
         jcpdf.endGetImageResolution();
     }

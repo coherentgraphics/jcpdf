@@ -1108,3 +1108,57 @@ JNIEXPORT void JNICALL Java_Jcpdf_endGetAttachments
     cpdf_endGetAttachments();
 }
 
+JNIEXPORT int JNICALL Java_Jcpdf_startGetImageResolution
+  (JNIEnv * env, jobject jobj, jint pdf, jdouble res)
+{
+    int result = cpdf_startGetImageResolution(pdf, res);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getImageResolutionPageNumber
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    int result = cpdf_getImageResolutionPageNumber(serial);
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getImageResolutionImageName
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    return (*env)->NewStringUTF(env, cpdf_getImageResolutionImageName(serial));
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getImageResolutionXPixels
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    int result = cpdf_getImageResolutionXPixels(serial);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getImageResolutionYPixels
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    int result = cpdf_getImageResolutionYPixels(serial);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_getImageResolutionXRes
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    double result = cpdf_getImageResolutionXRes(serial);
+    return result;
+}
+
+JNIEXPORT jdouble JNICALL Java_Jcpdf_getImageResolutionYRes
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    double result = cpdf_getImageResolutionYRes(serial);
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endGetImageResolution
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_endGetImageResolution();
+}
+
