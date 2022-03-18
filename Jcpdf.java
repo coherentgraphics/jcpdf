@@ -122,6 +122,8 @@ public class Jcpdf {
     native void setProducerXMP(int pdf, String str);
     native void setCreationDateXMP(int pdf, String str);
     native void setModificationDateXMP(int pdf, String str);
+    native int getPageRotation(int pdf, int pagenumber);
+    native boolean hasBox(int pdf, int pagenumber, String boxname);
 
     int a0portrait = 0;
     int a1portrait = 1;
@@ -672,13 +674,12 @@ public class Jcpdf {
         String datestr = jcpdf.dateStringOfComponents(year, month, day, hour, minute, second, hour_offset, minute_offset);
         System.out.println(datestr);*/
         
-        //FIXME DO NOW
-        /*System.out.println("---cpdf_getPageRotation()");
+        System.out.println("---cpdf_getPageRotation()");
         int rot = jcpdf.getPageRotation(pdf30, 1);
-        System.out.format("/Rotate on page 1 = {rot}");
+        System.out.format("/Rotate on page 1 = %d\n", rot);
         System.out.println("---cpdf_hasBox()");
         boolean hasbox = jcpdf.hasBox(pdf30, 1, "/CropBox");
-        System.out.format("hasbox: {(hasbox ? 1 : 0)}");*/
+        System.out.format("hasbox: %d\n", hasbox ? 1 : 0);
 
         //FIXME: refs
         /*double mb_minx = 0.0;
@@ -717,8 +718,6 @@ public class Jcpdf {
         jcpdf.getTrimBox(pdf30, 1, ref tb_minx, ref tb_maxx, ref tb_miny, ref tb_maxy);
         System.out.format("Trim: {tb_minx:0.000000} {tb_maxx:0.000000} {tb_miny:0.000000} {tb_maxy:0.000000}");*/
 
-        //FIXME DO NOW
-        /*
         System.out.println("---cpdf_setMediaBox()");
         jcpdf.setMediabox(pdf30, jcpdf.all(pdf30), 100, 500, 150, 550);
         System.out.println("---cpdf_setCropBox()");
@@ -761,7 +760,7 @@ public class Jcpdf {
         jcpdf.toFile(pdf30, "testoutputs/11open.pdf", false, false);
         System.out.println("---cpdf_setMetadataFromFile()");
         jcpdf.setMetadataFromFile(pdf30, "testinputs/cpdflibmanual.pdf");
-        jcpdf.toFile(pdf30, "testoutputs/11metadata1.pdf", false, false);*/
+        jcpdf.toFile(pdf30, "testoutputs/11metadata1.pdf", false, false);
 
         //FIXME bytes in/out
         /*System.out.println("---cpdf_setMetadataFromByteArray()");

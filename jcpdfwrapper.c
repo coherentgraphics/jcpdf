@@ -843,3 +843,19 @@ JNIEXPORT void JNICALL Java_Jcpdf_setModificationDateXMP
     (*env)->ReleaseStringUTFChars(env, str, str_str);
 }
 
+JNIEXPORT int JNICALL Java_Jcpdf_getPageRotation
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber)
+{
+    int result = cpdf_getPageRotation(pdf, pagenumber);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL Java_Jcpdf_hasBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jstring boxname)
+{
+    const char *str_boxname = (*env)->GetStringUTFChars(env, boxname, 0);
+    int result = cpdf_hasBox(pdf, pagenumber, str_boxname);
+    (*env)->ReleaseStringUTFChars(env, boxname, str_boxname);
+    return result;
+}
+
