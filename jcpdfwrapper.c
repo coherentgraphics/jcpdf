@@ -973,3 +973,84 @@ JNIEXPORT void JNICALL Java_Jcpdf_setMetadataFromFile
     cpdf_setMetadataFromFile(pdf, str_filename);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
 }
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeMetadata
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_removeMetadata(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_createMetadata
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_createMetadata(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setMetadataDate
+  (JNIEnv * env, jobject jobj, jint pdf, jstring date)
+{
+    const char *str_date = (*env)->GetStringUTFChars(env, date, 0);
+    cpdf_setMetadataDate(pdf, str_date);
+    (*env)->ReleaseStringUTFChars(env, date, str_date);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_addPageLabels
+  (JNIEnv * env, jobject jobj, jint pdf, jint style, jstring prefix, jint offset, jint range, jboolean progress)
+{
+    const char *str_prefix = (*env)->GetStringUTFChars(env, prefix, 0);
+    cpdf_addPageLabels(pdf, style, str_prefix, offset, range, progress);
+    (*env)->ReleaseStringUTFChars(env, prefix, str_prefix);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removePageLabels
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_removePageLabels(pdf);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_startGetPageLabels
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    int result = cpdf_startGetPageLabels(pdf);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getPageLabelOffset
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    int result = cpdf_getPageLabelOffset(n);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getPageLabelStyle
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    int result = cpdf_getPageLabelStyle(n);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getPageLabelRange
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    int result = cpdf_getPageLabelRange(n);
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endGetPageLabels
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_endGetPageLabels();
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getPageLabelPrefix
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    return (*env)->NewStringUTF(env, cpdf_getPageLabelPrefix(n));
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getPageLabelStringForPage
+  (JNIEnv * env, jobject jobj, jint pdf, jint n)
+{
+    return (*env)->NewStringUTF(env, cpdf_getPageLabelStringForPage(pdf, n));
+}
+

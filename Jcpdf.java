@@ -143,6 +143,7 @@ public class Jcpdf {
     native void displayDocTitle(int pdf, boolean flag);
     native void openAtPage(int pdf, boolean fit, int pagenumber);
     native void setMetadataFromFile(int pdf, String filename);
+
     native void removeMetadata(int pdf);
     native void createMetadata(int pdf);
     native void setMetadataDate(int pdf, String date);
