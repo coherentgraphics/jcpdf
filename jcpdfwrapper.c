@@ -586,3 +586,260 @@ JNIEXPORT void JNICALL Java_Jcpdf_padMultipleBefore
 {
     cpdf_padMultipleBefore(pdf, n);
 }
+
+/* CHAPTER 11. Document Information and Metadata */
+
+JNIEXPORT int JNICALL Java_Jcpdf_getVersion
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    int result = cpdf_getVersion(pdf);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getMajorVersion
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    int result = cpdf_getMajorVersion(pdf);
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getTitle
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getTitle(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getAuthor
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getAuthor(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getSubject
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getSubject(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getKeywords
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getKeywords(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getCreator
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getCreator(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getProducer
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getProducer(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getCreationDate
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getCreationDate(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getModificationDate
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getModificationDate(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getTitleXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getTitleXMP(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getAuthorXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getAuthorXMP(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getSubjectXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getSubjectXMP(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getKeywordsXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getKeywords(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getCreatorXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getCreatorXMP(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getProducerXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getProducerXMP(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getCreationDateXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getCreationDateXMP(pdf));
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getModificationDateXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_getModificationDateXMP(pdf));
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setTitle
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setTitle(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setAuthor
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setAuthor(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setSubject
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setSubject(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setKeywords
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setKeywords(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setCreator
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setCreator(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setProducer
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setProducer(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setCreationDate
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setCreationDate(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setModificationDate
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setModificationDate(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setTitleXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setTitleXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setAuthorXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setAuthorXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setSubjectXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setSubjectXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setKeywordsXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setKeywordsXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setCreatorXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setCreatorXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setProducerXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setProducerXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setCreationDateXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setCreationDateXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setModificationDateXMP
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_setModificationDateXMP(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
