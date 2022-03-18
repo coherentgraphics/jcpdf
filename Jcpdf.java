@@ -143,6 +143,26 @@ public class Jcpdf {
     native void displayDocTitle(int pdf, boolean flag);
     native void openAtPage(int pdf, boolean fit, int pagenumber);
     native void setMetadataFromFile(int pdf, String filename);
+    native void removeMetadata(int pdf);
+    native void createMetadata(int pdf);
+    native void setMetadataDate(int pdf, String date);
+    native void addPageLabels(int pdf, int style, String prefix, int offset, int range, boolean progress);
+    native void removePageLabels(int pdf);
+    native int startGetPageLabels(int pdf);
+    native void endGetPageLabels();
+    native int getPageLabelOffset(int n);
+    native int getPageLabelStyle(int n);
+    native int getPageLabelRange(int n);
+    native String getPageLabelPrefix(int n);
+    native String getPageLabelStringForPage(int pdf, int n);
+
+
+    int decimalArabic = 0;
+    int uppercaseRoman = 1;
+    int lowercaseRoman = 2;
+    int uppercaseLetters = 3;
+    int lowercaseLetters = 4;
+
     int singlePage = 0;
     int oneColumn = 1;
     int twoColumnLeft = 2;
@@ -172,6 +192,7 @@ public class Jcpdf {
     int usletterlandscape = 13;
     int uslegalportrait = 14;
     int uslegallandscape = 15;
+
     int timesRoman = 0;
     int timesBold = 1;
     int timesItalic = 2;
@@ -184,6 +205,7 @@ public class Jcpdf {
     int courierBold = 9;
     int courierOblique = 10;
     int courierBoldOblique = 11;
+
     static public void main(String argv[]) {
         System.loadLibrary("cpdf");
         System.loadLibrary("jcpdf");
@@ -801,8 +823,7 @@ public class Jcpdf {
         System.out.println("---cpdf_getMetadata()");
         byte[] metadata = jcpdf.getMetadata(pdf30);*/
 
-        //FIXME DO NOW
-        /*System.out.println("---cpdf_removeMetadata()");
+        System.out.println("---cpdf_removeMetadata()");
         jcpdf.removeMetadata(pdf30);
         System.out.println("---cpdf_createMetadata()");
         jcpdf.createMetadata(pdf30);
@@ -811,17 +832,17 @@ public class Jcpdf {
         jcpdf.setMetadataDate(pdf30, "now");
         jcpdf.toFile(pdf30, "testoutputs/11metadata4.pdf", false, false);
         System.out.println("---cpdf_addPageLabels()");
-        jcpdf.addPageLabels(pdf30, jcpdf.PageLabelStyle.UppercaseRoman, "PREFIX-", 1, jcpdf.all(pdf30), false);
+        jcpdf.addPageLabels(pdf30, jcpdf.uppercaseRoman, "PREFIX-", 1, jcpdf.all(pdf30), false);
         System.out.println("---cpdf: get page labels");
         int pls = jcpdf.startGetPageLabels(pdf30);
-        System.out.format("There are {pls} labels");
+        System.out.format("There are %d labels\n", pls);
         for (int plsc = 0; plsc < pls; plsc++)
         {
             int style = jcpdf.getPageLabelStyle(plsc);
-            string prefix = jcpdf.getPageLabelPrefix(plsc);
+            String prefix = jcpdf.getPageLabelPrefix(plsc);
             int offset = jcpdf.getPageLabelOffset(plsc);
             int lab_range = jcpdf.getPageLabelRange(plsc);
-            System.out.format("Page label: {style}, {prefix}, {offset}, {lab_range}");
+            System.out.format("Page label: %d, %s, %d, %d\n", style, prefix, offset, lab_range);
         }
         jcpdf.endGetPageLabels();
         System.out.println("---cpdf_removePageLabels()");
@@ -829,6 +850,6 @@ public class Jcpdf {
         jcpdf.toFile(pdf30, "testoutputs/11pagelabels.pdf", false, false);
         System.out.println("---cpdf_getPageLabelStringForPage()");
         String pl = jcpdf.getPageLabelStringForPage(pdf30, 1);
-        System.out.format("Label string is {pl}");*/
+        System.out.format("Label string is %s\n", pl);
     }
 }

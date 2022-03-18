@@ -859,3 +859,117 @@ JNIEXPORT jboolean JNICALL Java_Jcpdf_hasBox
     return result;
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_setMediabox
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    cpdf_setMediabox(pdf, range, minx, maxx, miny, maxy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setCropBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    cpdf_setCropBox(pdf, range, minx, maxx, miny, maxy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setTrimBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    cpdf_setTrimBox(pdf, range, minx, maxx, miny, maxy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setArtBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    cpdf_setArtBox(pdf, range, minx, maxx, miny, maxy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setBleedBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    cpdf_setBleedBox(pdf, range, minx, maxx, miny, maxy);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_markTrapped
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_markTrapped(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_markUntrapped
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_markUntrapped(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_markTrappedXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_markTrappedXMP(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_markUntrappedXMP
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_markUntrappedXMP(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setPageLayout
+  (JNIEnv * env, jobject jobj, jint pdf, jint layout)
+{
+    cpdf_setPageLayout(pdf, layout);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setPageMode
+  (JNIEnv * env, jobject jobj, jint pdf, jint mode)
+{
+    cpdf_setPageMode(pdf, mode);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_hideToolbar
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+{
+    cpdf_hideToolbar(pdf, flag);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_hideMenubar
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+{
+    cpdf_hideMenubar(pdf, flag);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_hideWindowUi
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+{
+    cpdf_hideWindowUi(pdf, flag);
+}
+JNIEXPORT void JNICALL Java_Jcpdf_fitWindow
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+{
+    cpdf_fitWindow(pdf, flag);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_centerWindow
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+{
+    cpdf_centerWindow(pdf, flag);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_displayDocTitle
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+{
+    cpdf_displayDocTitle(pdf, flag);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_openAtPage
+  (JNIEnv * env, jobject jobj, jint pdf, jboolean fit, jint pagenumber)
+{
+    cpdf_openAtPage(pdf, fit, pagenumber);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setMetadataFromFile
+  (JNIEnv * env, jobject jobj, jint pdf, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_setMetadataFromFile(pdf, str_filename);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
