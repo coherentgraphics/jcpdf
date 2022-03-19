@@ -175,6 +175,17 @@ public class Jcpdf {
     native double getImageResolutionYRes(int serial);
     native void endGetImageResolution();
 
+    native void startGetFontInfo(int pdf);
+    native int numberFonts();
+    native String getFontName(int serial);
+    native int getFontPage(int serial);
+    native String getFontType(int setial);
+    native String getFontEncoding(int serial);
+    native void endGetFontInfo();
+    native void removeFonts(int pdf);
+    native void copyFont(int from_pdf, int to_pdf, int range, int pagenumber, String fontname);
+
+
     int decimalArabic = 0;
     int uppercaseRoman = 1;
     int lowercaseRoman = 2;
@@ -917,5 +928,27 @@ public class Jcpdf {
             System.out.format("IMAGE: %d, %s, %d, %d, %f, %f\n", im_p, im_name, im_xp, im_yp, im_xres, im_yres);
         }
         jcpdf.endGetImageResolution();
+
+        /* CHAPTER 14. Fonts. */
+        System.out.println("***** CHAPTER 14. Fonts");
+        System.out.println("---cpdf: Get Fonts");
+        int fonts = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int fonts2 = jcpdf.fromFile("testinputs/frontmatter.pdf", "");
+        jcpdf.startGetFontInfo(fonts);
+        int n_fonts = jcpdf.numberFonts();
+        for (int ff = 0; ff < n_fonts; ff++)
+        {
+            int page = jcpdf.getFontPage(ff);
+            String f_name = jcpdf.getFontName(ff);
+            String type = jcpdf.getFontType(ff);
+            String encoding = jcpdf.getFontEncoding(ff);
+            System.out.format("Page %d, font %s has type %s and encoding %s\n", page, f_name, type, encoding);
+        }
+        jcpdf.endGetFontInfo();
+        System.out.println("---cpdf_removeFonts()");
+        jcpdf.removeFonts(fonts);
+        jcpdf.toFile(fonts, "testoutputs/14remove_fonts.pdf", false, false);
+        System.out.println("---cpdf_copyFont()");
+        jcpdf.copyFont(fonts, fonts2, jcpdf.all(fonts), 1, "/Font");
     }
 }

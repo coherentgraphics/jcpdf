@@ -1162,3 +1162,62 @@ JNIEXPORT void JNICALL Java_Jcpdf_endGetImageResolution
     cpdf_endGetImageResolution();
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_startGetFontInfo
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_startGetFontInfo(pdf);
+}
+
+
+JNIEXPORT int JNICALL Java_Jcpdf_numberFonts
+  (JNIEnv * env, jobject jobj)
+{
+    int result = cpdf_numberFonts();
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getFontName
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    return (*env)->NewStringUTF(env, cpdf_getFontName(serial));
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_getFontPage
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    int result = cpdf_getFontPage(serial);
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getFontType
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    return (*env)->NewStringUTF(env, cpdf_getFontType(serial));
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_getFontEncoding
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    return (*env)->NewStringUTF(env, cpdf_getFontEncoding(serial));
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endGetFontInfo
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_endGetFontInfo();
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeFonts
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_removeFonts(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_copyFont
+  (JNIEnv * env, jobject jobj, jint from_pdf, jint to_pdf, jint range, jint pagenumber, jstring fontname)
+{
+    const char *str_fontname = (*env)->GetStringUTFChars(env, fontname, 0);
+    cpdf_copyFont(from_pdf, to_pdf, range, pagenumber, str_fontname);
+    (*env)->ReleaseStringUTFChars(env, fontname, str_fontname);
+}
+
