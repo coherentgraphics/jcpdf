@@ -199,7 +199,7 @@ public class Jcpdf {
     native int textToPDF(double w, double h, int font, double fontsize, String filename);
     native int textToPDFPaper(int papersize, int font, double fontsize, String filename);
 
-    native int draft(int pdf, int range, boolean boxes);
+    native void draft(int pdf, int range, boolean boxes);
     native void removeAllText(int pdf, int range);
     native void blackText(int pdf, int range);
     native void blackLines(int pdf, int range);
@@ -214,11 +214,6 @@ public class Jcpdf {
     native void replaceDictEntry(int pdf, String key, String newvalue);
     native void replaceDictEntrySearch(int pdf, String key, String newvalue, String searchterm);
     native void removeClipping(int pdf, int range);
-
-
-
-
-
 
     int decimalArabic = 0;
     int uppercaseRoman = 1;

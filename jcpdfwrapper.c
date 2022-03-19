@@ -1298,3 +1298,108 @@ JNIEXPORT int JNICALL Java_Jcpdf_textToPDFPaper
     return result;
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_draft
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jboolean boxes)
+{
+    cpdf_draft(pdf, range, boxes);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeAllText
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeAllText(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_blackText
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_blackText(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_blackLines
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_blackLines(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_blackFills
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_blackFills(pdf, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_thinLines
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minwidth)
+{
+    cpdf_thinLines(pdf, range, minwidth);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_copyId
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2)
+{
+    cpdf_copyId(pdf, pdf2);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeId
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_removeId(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setVersion
+  (JNIEnv * env, jobject jobj, jint pdf, jint version)
+{
+    cpdf_setVersion(pdf, version);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setFullVersion
+  (JNIEnv * env, jobject jobj, jint pdf, jint major, jint minor)
+{
+    cpdf_setFullVersion(pdf, major, minor);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeDictEntry
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_removeDictEntry(pdf, str_str);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeDictEntrySearch
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str, jstring str2)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    const char *str_str2 = (*env)->GetStringUTFChars(env, str2, 0);
+    cpdf_removeDictEntrySearch(pdf, str_str, str_str2);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    (*env)->ReleaseStringUTFChars(env, str2, str_str2);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_replaceDictEntry
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str, jstring str2)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    const char *str_str2 = (*env)->GetStringUTFChars(env, str2, 0);
+    cpdf_replaceDictEntry(pdf, str_str, str_str2);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    (*env)->ReleaseStringUTFChars(env, str2, str_str2);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_replaceDictEntrySearch
+  (JNIEnv * env, jobject jobj, jint pdf, jstring str, jstring str2, jstring str3)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    const char *str_str2 = (*env)->GetStringUTFChars(env, str2, 0);
+    const char *str_str3 = (*env)->GetStringUTFChars(env, str3, 0);
+    cpdf_replaceDictEntrySearch(pdf, str_str, str_str2, str_str3);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    (*env)->ReleaseStringUTFChars(env, str2, str_str2);
+    (*env)->ReleaseStringUTFChars(env, str3, str_str3);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_removeClipping
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    cpdf_removeClipping(pdf, range);
+}
