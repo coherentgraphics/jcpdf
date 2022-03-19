@@ -52,19 +52,6 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromFileLazy
     return pdf;
 }
 
-JNIEXPORT int JNICALL Java_Jcpdf_blankDocument
-  (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint pages)
-{
-    int pdf = cpdf_blankDocument(w, h, pages);
-    return pdf;
-}
-
-JNIEXPORT int JNICALL Java_Jcpdf_blankDocumentPaper
-  (JNIEnv * env, jobject jobj, jint papersize, jint pages)
-{
-    int pdf = cpdf_blankDocumentPaper(papersize, pages);
-    return pdf;
-}
 
 JNIEXPORT int JNICALL Java_Jcpdf_startEnumeratePDFs
   (JNIEnv * env, jobject jobj)
@@ -1234,6 +1221,79 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromJSON
 {
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     int result = cpdf_fromJSON(str_filename);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_startGetOCGList
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    int result = cpdf_startGetOCGList(pdf);
+    return result;
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_OCGListEntry
+  (JNIEnv * env, jobject jobj, jint serial)
+{
+    return (*env)->NewStringUTF(env, cpdf_OCGListEntry(serial));
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_endGetOCGList
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_endGetOCGList();
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_OCGCoalesce
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_OCGCoalesce(pdf);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_OCGRename
+  (JNIEnv * env, jobject jobj, jint pdf, jstring f, jstring t)
+{
+    const char *str_f = (*env)->GetStringUTFChars(env, f, 0);
+    const char *str_t = (*env)->GetStringUTFChars(env, t, 0);
+    cpdf_OCGRename(pdf, str_f, str_t);
+    (*env)->ReleaseStringUTFChars(env, f, str_f);
+    (*env)->ReleaseStringUTFChars(env, t, str_t);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_OCGOrderAll
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_OCGOrderAll(pdf);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_blankDocument
+  (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint pages)
+{
+    int pdf = cpdf_blankDocument(w, h, pages);
+    return pdf;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_blankDocumentPaper
+  (JNIEnv * env, jobject jobj, jint papersize, jint pages)
+{
+    int pdf = cpdf_blankDocumentPaper(papersize, pages);
+    return pdf;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_textToPDF
+  (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint font, jdouble fontsize, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    int result = cpdf_textToPDF(w, h, font, fontsize, str_filename);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    return result;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_textToPDFPaper
+  (JNIEnv * env, jobject jobj, jint papersize, jint font, jdouble fontsize, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    int result = cpdf_textToPDFPaper(papersize, font, fontsize, str_filename);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     return result;
 }
