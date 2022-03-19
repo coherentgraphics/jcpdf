@@ -185,6 +185,8 @@ public class Jcpdf {
     native void removeFonts(int pdf);
     native void copyFont(int from_pdf, int to_pdf, int range, int pagenumber, String fontname);
 
+    native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, int pdf);
+    native int fromJSON(String filename); 
 
     int decimalArabic = 0;
     int uppercaseRoman = 1;
@@ -950,5 +952,22 @@ public class Jcpdf {
         jcpdf.toFile(fonts, "testoutputs/14remove_fonts.pdf", false, false);
         System.out.println("---cpdf_copyFont()");
         jcpdf.copyFont(fonts, fonts2, jcpdf.all(fonts), 1, "/Font");
+        /* CHAPTER 15. PDF and JSON */
+        System.out.println("***** CHAPTER 15. PDF and JSON");
+        int jsonpdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_outputJSON()");
+        jcpdf.outputJSON("testoutputs/15json.json", false, false, false, jsonpdf);
+        jcpdf.outputJSON("testoutputs/15jsonnostream.json", false, true, false, jsonpdf);
+        jcpdf.outputJSON("testoutputs/15jsonparsed.json", true, false, false, jsonpdf);
+        jcpdf.outputJSON("testoutputs/15jsondecomp.json", false, false, true, jsonpdf);
+        System.out.println("---cpdf_fromJSON()");
+        int fromjsonpdf = jcpdf.fromJSON("testoutputs/15jsonparsed.json");
+        jcpdf.toFile(fromjsonpdf, "testoutputs/15fromjson.pdf", false, false);
+        System.out.println("---cpdf_outputJSONMemory()");
+        //FIXME bytes to/from
+        /*byte[] jbuf = jcpdf.outputJSONMemory(fromjsonpdf, false, false, false);
+        System.out.println("---cpdf_fromJSONMemory()");
+        jcpdf.Pdf jfrommem = jcpdf.fromJSONMemory(jbuf);
+        jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);*/
     }
 }

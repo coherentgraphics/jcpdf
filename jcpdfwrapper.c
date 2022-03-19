@@ -1221,3 +1221,20 @@ JNIEXPORT void JNICALL Java_Jcpdf_copyFont
     (*env)->ReleaseStringUTFChars(env, fontname, str_fontname);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_outputJSON
+  (JNIEnv * env, jobject jobj, jstring filename, jboolean parse_content, jboolean no_stream_data, jboolean decompress_streams, jint pdf)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_outputJSON(str_filename, parse_content, no_stream_data, decompress_streams, pdf);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_fromJSON
+  (JNIEnv * env, jobject jobj, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    int result = cpdf_fromJSON(str_filename);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    return result;
+}
+
