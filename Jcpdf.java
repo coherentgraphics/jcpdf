@@ -7,7 +7,8 @@ public class Jcpdf {
     native void setSlow();
     native int fromFile(String filename, String userpw);
     native int fromFileLazy(String filename, String userpw);
-
+    native byte[] toMemory(int pdf, boolean linearize, boolean make_id);
+    native int fromMemory(byte[] data, String userpw);
     native int startEnumeratePDFs();
     native int enumeratePDFsKey(int n);
     native String enumeratePDFsInfo(int n);
@@ -285,14 +286,13 @@ public class Jcpdf {
         System.out.println("---cpdf_fromFileLazy()");
         int pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
 
-        //FIXME: Implement in/out to memory
-        
-        /*Console.WriteLine("---cpdf_toMemory()");
-        byte[] mempdf = Cpdf.toMemory(pdf, false, false);
-        Console.WriteLine("---cpdf_fromMemory()");
-        Cpdf.Pdf frommem = Cpdf.fromMemory(mempdf, "");
-        Cpdf.toFile(frommem, "testoutputs/01fromMemory.pdf", false, false);
-        Console.WriteLine("---cpdf_fromMemoryLazy()");
+        System.out.println("---cpdf_toMemory()");
+        byte[] mempdf = jcpdf.toMemory(pdf, false, false);
+        System.out.println("---cpdf_fromMemory()");
+        int frommem = jcpdf.fromMemory(mempdf, "");
+        jcpdf.toFile(frommem, "testoutputs/01fromMemory.pdf", false, false);
+
+        /*Console.WriteLine("---cpdf_fromMemoryLazy()");
         IntPtr ptr = Marshal.AllocHGlobal(mempdf.Length);
         Marshal.Copy(mempdf, 0, ptr, mempdf.Length);
         Cpdf.Pdf frommemlazy = Cpdf.fromMemoryLazy(ptr, mempdf.Length, "");

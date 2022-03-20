@@ -2,6 +2,7 @@
 //Check all of chapter 10: traps and pitfalls in Java book
 #include <jni.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "cpdflibwrapper.h"
 
 /* CHAPTER 0. Preliminaries */
@@ -52,6 +53,28 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromFileLazy
     return pdf;
 }
 
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_toMemory
+  (JNIEnv * env, jobject obj, jint pdf, jboolean linearize, jboolean make_id)
+{
+  int len = 0;
+  void* memory = cpdf_toMemory(pdf, linearize, make_id, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  free(memory);
+  return b;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_fromMemory
+  (JNIEnv * env, jobject jobj, jbyteArray data, jstring userpw)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
+    int result = cpdf_fromMemory(memory, length, str_userpw);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    return result;
+}
 
 JNIEXPORT int JNICALL Java_Jcpdf_startEnumeratePDFs
   (JNIEnv * env, jobject jobj)
