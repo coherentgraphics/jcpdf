@@ -82,6 +82,8 @@ public class Jcpdf {
     native void stampOn(int pdf, int pdf2, int range);
     native void stampUnder(int pdf, int pdf2, int range);
     native int combinePages(int pdf, int pdf2);
+    native String stampAsXObject(int pdf, int range, int stamp_pdf);
+    native void addContent(String s, boolean before, int pdf, int range); 
     native void impose(int pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth);
     native void twoUp(int pdf);
     native void twoUpStack(int pdf);
@@ -90,6 +92,7 @@ public class Jcpdf {
     native void padEvery(int pdf, int n);
     native void padMultiple(int pdf, int n);
     native void padMultipleBefore(int pdf, int n);
+    native byte[] annotationsJSON(int pdf);
     native int getVersion(int pdf);
     native int getMajorVersion(int pdf);
     native String getTitle(int pdf);
@@ -145,6 +148,8 @@ public class Jcpdf {
     native void displayDocTitle(int pdf, boolean flag);
     native void openAtPage(int pdf, boolean fit, int pagenumber);
     native void setMetadataFromFile(int pdf, String filename);
+    native void setMetadataFromByteArray(int pdf, byte[] data);
+    native byte[] getMetadata(int pdf);
 
     native void removeMetadata(int pdf);
     native void createMetadata(int pdf);
@@ -627,14 +632,11 @@ public class Jcpdf {
         int undoc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         int ulogo = jcpdf.fromFile("testinputs/logo.pdf", "");
 
-        // FIXME data in/out
-        /*
-        string name = Cpdf.stampAsXObject(undoc, Cpdf.all(undoc), ulogo);
-        string content = $"q 1 0 0 1 100 100 cm {name} Do Q q 1 0 0 1 300 300 cm {name} Do Q q 1 0 0 1 500 500 cm {name} Do Q";
-        Console.WriteLine("---cpdf_addContent()");
-        Cpdf.addContent(content, true, undoc, Cpdf.all(undoc));
-        Cpdf.toFile(undoc, "testoutputs/08demo.pdf", false, false);
-        */
+        String name = jcpdf.stampAsXObject(undoc, jcpdf.all(undoc), ulogo);
+        String content = String.format("q 1 0 0 1 100 100 cm %s Do Q q 1 0 0 1 300 300 cm %s Do Q q 1 0 0 1 500 500 cm %s Do Q", name, name, name);
+        System.out.println("---cpdf_addContent()");
+        jcpdf.addContent(content, true, undoc, jcpdf.all(undoc));
+        jcpdf.toFile(undoc, "testoutputs/08demo.pdf", false, false);
         
         /* CHAPTER 9. Multipage facilities */
         System.out.println("***** CHAPTER 9. Multipage facilities");
@@ -677,12 +679,9 @@ public class Jcpdf {
         /* CHAPTER 10. Annotations */
         System.out.println("***** CHAPTER 10. Annotations");
         System.out.println("---cpdf_annotationsJSON()");
-        /*
-        using (Cpdf.Pdf annot = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
-        {
-            byte[] annotjson = Cpdf.annotationsJSON(annot);
-            Console.WriteLine($"Contains {annotjson.Length} bytes of data");
-        }*/
+        int annot = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        byte[] annotjson = jcpdf.annotationsJSON(annot);
+        System.out.format("Contains %d bytes of data\n", annotjson.length);
         
         /* CHAPTER 11. Document Information and Metadata */
         System.out.println("***** CHAPTER 11. Document Information and Metadata");
@@ -878,13 +877,12 @@ public class Jcpdf {
         jcpdf.setMetadataFromFile(pdf30, "testinputs/cpdflibmanual.pdf");
         jcpdf.toFile(pdf30, "testoutputs/11metadata1.pdf", false, false);
 
-        //FIXME bytes in/out
-        /*System.out.println("---cpdf_setMetadataFromByteArray()");
-        byte[] md = Encoding.ASCII.GetBytes("BYTEARRAY");
+        System.out.println("---cpdf_setMetadataFromByteArray()");
+        byte[] md = "BYTEARRAY".getBytes();
         jcpdf.setMetadataFromByteArray(pdf30, md);
         jcpdf.toFile(pdf30, "testoutputs/11metadata2.pdf", false, false);
         System.out.println("---cpdf_getMetadata()");
-        byte[] metadata = jcpdf.getMetadata(pdf30);*/
+        byte[] metadata = jcpdf.getMetadata(pdf30);
 
         System.out.println("---cpdf_removeMetadata()");
         jcpdf.removeMetadata(pdf30);

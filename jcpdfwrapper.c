@@ -569,6 +569,20 @@ JNIEXPORT int JNICALL Java_Jcpdf_combinePages
     return result;
 }
 
+JNIEXPORT jstring JNICALL Java_Jcpdf_stampAsXObject
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint stamp_pdf)
+{
+    return (*env)->NewStringUTF(env, cpdf_stampAsXObject(pdf, range, stamp_pdf));
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_addContent
+  (JNIEnv * env, jobject jobj, jstring str, jboolean before, jint pdf, jint range)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    cpdf_addContent(str_str, before, pdf, range);
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_impose
   (JNIEnv * env, jobject jobj, jint pdf, jdouble x, jdouble y, jboolean fit, jboolean columns, jboolean rtl, jboolean btt, jboolean center, jdouble margin, jdouble spacing, jdouble linewidth)
 {
@@ -615,6 +629,17 @@ JNIEXPORT void JNICALL Java_Jcpdf_padMultipleBefore
   (JNIEnv * env, jobject jobj, jint pdf, int n)
 {
     cpdf_padMultipleBefore(pdf, n);
+}
+
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_annotationsJSON
+  (JNIEnv * env, jobject obj, jint pdf)
+{
+  int len = 0;
+  void* memory = cpdf_annotationsJSON(pdf, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  free(memory);
+  return b;
 }
 
 /* CHAPTER 11. Document Information and Metadata */
@@ -1002,6 +1027,26 @@ JNIEXPORT void JNICALL Java_Jcpdf_setMetadataFromFile
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_setMetadataFromFile(pdf, str_filename);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_getMetadata
+  (JNIEnv * env, jobject obj, jint pdf)
+{
+  int len = 0;
+  void* memory = cpdf_getMetadata(pdf, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  free(memory);
+  return b;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setMetadataFromByteArray
+  (JNIEnv * env, jobject jobj, jint pdf, jbyteArray data)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    cpdf_setMetadataFromByteArray(pdf, memory, length);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
 }
 
 JNIEXPORT void JNICALL Java_Jcpdf_removeMetadata
