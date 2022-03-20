@@ -1248,6 +1248,27 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromJSON
     return result;
 }
 
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_outputJSONMemory
+  (JNIEnv * env, jobject obj, jint pdf, jboolean parse_content, jboolean no_stream_data, jboolean decompress_streams)
+{
+  int len = 0;
+  void* memory = cpdf_outputJSONMemory(pdf, parse_content, no_stream_data, decompress_streams, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  free(memory);
+  return b;
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_fromJSONMemory
+  (JNIEnv * env, jobject jobj, jbyteArray data)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    int result = cpdf_fromJSONMemory(memory, length);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+    return result;
+}
+
 JNIEXPORT int JNICALL Java_Jcpdf_startGetOCGList
   (JNIEnv * env, jobject jobj, jint pdf)
 {
@@ -1421,6 +1442,18 @@ JNIEXPORT void JNICALL Java_Jcpdf_replaceDictEntrySearch
     (*env)->ReleaseStringUTFChars(env, str3, str_str3);
 }
 
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_getDictEntries
+  (JNIEnv * env, jobject obj, jint pdf, jstring str)
+{
+  const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+  int len = 0;
+  void* memory = cpdf_getDictEntries(pdf, str_str, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  (*env)->ReleaseStringUTFChars(env, str, str_str);
+  free(memory);
+  return b;
+}
 JNIEXPORT void JNICALL Java_Jcpdf_removeClipping
   (JNIEnv * env, jobject jobj, jint pdf, jint range)
 {

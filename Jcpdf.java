@@ -74,6 +74,8 @@ public class Jcpdf {
     native void setBookmarkOpenStatus(int serial, boolean open);
     native void setBookmarkText(int serial, String text);
     native void endSetBookmarkInfo(int pdf);
+    native byte[] getBookmarksJSON(int pdf);
+    native void setBookmarksJSON(int pdf, byte[] data);
     native void tableOfContents(int pdf, int font, double fontsize, String title, boolean bookmark);
     native void removeText(int pdf, int range);
     native int textWidth(int font, String text);
@@ -186,7 +188,9 @@ public class Jcpdf {
     native void copyFont(int from_pdf, int to_pdf, int range, int pagenumber, String fontname);
 
     native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, int pdf);
-    native int fromJSON(String filename); 
+    native int fromJSON(String filename);
+    native byte[] outputJSONMemory(int pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams);
+    native int fromJSONMemory(byte[] data);
 
     native int startGetOCGList(int pdf);
     native String OCGListEntry(int serial);
@@ -214,6 +218,7 @@ public class Jcpdf {
     native void removeDictEntrySearch(int pdf, String str, String searchterm);
     native void replaceDictEntry(int pdf, String key, String newvalue);
     native void replaceDictEntrySearch(int pdf, String key, String newvalue, String searchterm);
+    native byte[] getDictEntries(int pdf, String key);
     native void removeClipping(int pdf, int range);
 
     int decimalArabic = 0;
@@ -542,15 +547,15 @@ public class Jcpdf {
         jcpdf.setBookmarkText(0, "New bookmark!");
         jcpdf.endSetBookmarkInfo(pdf17);
         jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
-        //FIXME data in and out
-        /*System.out.println("---jcpdf.getBookmarksJSON()");
-        jcpdf.Pdf marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+
+        System.out.println("---jcpdf.getBookmarksJSON()");
+        int marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
-        System.out.println($"Contains {marksdata.Length} bytes of data");
+        System.out.format("Contains %d bytes of data\n", marksdata.length);
         System.out.println("---jcpdf.setBookmarksJSON()");
         jcpdf.setBookmarksJSON(marksjson, marksdata);
         jcpdf.toFile(marksjson, "testoutputs/06jsonmarks.pdf", false, false);
-        */
+
         System.out.println("---cpdf_tableOfContents()");
         int toc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         jcpdf.tableOfContents(toc, jcpdf.timesRoman, 12.0, "Table of Contents", false);
@@ -991,11 +996,11 @@ public class Jcpdf {
         int fromjsonpdf = jcpdf.fromJSON("testoutputs/15jsonparsed.json");
         jcpdf.toFile(fromjsonpdf, "testoutputs/15fromjson.pdf", false, false);
         System.out.println("---cpdf_outputJSONMemory()");
-        //FIXME bytes to/from
-        /*byte[] jbuf = jcpdf.outputJSONMemory(fromjsonpdf, false, false, false);
+        
+        byte[] jbuf = jcpdf.outputJSONMemory(fromjsonpdf, false, false, false);
         System.out.println("---cpdf_fromJSONMemory()");
-        jcpdf.Pdf jfrommem = jcpdf.fromJSONMemory(jbuf);
-        jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);*/
+        int jfrommem = jcpdf.fromJSONMemory(jbuf);
+        jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);
 
         /* CHAPTER 16. Optional Content Groups */
         System.out.println("***** CHAPTER 16. Optional Content Groups");
@@ -1091,8 +1096,8 @@ public class Jcpdf {
         jcpdf.replaceDictEntrySearch(misc15, "/Producer", "1", "2");
         jcpdf.toFile(misc15, "testoutputs/17replacedictentrysearch.pdf", false, false);
         System.out.println("---cpdf_getDictEntries()");
-        /*byte[] entries = jcpdf.getDictEntries(misc16, "/Producer");
-        System.out.println($"length of entries data = {entries.Length}");*/
+        byte[] entries = jcpdf.getDictEntries(misc16, "/Producer");
+        System.out.format("length of entries data = %d\n", entries.length);
         System.out.println("---cpdf_removeClipping()");
         jcpdf.removeClipping(misc12, jcpdf.all(misc12));
         jcpdf.toFile(misc12, "testoutputs/17removeclipping.pdf", false, false);
