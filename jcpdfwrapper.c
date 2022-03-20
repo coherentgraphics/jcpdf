@@ -507,6 +507,26 @@ JNIEXPORT void JNICALL Java_Jcpdf_endSetBookmarkInfo
     cpdf_endSetBookmarkInfo(pdf);
 }
 
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_getBookmarksJSON
+  (JNIEnv * env, jobject obj, jint pdf)
+{
+  int len = 0;
+  void* memory = cpdf_getBookmarksJSON(pdf, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  free(memory);
+  return b;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_setBookmarksJSON
+  (JNIEnv * env, jobject jobj, jint pdf, jbyteArray data)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    cpdf_setBookmarksJSON(pdf, memory, length);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_tableOfContents
   (JNIEnv * env, jobject jobj, jint pdf, jint font, jdouble fontsize, jstring title, jboolean bookmark)
 {

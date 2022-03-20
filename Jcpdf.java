@@ -548,11 +548,11 @@ public class Jcpdf {
         jcpdf.endSetBookmarkInfo(pdf17);
         jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
 
-        System.out.println("---jcpdf.getBookmarksJSON()");
+        System.out.println("---cpdf_getBookmarksJSON()");
         int marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
         System.out.format("Contains %d bytes of data\n", marksdata.length);
-        System.out.println("---jcpdf.setBookmarksJSON()");
+        System.out.println("---cpdf_setBookmarksJSON()");
         jcpdf.setBookmarksJSON(marksjson, marksdata);
         jcpdf.toFile(marksjson, "testoutputs/06jsonmarks.pdf", false, false);
 
