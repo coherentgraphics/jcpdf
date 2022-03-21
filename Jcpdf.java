@@ -40,6 +40,12 @@ public class Jcpdf {
     native void toFileExt(int pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm);
     native boolean isEncrypted(int pdf);
     native boolean isLinearized(String filename);
+    native int toFileEncrypted(int pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename);
+    native int toFileEncryptedExt(int pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename);
+    native boolean hasPermission(int pdf, int permission);
+    native int encryptionKind(int pdf);
+    native void decryptPdf(int pdf, String userpw);
+    native void decryptPdfOwner(int pdf, String ownerpw);
     native void scalePages(int pdf, int range, double sx, double sy);
     native void scaleToFit(int pdf, int range, double w, double h, double scale);
     native void scaleToFitPaper(int pdf, int range, int papersize, double scale);
@@ -226,6 +232,24 @@ public class Jcpdf {
     native byte[] getDictEntries(int pdf, String key);
     native void removeClipping(int pdf, int range);
 
+    int noEdit = 0;
+    int noPrint = 1;
+    int noCopy = 2;
+    int noAnnot = 3;
+    int noForms = 4;
+    int noExtract = 5;
+    int noAssemble = 6;
+    int noHqPrint = 7;
+
+    int pdf40bit = 0;
+    int pdf128bit = 1;
+    int aes128bitfalse = 2;
+    int aes128bittrue = 3;
+    int aes256bitfalse = 4;
+    int aes256bittrue = 5;
+    int aes256bitisofalse = 6;
+    int aes256bitiso = 7;
+
     int decimalArabic = 0;
     int uppercaseRoman = 1;
     int lowercaseRoman = 2;
@@ -383,25 +407,23 @@ public class Jcpdf {
         int pdf400 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         int pdf401 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
 
-        //FIXME: Implement arrays/lists
-        
-        /*List<Cpdf.Permission> permissions = new List<Cpdf.Permission> {Cpdf.Permission.NoEdit};
+        int[] permissions = new int[] {jcpdf.noEdit};
         System.out.println("---cpdf_toFileEncrypted()");
-        Cpdf.toFileEncrypted(pdf400, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
+        jcpdf.toFileEncrypted(pdf400, jcpdf.pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
         System.out.println("---cpdf_toFileEncryptedExt()");
-        Cpdf.toFileEncryptedExt(pdf401, Cpdf.EncryptionMethod.Pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");*/
-        /*System.out.println("---cpdf_hasPermission()");
-        int pdfenc = Cpdf.fromFile("testoutputs/01encrypted.pdf", "user")
-        bool hasnoedit = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoEdit);
-        bool hasnocopy = Cpdf.hasPermission(pdfenc, Cpdf.Permission.NoCopy);
-        System.out.println($"Haspermission {(hasnoedit ? 1 : 0)}, {(hasnocopy ? 1 : 0)}");
+        jcpdf.toFileEncryptedExt(pdf401, jcpdf.pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");
+        System.out.println("---cpdf_hasPermission()");
+        int pdfenc = jcpdf.fromFile("testoutputs/01encrypted.pdf", "user");
+        boolean hasnoedit = jcpdf.hasPermission(pdfenc, jcpdf.noEdit);
+        boolean hasnocopy = jcpdf.hasPermission(pdfenc, jcpdf.noCopy);
+        System.out.format("Haspermission %d, %d\n", hasnoedit ? 1 : 0, hasnocopy ? 1 : 0);
         System.out.println("---cpdf_encryptionKind()");
-        int enckind = Cpdf.encryptionKind(pdfenc);
-        System.out.println($"encryption kind is {enckind}");
+        int enckind = jcpdf.encryptionKind(pdfenc);
+        System.out.format("encryption kind is %d\n", enckind);
         System.out.println("---cpdf_decryptPdf()");
-        Cpdf.decryptPdf(pdf10, "");
+        jcpdf.decryptPdf(pdf10, "");
         System.out.println("---cpdf_decryptPdfOwner()");
-        Cpdf.decryptPdfOwner(pdf10, "");*/
+        jcpdf.decryptPdfOwner(pdf10, "");
         
         /* CHAPTER 2. Merging and Splitting */
         /*Console.WriteLine("***** CHAPTER 2. Merging and Splitting");
