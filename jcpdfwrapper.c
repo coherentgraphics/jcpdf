@@ -296,6 +296,51 @@ JNIEXPORT void JNICALL Java_Jcpdf_toFileEncrypted
     (*env)->ReleaseStringUTFChars(env, owner_password, str_owner_password);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_toFileEncryptedExt
+  (JNIEnv * env, jobject jobj, jint pdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jboolean preserve_objstm, jboolean generate_objstm, jboolean compress_objstm, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    const char *str_user_password = (*env)->GetStringUTFChars(env, user_password, 0);
+    const char *str_owner_password = (*env)->GetStringUTFChars(env, owner_password, 0);
+    int len = (*env)->GetArrayLength(env, data);
+    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    cpdf_toFileEncryptedExt(pdf, encryption_method, perms, len, str_owner_password, str_user_password, linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, str_filename);
+    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    (*env)->ReleaseStringUTFChars(env, user_password, str_user_password);
+    (*env)->ReleaseStringUTFChars(env, owner_password, str_owner_password);
+}
+
+JNIEXPORT jboolean JNICALL Java_Jcpdf_hasPermission
+  (JNIEnv * env, jobject jobj, jint pdf, jint permission)
+{
+    int result = cpdf_hasPermission(pdf, permission);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL Java_Jcpdf_encryptionKind
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    int result = cpdf_encryptionKind(pdf);
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_decryptPdf
+  (JNIEnv * env, jobject jobj, jint pdf, jstring userpw)
+{
+    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
+    cpdf_decryptPdf(pdf, str_userpw);
+    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_decryptPdfOwner
+  (JNIEnv * env, jobject jobj, jint pdf, jstring ownerpw)
+{
+    const char *str_ownerpw = (*env)->GetStringUTFChars(env, ownerpw, 0);
+    cpdf_decryptPdf(pdf, str_ownerpw);
+    (*env)->ReleaseStringUTFChars(env, ownerpw, str_ownerpw);
+}
+
 JNIEXPORT jboolean JNICALL Java_Jcpdf_isEncrypted
   (JNIEnv * env, jobject jobj, jint pdf)
 {

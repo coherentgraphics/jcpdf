@@ -435,7 +435,7 @@ public class Jcpdf {
         System.out.println("***** CHAPTER 2. Merging and Splitting");
         int pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         int selectrange = jcpdf.range(1, 3);
-        System.out.println("---cpdf_gmergeSimple()");
+        System.out.println("---cpdf_mergeSimple()");
         int[] arr = new int[] {pdf11, pdf11, pdf11};
         int merged = jcpdf.mergeSimple(arr);
         jcpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
