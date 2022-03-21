@@ -139,6 +139,14 @@ public class Jcpdf {
     native void setProducerXMP(int pdf, String str);
     native void setCreationDateXMP(int pdf, String str);
     native void setModificationDateXMP(int pdf, String str);
+    native void getDateComponents(String datestring, int[] r);
+    native String dateStringOfComponents(int year, int month, int day, int hour, int minute, int second, int hour_offset, int minute_offset);
+    native void getMediaBox(int pdf, int pagenumber, double[] r);
+    native void getCropBox(int pdf, int pagenumber, double[] r);
+    native void getBleedBox(int pdf, int pagenumber, double[] r);
+    native void getArtBox(int pdf, int pagenumber, double[] r);
+    native void getTrimBox(int pdf, int pagenumber, double[] r);
+
     native int getPageRotation(int pdf, int pagenumber);
     native boolean hasBox(int pdf, int pagenumber, String boxname);
     native void setMediabox(int pdf, int range, double minx, double maxx, double miny, double maxy);
@@ -796,66 +804,35 @@ public class Jcpdf {
         System.out.println("---cpdf_setModificationDateXMP()");
         jcpdf.setModificationDateXMP(pdf30, "now");
         jcpdf.toFile(pdf30, "testoutputs/11setinfo.pdf", false, false);
-        //FIXME: ref
-        /*int year = 0;
-        int month = 0;
-        int day = 0;
-        int hour = 0;
-        int minute = 0;
-        int second = 0;
-        int hour_offset = 0;
-        int minute_offset = 0;
+        int[] t = {0, 0, 0, 0, 0, 0, 0, 0};
         System.out.println("---cpdf_getDateComponents()");
-        jcpdf.getDateComponents("D:20061108125017Z", ref year, ref month, ref day, ref hour, ref minute, ref second, ref hour_offset, ref minute_offset);
-        System.out.format("D:20061108125017Z = {year}, {month}, {day}, {hour}, {minute}, {second}, {hour_offset}, {minute_offset}");
+        jcpdf.getDateComponents("D:20061108125017Z", t);
+        System.out.format("D:20061108125017Z = %i, %i, %i, %i, %i, %i, %i, %i\n");
         System.out.println("---cpdf_dateStringOfComponents()");
-        String datestr = jcpdf.dateStringOfComponents(year, month, day, hour, minute, second, hour_offset, minute_offset);
-        System.out.println(datestr);*/
-        
+        String datestr = jcpdf.dateStringOfComponents(0, 0, 0, 0, 0, 0, 0, 0);
+        System.out.println(datestr);
         System.out.println("---cpdf_getPageRotation()");
         int rot = jcpdf.getPageRotation(pdf30, 1);
         System.out.format("/Rotate on page 1 = %d\n", rot);
         System.out.println("---cpdf_hasBox()");
         boolean hasbox = jcpdf.hasBox(pdf30, 1, "/CropBox");
         System.out.format("hasbox: %d\n", hasbox ? 1 : 0);
-
-        //FIXME: refs
-        /*double mb_minx = 0.0;
-        double mb_maxx = 0.0;
-        double mb_miny = 0.0;
-        double mb_maxy = 0.0;
-        double cb_minx = 0.0;
-        double cb_maxx = 0.0;
-        double cb_miny = 0.0;
-        double cb_maxy = 0.0;
-        double tb_minx = 0.0;
-        double tb_maxx = 0.0;
-        double tb_miny = 0.0;
-        double tb_maxy = 0.0;
-        double ab_minx = 0.0;
-        double ab_maxx = 0.0;
-        double ab_miny = 0.0;
-        double ab_maxy = 0.0;
-        double bb_minx = 0.0;
-        double bb_maxx = 0.0;
-        double bb_miny = 0.0;
-        double bb_maxy = 0.0;
         System.out.println("---cpdf_getMediaBox()");
-        jcpdf.getMediaBox(pdf30, 1, ref mb_minx, ref mb_maxx, ref mb_miny, ref mb_maxy);
-        System.out.format("Media: {mb_minx:0.000000} {mb_maxx:0.000000} {mb_miny:0.000000} {mb_maxy:0.000000}");
+        double[] b4 = {0.0, 0.0, 0.0, 0.0};
+        jcpdf.getMediaBox(pdf30, 1, b4);
+        System.out.format("Media: %f %f %f %f\n");
         System.out.println("---cpdf_getCropBox()");
-        jcpdf.getCropBox(pdf30, 1, ref cb_minx, ref cb_maxx, ref cb_miny, ref cb_maxy);
-        System.out.format("Crop: {cb_minx:0.000000} {cb_maxx:0.000000} {cb_miny:0.000000} {cb_maxy:0.000000}");
+        jcpdf.getCropBox(pdf30, 1, b4);
+        System.out.format("Crop: %f %f %f %f\n");
         System.out.println("---cpdf_getBleedBox()");
-        jcpdf.getBleedBox(pdf30, 1, ref bb_minx, ref bb_maxx, ref bb_miny, ref bb_maxy);
-        System.out.format("Bleed: {bb_minx:0.000000} {bb_maxx:0.000000} {bb_miny:0.000000} {bb_maxy:0.000000}");
+        jcpdf.getBleedBox(pdf30, 1, b4);
+        System.out.format("Bleed: %f %f %f %f\n");
         System.out.println("---cpdf_getArtBox()");
-        jcpdf.getArtBox(pdf30, 1, ref ab_minx, ref ab_maxx, ref ab_miny, ref ab_maxy);
-        System.out.format("Art: {ab_minx:0.000000} {ab_maxx:0.000000} {ab_miny:0.000000} {ab_maxy:0.000000}");
+        jcpdf.getArtBox(pdf30, 1, b4);
+        System.out.format("Art: %f %f %f %f\n");
         System.out.println("---cpdf_getTrimBox()");
-        jcpdf.getTrimBox(pdf30, 1, ref tb_minx, ref tb_maxx, ref tb_miny, ref tb_maxy);
-        System.out.format("Trim: {tb_minx:0.000000} {tb_maxx:0.000000} {tb_miny:0.000000} {tb_maxy:0.000000}");*/
-
+        jcpdf.getTrimBox(pdf30, 1, b4);
+        System.out.format("Trim: %f %f %f %f\n");
         System.out.println("---cpdf_setMediaBox()");
         jcpdf.setMediabox(pdf30, jcpdf.all(pdf30), 100, 500, 150, 550);
         System.out.println("---cpdf_setCropBox()");
