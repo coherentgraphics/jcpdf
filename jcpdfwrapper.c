@@ -281,6 +281,21 @@ JNIEXPORT void JNICALL Java_Jcpdf_toFileExt
     cpdf_toFileExt(pdf, str_filename, linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_toFileEncrypted
+  (JNIEnv * env, jobject jobj, jint pdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jstring filename)
+{
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    const char *str_user_password = (*env)->GetStringUTFChars(env, user_password, 0);
+    const char *str_owner_password = (*env)->GetStringUTFChars(env, owner_password, 0);
+    int len = (*env)->GetArrayLength(env, data);
+    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    cpdf_toFileEncrypted(pdf, encryption_method, perms, len, str_owner_password, str_user_password, linearize, makeid, str_filename);
+    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    (*env)->ReleaseStringUTFChars(env, user_password, str_user_password);
+    (*env)->ReleaseStringUTFChars(env, owner_password, str_owner_password);
+}
+
 JNIEXPORT jboolean JNICALL Java_Jcpdf_isEncrypted
   (JNIEnv * env, jobject jobj, jint pdf)
 {
