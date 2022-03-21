@@ -1244,6 +1244,28 @@ JNIEXPORT void JNICALL Java_Jcpdf_attachFileToPage
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_attachFileFromMemory
+  (JNIEnv * env, jobject jobj, jbyteArray data, jstring filename, jint pdf)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_attachFileFromMemory(memory, length, str_filename, pdf);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_attachFileToPageFromMemory
+  (JNIEnv * env, jobject jobj, jbyteArray data, jstring filename, jint pdf, jint pagenumber)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    cpdf_attachFileToPageFromMemory(memory, length, str_filename, pdf, pagenumber);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_removeAttachedFiles
   (JNIEnv * env, jobject jobj, jint pdf)
 {
@@ -1274,6 +1296,17 @@ JNIEXPORT int JNICALL Java_Jcpdf_getAttachmentPage
 {
     int result = cpdf_getAttachmentPage(serial);
     return result;
+}
+
+JNIEXPORT jbyteArray JNICALL Java_Jcpdf_getAttachmentData
+  (JNIEnv * env, jobject obj, jint serial)
+{
+  int len = 0;
+  void* memory = cpdf_getAttachmentData(serial, &len);
+  jbyteArray b = (*env)->NewByteArray(env, len);
+  (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+  free(memory);
+  return b;
 }
 
 JNIEXPORT void JNICALL Java_Jcpdf_endGetAttachments

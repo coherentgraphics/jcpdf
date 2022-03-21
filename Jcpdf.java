@@ -175,14 +175,16 @@ public class Jcpdf {
     native int getPageLabelRange(int n);
     native String getPageLabelPrefix(int n);
     native String getPageLabelStringForPage(int pdf, int n);
-
     native void attachFile(String filename, int pdf);
     native void attachFileToPage(String filename, int pdf, int pagenumber);
+    native void attachFileFromMemory(byte[] data, String filename, int pdf);
+    native void attachFileToPageFromMemory(byte[] data, String filename, int pdf, int pagenumber);
     native void removeAttachedFiles(int pdf);
     native void startGetAttachments(int pdf);
     native int numberGetAttachments();
     native String getAttachmentName(int serial);
     native int getAttachmentPage(int serial);
+    native byte[] getAttachmentData(int serial);
     native void endGetAttachments(); 
 
     native int startGetImageResolution(int pdf, double res);
@@ -942,10 +944,10 @@ public class Jcpdf {
         System.out.println("---cpdf_attachFileToPage()");
         jcpdf.attachFileToPage("testinputs/image.pdf", attachments, 1);
         System.out.println("---cpdf_attachFileFromMemory()");
-        /*byte[] empty = {};
+        byte[] empty = {};
         jcpdf.attachFileFromMemory(empty, "metadata.txt", attachments);
         System.out.println("---cpdf_attachFileToPageFromMemory()");
-        jcpdf.attachFileToPageFromMemory(empty, "metadata.txt", attachments, 1);*/
+        jcpdf.attachFileToPageFromMemory(empty, "metadata.txt", attachments, 1);
         jcpdf.toFile(attachments, "testoutputs/12with_attachments.pdf", false, false);
         System.out.println("---cpdf: get attachments");
         jcpdf.startGetAttachments(attachments);
@@ -957,8 +959,8 @@ public class Jcpdf {
             System.out.format("Attachment %d is named %s\n", aa, a_n);
             int a_page = jcpdf.getAttachmentPage(aa);
             System.out.format("It is on page %d\n", a_page);
-            /*byte[] a_data = jcpdf.getAttachmentData(aa);
-            System.out.println($"Contains {a_data.Length} bytes of data");*/
+            byte[] a_data = jcpdf.getAttachmentData(aa);
+            System.out.format("Contains %d bytes of data\n", a_data.length);
         }
         jcpdf.endGetAttachments();
         System.out.println("---cpdf_removeAttachedFiles()");
