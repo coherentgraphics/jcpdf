@@ -356,6 +356,45 @@ JNIEXPORT jboolean JNICALL Java_Jcpdf_isLinearized
     return result;
 }
 
+JNIEXPORT jint JNICALL Java_Jcpdf_mergeSimple
+  (JNIEnv * env, jobject jobj, jintArray data)
+{
+    int len = (*env)->GetArrayLength(env, data);
+    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    int result = cpdf_mergeSimple(perms, len);
+    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_merge
+  (JNIEnv * env, jobject jobj, jintArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts)
+{
+    int len = (*env)->GetArrayLength(env, data);
+    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    int result = cpdf_merge(perms, len, retain_numbering, remove_duplicate_fonts);
+    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_mergeSame
+  (JNIEnv * env, jobject jobj, jintArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts, jintArray data2)
+{
+    int len = (*env)->GetArrayLength(env, data);
+    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    int* ranges = (*env)->GetIntArrayElements(env, data2, 0);
+    int result = cpdf_mergeSame(perms, len, retain_numbering, remove_duplicate_fonts, ranges);
+    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
+    (*env)->ReleaseIntArrayElements(env, data2, ranges, 0);
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_Jcpdf_selectPages
+  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+{
+    int result = cpdf_selectPages(pdf, range);
+    return result;
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_scalePages
   (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble sx, jdouble sy)
 {
