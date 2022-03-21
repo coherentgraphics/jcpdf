@@ -46,6 +46,12 @@ public class Jcpdf {
     native int encryptionKind(int pdf);
     native void decryptPdf(int pdf, String userpw);
     native void decryptPdfOwner(int pdf, String ownerpw);
+
+    native int mergeSimple(int[] pdfs);
+    native int merge(int[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts);
+    native int mergeSame(int[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, int[] ranges);
+    native int selectPages(int pdf, int range);
+
     native void scalePages(int pdf, int range, double sx, double sy);
     native void scaleToFit(int pdf, int range, double w, double h, double scale);
     native void scaleToFitPaper(int pdf, int range, int papersize, double scale);
@@ -426,31 +432,24 @@ public class Jcpdf {
         jcpdf.decryptPdfOwner(pdf10, "");
         
         /* CHAPTER 2. Merging and Splitting */
-        /*Console.WriteLine("***** CHAPTER 2. Merging and Splitting");
-        using (Cpdf.Pdf pdf11 = Cpdf.fromFile("testinputs/cpdflibmanual.pdf", ""))
-        {
-            List<int> selectrange = Cpdf.range(1, 3);
-            Console.WriteLine("---cpdf_mergeSimple()");
-            Cpdf.Pdf[] arr = new [] {pdf11, pdf11, pdf11};
-            List<Cpdf.Pdf> arr_list = new List<Cpdf.Pdf> {};
-            arr_list.AddRange(arr);
-            Cpdf.Pdf merged = Cpdf.mergeSimple(arr_list);
-            Cpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
-            merged.Dispose();
-            Console.WriteLine("---cpdf_merge()");
-            Cpdf.Pdf merged2 = Cpdf.merge(arr_list, false, false);
-            Cpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
-            merged2.Dispose();
-            Console.WriteLine("---cpdf_mergeSame()");
-            List<List<int>> ranges = new List<List<int>> {Cpdf.all(pdf11), Cpdf.all(pdf11), Cpdf.all(pdf11)};
-            Cpdf.Pdf merged3 = Cpdf.mergeSame(arr_list, false, false, ranges);
-            Cpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
-            merged3.Dispose();
-            Console.WriteLine("---cpdf_selectPages()");
-            Cpdf.Pdf pdf12 = Cpdf.selectPages(pdf11, selectrange);
-            Cpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
-            pdf12.Dispose();
-        }*/
+        System.out.println("***** CHAPTER 2. Merging and Splitting");
+        int pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int selectrange = jcpdf.range(1, 3);
+        System.out.println("---cpdf_gmergeSimple()");
+        int[] arr = new int[] {pdf11, pdf11, pdf11};
+        int merged = jcpdf.mergeSimple(arr);
+        jcpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
+        System.out.println("---cpdf_merge()");
+        int merged2 = jcpdf.merge(arr, false, false);
+        jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
+        System.out.println("---cpdf_mergeSame()");
+        int[] ranges = new int[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
+        int merged3 = jcpdf.mergeSame(arr, false, false, ranges);
+        jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
+        System.out.println("---cpdf_selectPages()");
+        int pdf12 = jcpdf.selectPages(pdf11, selectrange);
+        jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
+
         /* CHAPTER 3. Pages */
         System.out.println("***** CHAPTER 3. Pages");
         int pagespdf1 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
