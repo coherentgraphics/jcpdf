@@ -997,6 +997,31 @@ JNIEXPORT void JNICALL Java_Jcpdf_setModificationDateXMP
     (*env)->ReleaseStringUTFChars(env, str, str_str);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_getDateComponents
+  (JNIEnv * env, jobject jobj, jstring str, jintArray data)
+{
+    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
+    int year, month, day, hour, minute, second, hour_offset, minute_offset;
+    int* a = (*env)->GetIntArrayElements(env, data, 0); 
+    cpdf_getDateComponents(str_str, &year, &month, &day, &hour, &minute, &second, &hour_offset, &minute_offset);
+    a[0] = year;
+    a[1] = month;
+    a[2] = day;
+    a[3] = hour;
+    a[4] = minute;
+    a[5] = second;
+    a[6] = hour_offset;
+    a[7] = minute_offset;
+    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    (*env)->ReleaseIntArrayElements(env, data, a, 0);
+}
+
+JNIEXPORT jstring JNICALL Java_Jcpdf_dateStringOfComponents
+  (JNIEnv * env, jobject jobj, jint a, jint b, jint c, jint d, jint e, jint f, jint g, jint h)
+{
+    return (*env)->NewStringUTF(env, cpdf_dateStringOfComponents(a, b, c, d, e, f, g, h));
+}
+
 JNIEXPORT int JNICALL Java_Jcpdf_getPageRotation
   (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber)
 {
@@ -1011,6 +1036,71 @@ JNIEXPORT jboolean JNICALL Java_Jcpdf_hasBox
     int result = cpdf_hasBox(pdf, pagenumber, str_boxname);
     (*env)->ReleaseStringUTFChars(env, boxname, str_boxname);
     return result;
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_getMediaBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+{
+    double da, db, dc, dd;
+    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
+    cpdf_getMediaBox(pdf, pagenumber, &da, &db, &dc, &dd);
+    a[0] = da;
+    a[1] = db;
+    a[2] = dc;
+    a[3] = dd;
+    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_getCropBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+{
+    double da, db, dc, dd;
+    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
+    cpdf_getCropBox(pdf, pagenumber, &da, &db, &dc, &dd);
+    a[0] = da;
+    a[1] = db;
+    a[2] = dc;
+    a[3] = dd;
+    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_getArtBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+{
+    double da, db, dc, dd;
+    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
+    cpdf_getArtBox(pdf, pagenumber, &da, &db, &dc, &dd);
+    a[0] = da;
+    a[1] = db;
+    a[2] = dc;
+    a[3] = dd;
+    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_getTrimBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+{
+    double da, db, dc, dd;
+    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
+    cpdf_getTrimBox(pdf, pagenumber, &da, &db, &dc, &dd);
+    a[0] = da;
+    a[1] = db;
+    a[2] = dc;
+    a[3] = dd;
+    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_getBleedBox
+  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+{
+    double da, db, dc, dd;
+    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
+    cpdf_getBleedBox(pdf, pagenumber, &da, &db, &dc, &dd);
+    a[0] = da;
+    a[1] = db;
+    a[2] = dc;
+    a[3] = dd;
+    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
 }
 
 JNIEXPORT void JNICALL Java_Jcpdf_setMediabox
