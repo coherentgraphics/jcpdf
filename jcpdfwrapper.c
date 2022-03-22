@@ -419,6 +419,13 @@ JNIEXPORT void JNICALL Java_Jcpdf_shiftContents
     cpdf_shiftContents(pdf, range, dx, dy);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_scaleContents
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint anchor, jdouble p1, jdouble p2, jdouble scale)
+{
+    struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
+    cpdf_scaleContents(pdf, range, p, scale);
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_rotate
   (JNIEnv * env, jobject jobj, jint pdf, jint range, jint angle)
 {
@@ -659,6 +666,13 @@ JNIEXPORT void JNICALL Java_Jcpdf_stampUnder
   (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
 {
     cpdf_stampUnder(pdf, pdf2, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_stampExtended
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
+{
+    struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
+    cpdf_stampExtended(pdf, pdf2, range, isover, scale_stamp_to_fit, p, relative_to_cropbox);
 }
 
 JNIEXPORT int JNICALL Java_Jcpdf_combinePages

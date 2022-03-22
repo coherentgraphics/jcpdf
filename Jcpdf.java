@@ -46,15 +46,14 @@ public class Jcpdf {
     native int encryptionKind(int pdf);
     native void decryptPdf(int pdf, String userpw);
     native void decryptPdfOwner(int pdf, String ownerpw);
-
     native int mergeSimple(int[] pdfs);
     native int merge(int[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts);
     native int mergeSame(int[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, int[] ranges);
     native int selectPages(int pdf, int range);
-
     native void scalePages(int pdf, int range, double sx, double sy);
     native void scaleToFit(int pdf, int range, double w, double h, double scale);
     native void scaleToFitPaper(int pdf, int range, int papersize, double scale);
+    native void scaleContents(int pdf, int range, int anchor, double p1, double p2, double scale);
     native void shiftContents(int pdf, int range, double dx, double dy);
     native void rotate(int pdf, int range, int angle);
     native void rotateBy(int pdf, int range, int angle);
@@ -93,6 +92,7 @@ public class Jcpdf {
     native int textWidth(int font, String text);
     native void stampOn(int pdf, int pdf2, int range);
     native void stampUnder(int pdf, int pdf2, int range);
+    native void stampExtended(int pdf, int pdf2, int range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox);
     native int combinePages(int pdf, int pdf2);
     native String stampAsXObject(int pdf, int range, int stamp_pdf);
     native void addContent(String s, boolean before, int pdf, int range); 
@@ -146,7 +146,6 @@ public class Jcpdf {
     native void getBleedBox(int pdf, int pagenumber, double[] r);
     native void getArtBox(int pdf, int pagenumber, double[] r);
     native void getTrimBox(int pdf, int pagenumber, double[] r);
-
     native int getPageRotation(int pdf, int pagenumber);
     native boolean hasBox(int pdf, int pagenumber, String boxname);
     native void setMediabox(int pdf, int range, double minx, double maxx, double miny, double maxy);
@@ -170,7 +169,6 @@ public class Jcpdf {
     native void setMetadataFromFile(int pdf, String filename);
     native void setMetadataFromByteArray(int pdf, byte[] data);
     native byte[] getMetadata(int pdf);
-
     native void removeMetadata(int pdf);
     native void createMetadata(int pdf);
     native void setMetadataDate(int pdf, String date);
@@ -194,7 +192,6 @@ public class Jcpdf {
     native int getAttachmentPage(int serial);
     native byte[] getAttachmentData(int serial);
     native void endGetAttachments(); 
-
     native int startGetImageResolution(int pdf, double res);
     native int getImageResolutionPageNumber(int serial);
     native String getImageResolutionImageName(int serial);
@@ -203,7 +200,6 @@ public class Jcpdf {
     native double getImageResolutionXRes(int serial);
     native double getImageResolutionYRes(int serial);
     native void endGetImageResolution();
-
     native void startGetFontInfo(int pdf);
     native int numberFonts();
     native String getFontName(int serial);
@@ -213,24 +209,20 @@ public class Jcpdf {
     native void endGetFontInfo();
     native void removeFonts(int pdf);
     native void copyFont(int from_pdf, int to_pdf, int range, int pagenumber, String fontname);
-
     native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, int pdf);
     native int fromJSON(String filename);
     native byte[] outputJSONMemory(int pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams);
     native int fromJSONMemory(byte[] data);
-
     native int startGetOCGList(int pdf);
     native String OCGListEntry(int serial);
     native void endGetOCGList();
     native void OCGCoalesce(int pdf);
     native void OCGRename(int pdf, String f, String t);
     native void OCGOrderAll(int pdf);
-
     native int blankDocument(double w, double h, int pages);
     native int blankDocumentPaper(int papersize, int pages);
     native int textToPDF(double w, double h, int font, double fontsize, String filename);
     native int textToPDFPaper(int papersize, int font, double fontsize, String filename);
-
     native void draft(int pdf, int range, boolean boxes);
     native void removeAllText(int pdf, int range);
     native void blackText(int pdf, int range);
@@ -314,6 +306,20 @@ public class Jcpdf {
     int courierBold = 9;
     int courierOblique = 10;
     int courierBoldOblique = 11;
+
+    int posCentre = 0;
+    int posLeft = 1;
+    int posRight = 2;
+    int top = 3;
+    int topLeft = 4;
+    int topRight = 5;
+    int left = 6;
+    int bottomLeft = 7;
+    int bottom = 8;
+    int bottomRight = 9;
+    int right = 10;
+    int diagonal = 11;
+    int reverseDiagonal = 12;
 
     static public void main(String argv[]) {
         System.loadLibrary("cpdf");
@@ -491,11 +497,7 @@ public class Jcpdf {
         jcpdf.scaleToFitPaper(pagespdf3, jcpdf.all(pagespdf3), jcpdf.a4portrait, 0.8);
         jcpdf.toFile(pagespdf3, "testoutputs/03scaletofitpaper.pdf", false, false);
         System.out.println("---cpdf_scaleContents()");
-
-        //FIXME Need to implement positions
-        /*Cpdf.Position position = new Cpdf.Position (Cpdf.Anchor.TopLeft, 20.0, 20.0);
-        Cpdf.scaleContents(pagespdf4, Cpdf.all(pagespdf4), position, 2.0);*/
-
+        jcpdf.scaleContents(pagespdf4, jcpdf.all(pagespdf4), jcpdf.topLeft, 20.0, 20.0, 2.0);
         jcpdf.toFile(pagespdf4, "testoutputs/03scalecontents.pdf", false, false);
         System.out.println("---cpdf_shiftContents()");
         jcpdf.shiftContents(pagespdf5, jcpdf.all(pagespdf5), 1.5, 1.25);
@@ -645,15 +647,10 @@ public class Jcpdf {
         jcpdf.stampOn(stamp, stampee, stamp_range);
         System.out.println("---cpdf_stampUnder()");
         jcpdf.stampUnder(stamp, stampee, stamp_range);
-
-        //FIXME pos
-        /*
-        Cpdf.Position spos = new Cpdf.Position (Cpdf.Anchor.TopLeft, 20.0, 20.0);
-        Console.WriteLine("---cpdf_stampExtended()");
-        Cpdf.stampExtended(stamp, stampee, stamp_range, true, true, spos, true);
-        Cpdf.toFile(stamp, "testoutputs/08stamp_after.pdf", false, false);
-        Cpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);*/
-
+        System.out.println("---cpdf_stampExtended()");
+        jcpdf.stampExtended(stamp, stampee, stamp_range, true, true, jcpdf.topLeft, 20.0, 20.0, true);
+        jcpdf.toFile(stamp, "testoutputs/08stamp_after.pdf", false, false);
+        jcpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);
         int c1 = jcpdf.fromFile("testinputs/logo.pdf", "");
         int c2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_combinePages()");
