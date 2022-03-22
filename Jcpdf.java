@@ -88,6 +88,8 @@ public class Jcpdf {
     native byte[] getBookmarksJSON(int pdf);
     native void setBookmarksJSON(int pdf, byte[] data);
     native void tableOfContents(int pdf, int font, double fontsize, String title, boolean bookmark);
+    native void addText(boolean metrics, int pdf, int range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fonrtsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts);
+    native void addTextSimple(int pdf, int range, String text, int anchor, double p1, double p2, int font, double fontsize);
     native void removeText(int pdf, int range);
     native int textWidth(int font, String text);
     native void stampOn(int pdf, int pdf2, int range);
@@ -320,6 +322,10 @@ public class Jcpdf {
     int right = 10;
     int diagonal = 11;
     int reverseDiagonal = 12;
+
+    int leftJustify = 0;
+    int centreJustify = 1;
+    int rightJusitfy = 2;
 
     static public void main(String argv[]) {
         System.loadLibrary("cpdf");
@@ -605,17 +611,15 @@ public class Jcpdf {
         /* CHAPTER 8. Logos, Watermarks and Stamps */
         System.out.println("***** CHAPTER 8. Logos, Watermarks and Stamps");
         int textfile = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        //FIXME pos
-        /*Console.WriteLine("---cpdf_addText()");
-        Cpdf.Position pos = new Cpdf.Position (Cpdf.Anchor.TopLeft, 20.0, 20.0);
-        Cpdf.addText(false,
+        System.out.println("---cpdf_addText()");
+        jcpdf.addText(false,
                      textfile,
-                     Cpdf.all(textfile),
+                     jcpdf.all(textfile),
                      "Some Text~~~~~~~~~~!",
-                     pos,
+                     jcpdf.topLeft, 20.0, 20.0,
                      1.0,
                      1,
-                     Cpdf.Font.TimesRoman,
+                     jcpdf.timesRoman,
                      20.0,
                      0.5,
                      0.5,
@@ -624,17 +628,15 @@ public class Jcpdf {
                      false,
                      true,
                      0.5,
-                     Cpdf.Justification.LeftJustify,
+                     jcpdf.leftJustify,
                      false,
                      false,
                      "",
                      1.0,
                      false);
-        Console.WriteLine("---cpdf_addTextSimple()");
-        Cpdf.addTextSimple(textfile, Cpdf.all(textfile), "The text!", pos, Cpdf.Font.TimesRoman, 50.0);
-        Cpdf.toFile(textfile, "testoutputs/08added_text.pdf", false, false);
-        */
-
+        System.out.println("---cpdf_addTextSimple()");
+        jcpdf.addTextSimple(textfile, jcpdf.all(textfile), "The text!", jcpdf.topLeft, 20.0, 20.0, jcpdf.timesRoman, 50.0);
+        jcpdf.toFile(textfile, "testoutputs/08added_text.pdf", false, false);
         System.out.println("---cpdf_removeText()");
         jcpdf.removeText(textfile, jcpdf.all(textfile));
         jcpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
