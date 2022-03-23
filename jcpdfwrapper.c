@@ -641,6 +641,26 @@ JNIEXPORT void JNICALL Java_Jcpdf_tableOfContents
     (*env)->ReleaseStringUTFChars(env, title, str_title);
 }
 
+JNIEXPORT void JNICALL Java_Jcpdf_addText
+  (JNIEnv * env, jobject jobj, jboolean metrics, jint pdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
+{
+    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
+    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
+    cpdf_addText(metrics, pdf, range, str_text, p, linespacing, bates, font, fontsize, r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, str_filename, linewidth, embed_fonts);
+    (*env)->ReleaseStringUTFChars(env, text, str_text);
+    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+}
+
+  JNIEXPORT void JNICALL Java_Jcpdf_addTextSimple
+  (JNIEnv * env, jobject jobj, jint pdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
+{
+    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
+    struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
+    cpdf_addTextSimple(pdf, range, str_text, p, font, fontsize);
+    (*env)->ReleaseStringUTFChars(env, text, str_text);
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_removeText
   (JNIEnv * env, jobject jobj, jint pdf, jint range)
 {
@@ -1247,7 +1267,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_setMetadataFromByteArray
   (JNIEnv * env, jobject jobj, jint pdf, jbyteArray data)
 {
     int length = (*env)->GetArrayLength(env, data);
-    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    signed char* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    printf("%d, %d, %d\n", memory[0], memory[1], memory[2]);
     cpdf_setMetadataFromByteArray(pdf, memory, length);
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
 }
