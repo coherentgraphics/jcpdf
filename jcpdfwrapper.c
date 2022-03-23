@@ -1,5 +1,3 @@
-//Check "modified UTF8" not a problem for us
-//Check all of chapter 10: traps and pitfalls in Java book
 #include <jni.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +14,7 @@ JNIEXPORT void JNICALL Java_Jcpdf_startup
 JNIEXPORT jstring JNICALL Java_Jcpdf_version
   (JNIEnv * env, jobject jobj)
 {
-    return (*env)->NewStringUTF(env, cpdf_version()); //No need to check for null, since last statement in function.
+    return (*env)->NewStringUTF(env, cpdf_version());
 }
 
 JNIEXPORT void JNICALL Java_Jcpdf_setFast
@@ -30,6 +28,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_setSlow
 {
     cpdf_setSlow();
 }
+
+/* CHAPTER 1. Basics */
 
 JNIEXPORT int JNICALL Java_Jcpdf_fromFile
   (JNIEnv * env, jobject jobj, jstring filename, jstring userpw)
@@ -375,6 +375,8 @@ JNIEXPORT jboolean JNICALL Java_Jcpdf_isLinearized
     return result;
 }
 
+/* CHAPTER 2. Merging and Splitting */
+
 JNIEXPORT jint JNICALL Java_Jcpdf_mergeSimple
   (JNIEnv * env, jobject jobj, jintArray data)
 {
@@ -413,6 +415,8 @@ JNIEXPORT jint JNICALL Java_Jcpdf_selectPages
     int result = cpdf_selectPages(pdf, range);
     return result;
 }
+
+/* CHAPTER 3. Pages */
 
 JNIEXPORT void JNICALL Java_Jcpdf_scalePages
   (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble sx, jdouble sy)
@@ -530,6 +534,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_hardBox
     cpdf_hardBox(pdf, range, str_box);
 }
 
+/* CHAPTER 5. Compression */
+
 JNIEXPORT void JNICALL Java_Jcpdf_compress
   (JNIEnv * env, jobject jobj, jint pdf)
 {
@@ -547,6 +553,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_squeezeInMemory
 {
     cpdf_squeezeInMemory(pdf);
 }
+
+/* CHAPTER 6. Bookmarks */
 
 JNIEXPORT void JNICALL Java_Jcpdf_startGetBookmarkInfo
   (JNIEnv * env, jobject jobj, jint pdf)
@@ -660,6 +668,38 @@ JNIEXPORT void JNICALL Java_Jcpdf_tableOfContents
     (*env)->ReleaseStringUTFChars(env, title, str_title);
 }
 
+/* CHAPTER 7. Presentations */
+
+/* Not included in the library version */
+
+/* CHAPTER 8. Logos, Watermarks and Stamps */
+
+JNIEXPORT void JNICALL Java_Jcpdf_stampOn
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
+{
+    cpdf_stampOn(pdf, pdf2, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_stampUnder
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
+{
+    cpdf_stampUnder(pdf, pdf2, range);
+}
+
+JNIEXPORT void JNICALL Java_Jcpdf_stampExtended
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
+{
+    struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
+    cpdf_stampExtended(pdf, pdf2, range, isover, scale_stamp_to_fit, p, relative_to_cropbox);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_combinePages
+  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2)
+{
+    int result = cpdf_combinePages(pdf, pdf2);
+    return result;
+}
+
 JNIEXPORT void JNICALL Java_Jcpdf_addText
   (JNIEnv * env, jobject jobj, jboolean metrics, jint pdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
 {
@@ -695,32 +735,6 @@ JNIEXPORT int JNICALL Java_Jcpdf_textWidth
     return w;
 }
 
-JNIEXPORT void JNICALL Java_Jcpdf_stampOn
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
-{
-    cpdf_stampOn(pdf, pdf2, range);
-}
-
-JNIEXPORT void JNICALL Java_Jcpdf_stampUnder
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
-{
-    cpdf_stampUnder(pdf, pdf2, range);
-}
-
-JNIEXPORT void JNICALL Java_Jcpdf_stampExtended
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
-{
-    struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
-    cpdf_stampExtended(pdf, pdf2, range, isover, scale_stamp_to_fit, p, relative_to_cropbox);
-}
-
-JNIEXPORT int JNICALL Java_Jcpdf_combinePages
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2)
-{
-    int result = cpdf_combinePages(pdf, pdf2);
-    return result;
-}
-
 JNIEXPORT jstring JNICALL Java_Jcpdf_stampAsXObject
   (JNIEnv * env, jobject jobj, jint pdf, jint range, jint stamp_pdf)
 {
@@ -734,6 +748,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_addContent
     cpdf_addContent(str_str, before, pdf, range);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
 }
+
+/* CHAPTER 9. Multipage facilities */
 
 JNIEXPORT void JNICALL Java_Jcpdf_impose
   (JNIEnv * env, jobject jobj, jint pdf, jdouble x, jdouble y, jboolean fit, jboolean columns, jboolean rtl, jboolean btt, jboolean center, jdouble margin, jdouble spacing, jdouble linewidth)
@@ -782,6 +798,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_padMultipleBefore
 {
     cpdf_padMultipleBefore(pdf, n);
 }
+
+/* CHAPTER 10. Annotations */
 
 JNIEXPORT jbyteArray JNICALL Java_Jcpdf_annotationsJSON
   (JNIEnv * env, jobject obj, jint pdf)
@@ -1371,6 +1389,8 @@ JNIEXPORT jstring JNICALL Java_Jcpdf_getPageLabelStringForPage
     return (*env)->NewStringUTF(env, cpdf_getPageLabelStringForPage(pdf, n));
 }
 
+/* CHAPTER 12. File Attachments */
+
 JNIEXPORT void JNICALL Java_Jcpdf_attachFile
   (JNIEnv * env, jobject jobj, jstring filename, jint pdf)
 {
@@ -1458,6 +1478,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_endGetAttachments
     cpdf_endGetAttachments();
 }
 
+/* CHAPTER 13. Images */
+
 JNIEXPORT int JNICALL Java_Jcpdf_startGetImageResolution
   (JNIEnv * env, jobject jobj, jint pdf, jdouble res)
 {
@@ -1512,12 +1534,14 @@ JNIEXPORT void JNICALL Java_Jcpdf_endGetImageResolution
     cpdf_endGetImageResolution();
 }
 
+/* CHAPTER 14. Fonts */
+
+
 JNIEXPORT void JNICALL Java_Jcpdf_startGetFontInfo
   (JNIEnv * env, jobject jobj, jint pdf)
 {
     cpdf_startGetFontInfo(pdf);
 }
-
 
 JNIEXPORT int JNICALL Java_Jcpdf_numberFonts
   (JNIEnv * env, jobject jobj)
@@ -1571,6 +1595,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_copyFont
     (*env)->ReleaseStringUTFChars(env, fontname, str_fontname);
 }
 
+/* CHAPTER 15. PDF and JSON */
+
 JNIEXPORT void JNICALL Java_Jcpdf_outputJSON
   (JNIEnv * env, jobject jobj, jstring filename, jboolean parse_content, jboolean no_stream_data, jboolean decompress_streams, jint pdf)
 {
@@ -1608,6 +1634,8 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromJSONMemory
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
     return result;
 }
+
+/* CHAPTER 16. Optional Content Groups */
 
 JNIEXPORT int JNICALL Java_Jcpdf_startGetOCGList
   (JNIEnv * env, jobject jobj, jint pdf)
@@ -1650,6 +1678,8 @@ JNIEXPORT void JNICALL Java_Jcpdf_OCGOrderAll
     cpdf_OCGOrderAll(pdf);
 }
 
+/* CHAPTER 17. Creating New PDFs */
+
 JNIEXPORT int JNICALL Java_Jcpdf_blankDocument
   (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint pages)
 {
@@ -1681,6 +1711,8 @@ JNIEXPORT int JNICALL Java_Jcpdf_textToPDFPaper
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     return result;
 }
+
+/* CHAPTER 18. Miscellaneous */
 
 JNIEXPORT void JNICALL Java_Jcpdf_draft
   (JNIEnv * env, jobject jobj, jint pdf, jint range, jboolean boxes)
