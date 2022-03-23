@@ -9,6 +9,8 @@ public class Jcpdf {
     native int fromFileLazy(String filename, String userpw);
     native byte[] toMemory(int pdf, boolean linearize, boolean make_id);
     native int fromMemory(byte[] data, String userpw);
+    native void fromMemoryLazyRelease(byte[] data);
+    native int fromMemoryLazy(byte[] data, String userpw);
     native int startEnumeratePDFs();
     native int enumeratePDFsKey(int n);
     native String enumeratePDFsInfo(int n);
@@ -354,11 +356,10 @@ public class Jcpdf {
         int frommem = jcpdf.fromMemory(mempdf, "");
         jcpdf.toFile(frommem, "testoutputs/01fromMemory.pdf", false, false);
 
-        /*Console.WriteLine("---cpdf_fromMemoryLazy()");
-        IntPtr ptr = Marshal.AllocHGlobal(mempdf.Length);
-        Marshal.Copy(mempdf, 0, ptr, mempdf.Length);
-        Cpdf.Pdf frommemlazy = Cpdf.fromMemoryLazy(ptr, mempdf.Length, "");
-        Cpdf.toFile(frommemlazy, "testoutputs/01fromMemoryLazy.pdf", false, false);*/
+        System.out.println("---cpdf_fromMemoryLazy()");
+        int frommemlazy = jcpdf.fromMemoryLazy(mempdf, "");
+        jcpdf.toFile(frommemlazy, "testoutputs/01fromMemoryLazy.pdf", false, false);
+        jcpdf.fromMemoryLazyRelease(mempdf);
         int pdf3 = jcpdf.blankDocument(153.5, 234.2, 50);
         int pdf4 = jcpdf.blankDocumentPaper(jcpdf.a4landscape, 50);
         System.out.println("---cpdf: enumerate PDFs");

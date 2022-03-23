@@ -76,6 +76,25 @@ JNIEXPORT int JNICALL Java_Jcpdf_fromMemory
     return result;
 }
 
+void* memory;
+
+JNIEXPORT void JNICALL Java_Jcpdf_fromMemoryLazyRelease
+  (JNIEnv *env, jobject jobj, jbyteArray data)
+{
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+}
+
+JNIEXPORT int JNICALL Java_Jcpdf_fromMemoryLazy
+  (JNIEnv * env, jobject jobj, jbyteArray data, jstring userpw)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    memory = (*env)->GetByteArrayElements(env, data, 0); 
+    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
+    int result = cpdf_fromMemory(memory, length, str_userpw);
+    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    return result;
+}
+
 JNIEXPORT int JNICALL Java_Jcpdf_startEnumeratePDFs
   (JNIEnv * env, jobject jobj)
 {
@@ -1268,7 +1287,6 @@ JNIEXPORT void JNICALL Java_Jcpdf_setMetadataFromByteArray
 {
     int length = (*env)->GetArrayLength(env, data);
     signed char* memory = (*env)->GetByteArrayElements(env, data, 0); 
-    printf("%d, %d, %d\n", memory[0], memory[1], memory[2]);
     cpdf_setMetadataFromByteArray(pdf, memory, length);
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
 }
