@@ -1,7 +1,7 @@
 package com.coherentpdf;
 
 public class Jcpdf {
-    public class CpdfError extends Exception
+    public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
       {

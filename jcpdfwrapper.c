@@ -16,7 +16,7 @@ void checkerror(JNIEnv *env)
   if (cpdf_lastError != 0)
   {
       cpdf_clearError();
-      ThrowByName(env, "com/coherentpdf/JCpdf$CpdfError", cpdf_lastErrorString);
+      ThrowByName(env, "com/coherentpdf/Jcpdf$CpdfError", cpdf_lastErrorString);
   }
 }
 
