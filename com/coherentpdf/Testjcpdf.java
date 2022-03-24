@@ -21,7 +21,7 @@ public class Testjcpdf
     {
         System.out.println("***** CHAPTER 1. Basics");
         System.out.println("---cpdf_fromFile()");
-        int pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int pdf = jcpdf.fromFile("testdinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_fromFileLazy()");
         int pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_toMemory()");
