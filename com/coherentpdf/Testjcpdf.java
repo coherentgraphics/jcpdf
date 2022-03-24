@@ -2,7 +2,7 @@ package com.coherentpdf;
 
 public class Testjcpdf
 {
-    static void chapter0(Jcpdf jcpdf)
+    static void chapter0(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 0. Preliminaries */
         System.out.println("***** CHAPTER 0. Preliminaries");
@@ -17,11 +17,11 @@ public class Testjcpdf
         System.out.println("---cpdf_clearError()");
     }
 
-    static void chapter1(Jcpdf jcpdf)
+    static void chapter1(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         System.out.println("***** CHAPTER 1. Basics");
         System.out.println("---cpdf_fromFile()");
-        int pdf = jcpdf.fromFile("testdinputs/cpdflibmanual.pdf", "");
+        int pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_fromFileLazy()");
         int pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_toMemory()");
@@ -125,7 +125,7 @@ public class Testjcpdf
         jcpdf.decryptPdfOwner(pdf10, "");
     }
    
-    static void chapter2(Jcpdf jcpdf)
+    static void chapter2(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 2. Merging and Splitting */
         System.out.println("***** CHAPTER 2. Merging and Splitting");
@@ -147,7 +147,7 @@ public class Testjcpdf
         jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
     }
    
-    static void chapter3(Jcpdf jcpdf)
+    static void chapter3(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 3. Pages */
         System.out.println("***** CHAPTER 3. Pages");
@@ -229,13 +229,13 @@ public class Testjcpdf
         jcpdf.toFile(pagespdf19, "testoutputs/03remove_bleed.pdf", false, false);
     }
    
-    static void chapter4(Jcpdf jcpdf)
+    static void chapter4(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 4. Encryption */
         /* Encryption covered under Chapter 1 in cpdflib. */
     }
    
-    static void chapter5(Jcpdf jcpdf)
+    static void chapter5(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 5. Compression */
         System.out.println("***** CHAPTER 5. Compression");
@@ -251,7 +251,7 @@ public class Testjcpdf
         jcpdf.toFile(pdf16, "testoutputs/05squeezedinmemory.pdf", false, false);
     }
    
-    static void chapter6(Jcpdf jcpdf)
+    static void chapter6(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 6. Bookmarks */
         System.out.println("***** CHAPTER 6. Bookmarks");
@@ -290,13 +290,13 @@ public class Testjcpdf
         jcpdf.toFile(toc, "testoutputs/06toc.pdf", false, false);
     }
    
-    static void chapter7(Jcpdf jcpdf)
+    static void chapter7(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 7. Presentations */
         /* Not included in the library version. */
     }
    
-    static void chapter8(Jcpdf jcpdf)
+    static void chapter8(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 8. Logos, Watermarks and Stamps */
         System.out.println("***** CHAPTER 8. Logos, Watermarks and Stamps");
@@ -358,7 +358,7 @@ public class Testjcpdf
         jcpdf.toFile(undoc, "testoutputs/08demo.pdf", false, false);
     }
    
-    static void chapter9(Jcpdf jcpdf)
+    static void chapter9(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 9. Multipage facilities */
         System.out.println("***** CHAPTER 9. Multipage facilities");
@@ -399,7 +399,7 @@ public class Testjcpdf
         jcpdf.toFile(mp7, "testoutputs/09mp7.pdf", false, false);
     }
    
-    static void chapter10(Jcpdf jcpdf)
+    static void chapter10(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 10. Annotations */
         System.out.println("***** CHAPTER 10. Annotations");
@@ -409,7 +409,7 @@ public class Testjcpdf
         System.out.format("Contains %d bytes of data\n", annotjson.length);
     }
    
-    static void chapter11(Jcpdf jcpdf)
+    static void chapter11(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 11. Document Information and Metadata */
         System.out.println("***** CHAPTER 11. Document Information and Metadata");
@@ -609,7 +609,7 @@ public class Testjcpdf
         System.out.format("Label string is %s\n", pl);
     }
    
-    static void chapter12(Jcpdf jcpdf)
+    static void chapter12(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 12. File Attachments */
         System.out.println("***** CHAPTER 12. File Attachments");
@@ -643,7 +643,7 @@ public class Testjcpdf
         jcpdf.toFile(attachments, "testoutputs/12removed_attachments.pdf", false, false);
     }
    
-    static void chapter13(Jcpdf jcpdf)
+    static void chapter13(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 13. Images. */
         System.out.println("***** CHAPTER 13. Images");
@@ -663,7 +663,7 @@ public class Testjcpdf
         jcpdf.endGetImageResolution();
     }
    
-    static void chapter14(Jcpdf jcpdf)
+    static void chapter14(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 14. Fonts. */
         System.out.println("***** CHAPTER 14. Fonts");
@@ -688,7 +688,7 @@ public class Testjcpdf
         jcpdf.copyFont(fonts, fonts2, jcpdf.all(fonts), 1, "/Font");
     }
    
-    static void chapter15(Jcpdf jcpdf)
+    static void chapter15(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 15. PDF and JSON */
         System.out.println("***** CHAPTER 15. PDF and JSON");
@@ -708,7 +708,7 @@ public class Testjcpdf
         jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);
     }
    
-    static void chapter16(Jcpdf jcpdf)
+    static void chapter16(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 16. Optional Content Groups */
         System.out.println("***** CHAPTER 16. Optional Content Groups");
@@ -728,7 +728,7 @@ public class Testjcpdf
         jcpdf.OCGOrderAll(ocg);
     }
     
-    static void chapter17(Jcpdf jcpdf)
+    static void chapter17(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 17. Creating New PDFs */
         System.out.println("***** CHAPTER 17. Creating New PDFs");
@@ -746,7 +746,7 @@ public class Testjcpdf
         jcpdf.toFile(ttpdfpaper, "testoutputs/01ttpdfpaper.pdf", false, false);
     }
 
-    static void chapter18(Jcpdf jcpdf)
+    static void chapter18(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 18. Miscellaneous */
         System.out.println("***** CHAPTER 18. Miscellaneous");
@@ -819,24 +819,30 @@ public class Testjcpdf
 
     static public void main(String argv[]) {
         Jcpdf jcpdf = new Jcpdf();
-        chapter0(jcpdf);
-        chapter1(jcpdf);
-        chapter2(jcpdf);
-        chapter3(jcpdf);
-        chapter4(jcpdf);
-        chapter5(jcpdf);
-        chapter6(jcpdf);
-        chapter7(jcpdf);
-        chapter8(jcpdf);
-        chapter9(jcpdf);
-        chapter10(jcpdf);
-        chapter11(jcpdf);
-        chapter12(jcpdf);
-        chapter13(jcpdf);
-        chapter14(jcpdf);
-        chapter15(jcpdf);
-        chapter16(jcpdf);
-        chapter17(jcpdf);
-        chapter18(jcpdf);
+        try
+        {
+            chapter0(jcpdf);
+            chapter1(jcpdf);
+            chapter2(jcpdf);
+            chapter3(jcpdf);
+            chapter4(jcpdf);
+            chapter5(jcpdf);
+            chapter6(jcpdf);
+            chapter7(jcpdf);
+            chapter8(jcpdf);
+            chapter9(jcpdf);
+            chapter10(jcpdf);
+            chapter11(jcpdf);
+            chapter12(jcpdf);
+            chapter13(jcpdf);
+            chapter14(jcpdf);
+            chapter15(jcpdf);
+            chapter16(jcpdf);
+            chapter17(jcpdf);
+            chapter18(jcpdf);
+        }
+        catch (Jcpdf.CpdfError e)
+        {
+        }
     }
 }
