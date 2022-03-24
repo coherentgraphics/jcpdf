@@ -1,5 +1,4 @@
 /* Jcpdf.java */
-
 public class Jcpdf {
     native void startup();
     native String version();

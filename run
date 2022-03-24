@@ -1,2 +1,2 @@
 #Try it out
-CAMLPDF_REPRODUCIBLE_IDS=true CPDF_REPRODUCIBLE_DATES=true java -cp . -Djava.library.path=.:../cpdflib-source Jcpdf.java
+CAMLPDF_REPRODUCIBLE_IDS=true CPDF_REPRODUCIBLE_DATES=true java -cp . -Djava.library.path=.:../cpdflib-source ./com/coherentpdf/Jcpdf.java
