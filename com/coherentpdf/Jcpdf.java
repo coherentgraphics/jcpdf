@@ -1,6 +1,13 @@
 package com.coherentpdf;
 
 public class Jcpdf {
+    public class CpdfError extends Exception
+    {
+      public CpdfError(String errorMessage)
+      {
+        super(errorMessage);
+      }
+    }
     public Jcpdf()
     {
       System.loadLibrary("cpdf");
