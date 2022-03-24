@@ -1,4 +1,6 @@
 /* Jcpdf.java */
+package com.coherentpdf;
+
 public class Jcpdf {
     native void startup();
     native String version();
