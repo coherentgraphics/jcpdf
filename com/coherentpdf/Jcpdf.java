@@ -251,8 +251,8 @@ public class Jcpdf {
     public native void OCGOrderAll(int pdf) throws CpdfError;
     public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
-    public native int textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError;
-    public native int textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError;
+    public native Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError;
+    public native Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError;
     public native void draft(int pdf, int range, boolean boxes) throws CpdfError;
     public native void removeAllText(int pdf, int range) throws CpdfError;
     public native void blackText(int pdf, int range) throws CpdfError;

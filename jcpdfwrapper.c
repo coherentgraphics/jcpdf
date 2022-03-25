@@ -2022,24 +2022,24 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankDocumentPaper
     return makePDF(env, jobj, pdf);
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_textToPDF
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_textToPDF
   (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint font, jdouble fontsize, jstring filename)
 {
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     int result = cpdf_textToPDF(w, h, font, fontsize, str_filename);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_textToPDFPaper
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_textToPDFPaper
   (JNIEnv * env, jobject jobj, jint papersize, jint font, jdouble fontsize, jstring filename)
 {
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     int result = cpdf_textToPDFPaper(papersize, font, fontsize, str_filename);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
 /* CHAPTER 18. Miscellaneous */

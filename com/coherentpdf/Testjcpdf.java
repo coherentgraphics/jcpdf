@@ -290,11 +290,11 @@ public class Testjcpdf
 //        jcpdf.toFile(toc, "testoutputs/06toc.pdf", false, false);
 //    }
 //   
-//    static void chapter7(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 7. Presentations */
-//        /* Not included in the library version. */
-//    }
+    static void chapter7(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 7. Presentations */
+        /* Not included in the library version. */
+    }
 //   
 //    static void chapter8(Jcpdf jcpdf) throws Jcpdf.CpdfError
 //    {
@@ -729,23 +729,23 @@ public class Testjcpdf
 //        jcpdf.OCGOrderAll(ocg);
 //    }
 //    
-//    static void chapter17(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 17. Creating New PDFs */
-//        System.out.println("***** CHAPTER 17. Creating New PDFs");
-//        System.out.println("---cpdf_blankDocument()");
-//        System.out.println("---cpdf_blankDocumentPaper()");
-//        int new1 = jcpdf.blankDocument(100.0, 200.0, 20);
-//        int new2 = jcpdf.blankDocumentPaper(jcpdf.a4portrait, 10);
-//        jcpdf.toFile(new1, "testoutputs/01blank.pdf", false, false);
-//        jcpdf.toFile(new2, "testoutputs/01blanka4.pdf", false, false);
-//        System.out.println("---cpdf_textToPDF()");
-//        System.out.println("---cpdf_textToPDFPaper()");
-//        int ttpdf = jcpdf.textToPDF(500.0, 600.0, jcpdf.timesItalic, 8.0, "../cpdflib-source/cpdflibtest.c");
-//        int ttpdfpaper = jcpdf.textToPDFPaper(jcpdf.a4portrait, jcpdf.timesBoldItalic, 10.0, "../cpdflib-source/cpdflibtest.c");
-//        jcpdf.toFile(ttpdf, "testoutputs/01ttpdf.pdf", false, false);
-//        jcpdf.toFile(ttpdfpaper, "testoutputs/01ttpdfpaper.pdf", false, false);
-//    }
+    static void chapter17(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 17. Creating New PDFs */
+        System.out.println("***** CHAPTER 17. Creating New PDFs");
+        System.out.println("---cpdf_blankDocument()");
+        System.out.println("---cpdf_blankDocumentPaper()");
+        Jcpdf.Pdf new1 = jcpdf.blankDocument(100.0, 200.0, 20);
+        Jcpdf.Pdf new2 = jcpdf.blankDocumentPaper(jcpdf.a4portrait, 10);
+        jcpdf.toFile(new1, "testoutputs/01blank.pdf", false, false);
+        jcpdf.toFile(new2, "testoutputs/01blanka4.pdf", false, false);
+        System.out.println("---cpdf_textToPDF()");
+        System.out.println("---cpdf_textToPDFPaper()");
+        Jcpdf.Pdf ttpdf = jcpdf.textToPDF(500.0, 600.0, jcpdf.timesItalic, 8.0, "../cpdflib-source/cpdflibtest.c");
+        Jcpdf.Pdf ttpdfpaper = jcpdf.textToPDFPaper(jcpdf.a4portrait, jcpdf.timesBoldItalic, 10.0, "../cpdflib-source/cpdflibtest.c");
+        jcpdf.toFile(ttpdf, "testoutputs/01ttpdf.pdf", false, false);
+        jcpdf.toFile(ttpdfpaper, "testoutputs/01ttpdfpaper.pdf", false, false);
+    }
 //
 //    static void chapter18(Jcpdf jcpdf) throws Jcpdf.CpdfError
 //    {
@@ -829,7 +829,7 @@ public class Testjcpdf
             chapter4(jcpdf);
             chapter5(jcpdf);
 //            chapter6(jcpdf);
-//            chapter7(jcpdf);
+            chapter7(jcpdf);
 //            chapter8(jcpdf);
 //            chapter9(jcpdf);
             chapter10(jcpdf);
@@ -839,7 +839,7 @@ public class Testjcpdf
 //            chapter14(jcpdf);
 //            chapter15(jcpdf);
 //            chapter16(jcpdf);
-//            chapter17(jcpdf);
+            chapter17(jcpdf);
 //            chapter18(jcpdf);
         }
         catch (Jcpdf.CpdfError e)
