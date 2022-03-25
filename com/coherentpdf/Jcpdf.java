@@ -31,7 +31,7 @@ public class Jcpdf {
     public native String version() throws CpdfError;
     public native void setFast() throws CpdfError;
     public native void setSlow() throws CpdfError;
-    public native int fromFile(String filename, String userpw) throws CpdfError;
+    public native Pdf fromFile(String filename, String userpw) throws CpdfError;
     public native int fromFileLazy(String filename, String userpw) throws CpdfError;
     public native byte[] toMemory(int pdf, boolean linearize, boolean make_id) throws CpdfError;
     public native int fromMemory(byte[] data, String userpw) throws CpdfError;
@@ -134,7 +134,7 @@ public class Jcpdf {
     public native void padEvery(int pdf, int n) throws CpdfError;
     public native void padMultiple(int pdf, int n) throws CpdfError;
     public native void padMultipleBefore(int pdf, int n) throws CpdfError;
-    public native byte[] annotationsJSON(int pdf) throws CpdfError;
+    public native byte[] annotationsJSON(Pdf pdf) throws CpdfError;
     public native int getVersion(int pdf) throws CpdfError;
     public native int getMajorVersion(int pdf) throws CpdfError;
     public native String getTitle(int pdf) throws CpdfError;

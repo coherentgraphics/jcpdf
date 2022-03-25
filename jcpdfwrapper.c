@@ -52,8 +52,26 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
 }
 
 /* CHAPTER 1. Basics */
+jobject makePDF(JNIEnv * env, jobject jobj, jint pdf)
+{
+    jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Pdf");
+    if (class == NULL) return NULL;
+    jmethodID cid = (*env)->GetMethodID(env, class, "<init>", "(Lcom/coherentpdf/Jcpdf;I)V");
+    if (cid == NULL) return NULL;
+    return (*env)->NewObject(env, class, cid, jobj, pdf);
+}
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromFile
+int getPDF(JNIEnv * env, jobject jobj, jobject opdf)
+{
+   jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Pdf");
+   if (class == NULL) fprintf(stderr, "***getpdf: class null\n");
+   jfieldID fid = (*env)->GetFieldID(env, class, "pdf", "I");
+   if (class == NULL) fprintf(stderr, "***getpdf: fid null\n");
+   int result = (*env)->GetIntField(env, opdf, fid);
+   return result;
+}
+
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromFile
   (JNIEnv * env, jobject jobj, jstring filename, jstring userpw)
 {
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
@@ -62,7 +80,7 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromFile
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
     checkerror(env);
-    return pdf;
+    return makePDF(env, jobj, pdf);
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromFileLazy
@@ -942,8 +960,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padMultipleBefore
 /* CHAPTER 10. Annotations */
 
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_annotationsJSON
-  (JNIEnv * env, jobject obj, jint pdf)
+  (JNIEnv * env, jobject obj, jobject opdf)
 {
+    int pdf = getPDF(env, obj, opdf);
     int len = 0;
     void* memory = cpdf_annotationsJSON(pdf, &len);
     jbyteArray b = (*env)->NewByteArray(env, len);

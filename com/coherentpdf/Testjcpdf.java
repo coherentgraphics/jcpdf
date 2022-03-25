@@ -404,9 +404,10 @@ public class Testjcpdf
         /* CHAPTER 10. Annotations */
         System.out.println("***** CHAPTER 10. Annotations");
         System.out.println("---cpdf_annotationsJSON()");
-        int annot = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf annot = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         byte[] annotjson = jcpdf.annotationsJSON(annot);
         System.out.format("Contains %d bytes of data\n", annotjson.length);
+        annot.close();
     }
    
 //    static void chapter11(Jcpdf jcpdf) throws Jcpdf.CpdfError
