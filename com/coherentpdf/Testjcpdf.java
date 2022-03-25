@@ -89,64 +89,64 @@ public class Testjcpdf
         int b = jcpdf.blankRange();
         Jcpdf.Pdf pdf10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_pages()");
-//        int pages = jcpdf.pages(pdf10);
-//        System.out.format("Pages = %d\n", pages);
-//        System.out.println("---cpdf_pagesFast()");
-//        int pagesfast = jcpdf.pagesFast("", "testinputs/cpdflibmanual.pdf");
-//        System.out.format("Pages = %d\n", pagesfast);
-//        System.out.println("---cpdf_toFile()");
-//        jcpdf.toFile(pdf10, "testoutputs/01tofile.pdf", false, false);
-//        System.out.println("---cpdf_toFileExt()");
-//        jcpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
-//        System.out.println("---cpdf_isEncrypted()");
-//        boolean isenc = jcpdf.isEncrypted(pdf10);
-//        System.out.format("isencrypted:%d\n", isenc ? 1 : 0);
-//        System.out.println("---cpdf_isLinearized()");
-//        boolean lin = jcpdf.isLinearized("testinputs/cpdfmanual.pdf");
-//        System.out.format("islinearized:%d\n", lin ? 1 : 0);
-//        int pdf400 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pdf401 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int[] permissions = new int[] {jcpdf.noEdit};
-//        System.out.println("---cpdf_toFileEncrypted()");
-//        jcpdf.toFileEncrypted(pdf400, jcpdf.pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
-//        System.out.println("---cpdf_toFileEncryptedExt()");
-//        jcpdf.toFileEncryptedExt(pdf401, jcpdf.pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");
-//        System.out.println("---cpdf_hasPermission()");
-//        int pdfenc = jcpdf.fromFile("testoutputs/01encrypted.pdf", "user");
-//        boolean hasnoedit = jcpdf.hasPermission(pdfenc, jcpdf.noEdit);
-//        boolean hasnocopy = jcpdf.hasPermission(pdfenc, jcpdf.noCopy);
-//        System.out.format("Haspermission %d, %d\n", hasnoedit ? 1 : 0, hasnocopy ? 1 : 0);
-//        System.out.println("---cpdf_encryptionKind()");
-//        int enckind = jcpdf.encryptionKind(pdfenc);
-//        System.out.format("encryption kind is %d\n", enckind);
-//        System.out.println("---cpdf_decryptPdf()");
-//        jcpdf.decryptPdf(pdf10, "");
-//        System.out.println("---cpdf_decryptPdfOwner()");
-//        jcpdf.decryptPdfOwner(pdf10, "");
+        int pages = jcpdf.pages(pdf10);
+        System.out.format("Pages = %d\n", pages);
+        System.out.println("---cpdf_pagesFast()");
+        int pagesfast = jcpdf.pagesFast("", "testinputs/cpdflibmanual.pdf");
+        System.out.format("Pages = %d\n", pagesfast);
+        System.out.println("---cpdf_toFile()");
+        jcpdf.toFile(pdf10, "testoutputs/01tofile.pdf", false, false);
+        System.out.println("---cpdf_toFileExt()");
+        jcpdf.toFileExt(pdf10, "testoutputs/01tofileext.pdf", false, true, true, true, true);
+        System.out.println("---cpdf_isEncrypted()");
+        boolean isenc = jcpdf.isEncrypted(pdf10);
+        System.out.format("isencrypted:%d\n", isenc ? 1 : 0);
+        System.out.println("---cpdf_isLinearized()");
+        boolean lin = jcpdf.isLinearized("testinputs/cpdfmanual.pdf");
+        System.out.format("islinearized:%d\n", lin ? 1 : 0);
+        Jcpdf.Pdf pdf400 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pdf401 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int[] permissions = new int[] {jcpdf.noEdit};
+        System.out.println("---cpdf_toFileEncrypted()");
+        jcpdf.toFileEncrypted(pdf400, jcpdf.pdf40bit, permissions, "owner", "user", false, false, "testoutputs/01encrypted.pdf");
+        System.out.println("---cpdf_toFileEncryptedExt()");
+        jcpdf.toFileEncryptedExt(pdf401, jcpdf.pdf40bit, permissions, "owner", "user", false, false, true, true, true, "testoutputs/01encryptedext.pdf");
+        System.out.println("---cpdf_hasPermission()");
+        Jcpdf.Pdf pdfenc = jcpdf.fromFile("testoutputs/01encrypted.pdf", "user");
+        boolean hasnoedit = jcpdf.hasPermission(pdfenc, jcpdf.noEdit);
+        boolean hasnocopy = jcpdf.hasPermission(pdfenc, jcpdf.noCopy);
+        System.out.format("Haspermission %d, %d\n", hasnoedit ? 1 : 0, hasnocopy ? 1 : 0);
+        System.out.println("---cpdf_encryptionKind()");
+        int enckind = jcpdf.encryptionKind(pdfenc);
+        System.out.format("encryption kind is %d\n", enckind);
+        System.out.println("---cpdf_decryptPdf()");
+        jcpdf.decryptPdf(pdf10, "");
+        System.out.println("---cpdf_decryptPdfOwner()");
+        jcpdf.decryptPdfOwner(pdf10, "");
     }
    
-//    static void chapter2(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 2. Merging and Splitting */
-//        System.out.println("***** CHAPTER 2. Merging and Splitting");
-//        int pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int selectrange = jcpdf.range(1, 3);
-//        System.out.println("---cpdf_mergeSimple()");
-//        int[] arr = new int[] {pdf11, pdf11, pdf11};
-//        int merged = jcpdf.mergeSimple(arr);
-//        jcpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
-//        System.out.println("---cpdf_merge()");
-//        int merged2 = jcpdf.merge(arr, false, false);
-//        jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
-//        System.out.println("---cpdf_mergeSame()");
-//        int[] ranges = new int[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
-//        int merged3 = jcpdf.mergeSame(arr, false, false, ranges);
-//        jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
-//        System.out.println("---cpdf_selectPages()");
-//        int pdf12 = jcpdf.selectPages(pdf11, selectrange);
-//        jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
-//    }
-//   
+    static void chapter2(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 2. Merging and Splitting */
+        System.out.println("***** CHAPTER 2. Merging and Splitting");
+        Jcpdf.Pdf pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int selectrange = jcpdf.range(1, 3);
+        System.out.println("---cpdf_mergeSimple()");
+        Jcpdf.Pdf[] arr = new Jcpdf.Pdf[] {pdf11, pdf11, pdf11};
+        Jcpdf.Pdf merged = jcpdf.mergeSimple(arr);
+        jcpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
+        System.out.println("---cpdf_merge()");
+        Jcpdf.Pdf merged2 = jcpdf.merge(arr, false, false);
+        jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
+        System.out.println("---cpdf_mergeSame()");
+        int[] ranges = new int[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
+        Jcpdf.Pdf merged3 = jcpdf.mergeSame(arr, false, false, ranges);
+        jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
+        System.out.println("---cpdf_selectPages()");
+        Jcpdf.Pdf pdf12 = jcpdf.selectPages(pdf11, selectrange);
+        jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
+    }
+   
 //    static void chapter3(Jcpdf jcpdf) throws Jcpdf.CpdfError
 //    {
 //        /* CHAPTER 3. Pages */
@@ -824,7 +824,7 @@ public class Testjcpdf
         {
             chapter0(jcpdf);
             chapter1(jcpdf);
-//            chapter2(jcpdf);
+            chapter2(jcpdf);
 //            chapter3(jcpdf);
 //            chapter4(jcpdf);
 //            chapter5(jcpdf);

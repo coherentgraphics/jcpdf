@@ -357,8 +357,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_pages
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jint result = cpdf_pages(pdf);
     checkerror(env);
     return result;
@@ -384,16 +385,18 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFile
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileExt
-  (JNIEnv * env, jobject jobj, jint pdf, jstring filename, jboolean linearize, jboolean make_id, jboolean preserve_objstm, jboolean create_objstm, jboolean compress_objstm)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring filename, jboolean linearize, jboolean make_id, jboolean preserve_objstm, jboolean create_objstm, jboolean compress_objstm)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_toFileExt(pdf, str_filename, linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileEncrypted
-  (JNIEnv * env, jobject jobj, jint pdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jstring filename)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jstring filename)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     const char *str_user_password = (*env)->GetStringUTFChars(env, user_password, 0);
     const char *str_owner_password = (*env)->GetStringUTFChars(env, owner_password, 0);
@@ -408,8 +411,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileEncrypted
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileEncryptedExt
-  (JNIEnv * env, jobject jobj, jint pdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jboolean preserve_objstm, jboolean generate_objstm, jboolean compress_objstm, jstring filename)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jboolean preserve_objstm, jboolean generate_objstm, jboolean compress_objstm, jstring filename)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     const char *str_user_password = (*env)->GetStringUTFChars(env, user_password, 0);
     const char *str_owner_password = (*env)->GetStringUTFChars(env, owner_password, 0);
@@ -424,24 +428,27 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileEncryptedExt
 }
 
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasPermission
-  (JNIEnv * env, jobject jobj, jint pdf, jint permission)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint permission)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_hasPermission(pdf, permission);
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_encryptionKind
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_encryptionKind(pdf);
     checkerror(env);
     return result;
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decryptPdf
-  (JNIEnv * env, jobject jobj, jint pdf, jstring userpw)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring userpw)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
     cpdf_decryptPdf(pdf, str_userpw);
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
@@ -449,8 +456,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decryptPdf
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decryptPdfOwner
-  (JNIEnv * env, jobject jobj, jint pdf, jstring ownerpw)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring ownerpw)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_ownerpw = (*env)->GetStringUTFChars(env, ownerpw, 0);
     cpdf_decryptPdf(pdf, str_ownerpw);
     (*env)->ReleaseStringUTFChars(env, ownerpw, str_ownerpw);
@@ -458,8 +466,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decryptPdfOwner
 }
 
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_isEncrypted
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jint result = cpdf_isEncrypted(pdf);
     checkerror(env);
     return result;
@@ -476,47 +485,58 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_isLinearized
 
 /* CHAPTER 2. Merging and Splitting */
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_mergeSimple
-  (JNIEnv * env, jobject jobj, jintArray data)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_mergeSimple
+  (JNIEnv * env, jobject jobj, jobjectArray data)
 {
     int len = (*env)->GetArrayLength(env, data);
-    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    int* perms = malloc(len * sizeof(int));
+    for (int x = 0; x < len; x++)
+    {
+        perms[x] = getPDF(env, jobj, (*env)->GetObjectArrayElement(env, data, x));
+    }
     int result = cpdf_mergeSimple(perms, len);
-    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
+    free(perms);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_merge
-  (JNIEnv * env, jobject jobj, jintArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_merge
+  (JNIEnv * env, jobject jobj, jobjectArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts)
 {
     int len = (*env)->GetArrayLength(env, data);
-    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    int* perms = malloc(len * sizeof(int));
+    for (int x = 0; x < len; x++)
+    {
+        perms[x] = getPDF(env, jobj, (*env)->GetObjectArrayElement(env, data, x));
+    }
     int result = cpdf_merge(perms, len, retain_numbering, remove_duplicate_fonts);
-    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_mergeSame
-  (JNIEnv * env, jobject jobj, jintArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts, jintArray data2)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_mergeSame
+  (JNIEnv * env, jobject jobj, jobjectArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts, jintArray data2)
 {
     int len = (*env)->GetArrayLength(env, data);
-    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
+    int* perms = malloc(len * sizeof(int));
+    for (int x = 0; x < len; x++)
+    {
+        perms[x] = getPDF(env, jobj, (*env)->GetObjectArrayElement(env, data, x));
+    }
     int* ranges = (*env)->GetIntArrayElements(env, data2, 0);
     int result = cpdf_mergeSame(perms, len, retain_numbering, remove_duplicate_fonts, ranges);
-    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
     (*env)->ReleaseIntArrayElements(env, data2, ranges, 0);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_selectPages
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_selectPages
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_selectPages(pdf, range);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
 /* CHAPTER 3. Pages */
