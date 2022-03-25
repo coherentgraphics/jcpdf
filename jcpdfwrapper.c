@@ -3,11 +3,25 @@
 #include <stdlib.h>
 #include "cpdflibwrapper.h"
 
-void ThrowByName(JNIEnv *env, const char *name, const char* msg)
+/* Internal helper functions */
+
+jobject makePDF(JNIEnv * env, jobject jobj, jint pdf)
 {
-    jclass cls = (*env)->FindClass(env, name);
-    if (cls != NULL) (*env)->ThrowNew(env, cls, msg);
-    (*env)->DeleteLocalRef(env, cls);
+    jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Pdf");
+    if (class == NULL) return NULL;
+    jmethodID cid = (*env)->GetMethodID(env, class, "<init>", "(Lcom/coherentpdf/Jcpdf;I)V");
+    if (cid == NULL) return NULL;
+    return (*env)->NewObject(env, class, cid, jobj, pdf);
+}
+
+int getPDF(JNIEnv * env, jobject jobj, jobject opdf)
+{
+   jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Pdf");
+   if (class == NULL) fprintf(stderr, "***getpdf: class null\n");
+   jfieldID fid = (*env)->GetFieldID(env, class, "pdf", "I");
+   if (class == NULL) fprintf(stderr, "***getpdf: fid null\n");
+   int result = (*env)->GetIntField(env, opdf, fid);
+   return result;
 }
 
 void checkerror(JNIEnv *env)
@@ -15,7 +29,9 @@ void checkerror(JNIEnv *env)
   if (cpdf_lastError != 0)
   {
       cpdf_clearError();
-      ThrowByName(env, "com/coherentpdf/Jcpdf$CpdfError", cpdf_lastErrorString);
+      jclass cls = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$CpdfError");
+      if (cls != NULL) (*env)->ThrowNew(env, cls, cpdf_lastErrorString);
+      (*env)->DeleteLocalRef(env, cls);
   }
 }
 
@@ -52,24 +68,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
 }
 
 /* CHAPTER 1. Basics */
-jobject makePDF(JNIEnv * env, jobject jobj, jint pdf)
-{
-    jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Pdf");
-    if (class == NULL) return NULL;
-    jmethodID cid = (*env)->GetMethodID(env, class, "<init>", "(Lcom/coherentpdf/Jcpdf;I)V");
-    if (cid == NULL) return NULL;
-    return (*env)->NewObject(env, class, cid, jobj, pdf);
-}
-
-int getPDF(JNIEnv * env, jobject jobj, jobject opdf)
-{
-   jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Pdf");
-   if (class == NULL) fprintf(stderr, "***getpdf: class null\n");
-   jfieldID fid = (*env)->GetFieldID(env, class, "pdf", "I");
-   if (class == NULL) fprintf(stderr, "***getpdf: fid null\n");
-   int result = (*env)->GetIntField(env, opdf, fid);
-   return result;
-}
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromFile
   (JNIEnv * env, jobject jobj, jstring filename, jstring userpw)
