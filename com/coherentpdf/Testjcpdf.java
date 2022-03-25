@@ -147,109 +147,109 @@ public class Testjcpdf
         jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
     }
    
-//    static void chapter3(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 3. Pages */
-//        System.out.println("***** CHAPTER 3. Pages");
-//        int pagespdf1 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf8 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf9 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf12 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf13 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf14 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf15 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf18 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int pagespdf19 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_scalePages()");
-//        jcpdf.scalePages(pagespdf1, jcpdf.all(pagespdf1), 1.5, 1.8);
-//        jcpdf.toFile(pagespdf1, "testoutputs/03scalepages.pdf", false, false);
-//        System.out.println("---cpdf_scaleToFit()");
-//        jcpdf.scaleToFit(pagespdf2, jcpdf.all(pagespdf2), 1.5, 1.8, 0.9);
-//        jcpdf.toFile(pagespdf2, "testoutputs/03scaletofit.pdf", false, false);
-//        System.out.println("---cpdf_scaleToFitPaper()");
-//        jcpdf.scaleToFitPaper(pagespdf3, jcpdf.all(pagespdf3), jcpdf.a4portrait, 0.8);
-//        jcpdf.toFile(pagespdf3, "testoutputs/03scaletofitpaper.pdf", false, false);
-//        System.out.println("---cpdf_scaleContents()");
-//        jcpdf.scaleContents(pagespdf4, jcpdf.all(pagespdf4), jcpdf.topLeft, 20.0, 20.0, 2.0);
-//        jcpdf.toFile(pagespdf4, "testoutputs/03scalecontents.pdf", false, false);
-//        System.out.println("---cpdf_shiftContents()");
-//        jcpdf.shiftContents(pagespdf5, jcpdf.all(pagespdf5), 1.5, 1.25);
-//        jcpdf.toFile(pagespdf5, "testoutputs/03shiftcontents.pdf", false, false);
-//        System.out.println("---cpdf_rotate()");
-//        jcpdf.rotate(pagespdf6, jcpdf.all(pagespdf6), 90);
-//        jcpdf.toFile(pagespdf6, "testoutputs/03rotate.pdf", false, false);
-//        System.out.println("---cpdf_rotateBy()");
-//        jcpdf.rotateBy(pagespdf7, jcpdf.all(pagespdf7), 90);
-//        jcpdf.toFile(pagespdf7, "testoutputs/03rotateby.pdf", false, false);
-//        System.out.println("---cpdf_rotateContents()");
-//        jcpdf.rotateContents(pagespdf8, jcpdf.all(pagespdf8), 35.0);
-//        jcpdf.toFile(pagespdf8, "testoutputs/03rotatecontents.pdf", false, false);
-//        System.out.println("---cpdf_upright()");
-//        jcpdf.upright(pagespdf9, jcpdf.all(pagespdf9));
-//        jcpdf.toFile(pagespdf9, "testoutputs/03upright.pdf", false, false);
-//        System.out.println("---cpdf_hFlip()");
-//        jcpdf.hFlip(pagespdf10, jcpdf.all(pagespdf10));
-//        jcpdf.toFile(pagespdf10, "testoutputs/03hflip.pdf", false, false);
-//        System.out.println("---cpdf_vFlip()");
-//        jcpdf.vFlip(pagespdf11, jcpdf.all(pagespdf11));
-//        jcpdf.toFile(pagespdf11, "testoutputs/03vflip.pdf", false, false);
-//        System.out.println("---cpdf_crop()");
-//        jcpdf.crop(pagespdf12, jcpdf.all(pagespdf12), 0.0, 0.0, 400.0, 500.0);
-//        jcpdf.toFile(pagespdf12, "testoutputs/03crop.pdf", false, false);
-//        System.out.println("---cpdf_trimMarks()");
-//        jcpdf.trimMarks(pagespdf13, jcpdf.all(pagespdf13));
-//        jcpdf.toFile(pagespdf13, "testoutputs/03trim_marks.pdf", false, false);
-//        System.out.println("---cpdf_showBoxes()");
-//        jcpdf.showBoxes(pagespdf14, jcpdf.all(pagespdf14));
-//        jcpdf.toFile(pagespdf14, "testoutputs/03show_boxes.pdf", false, false);
-//        System.out.println("---cpdf_hardBox()");
-//        jcpdf.hardBox(pagespdf15, jcpdf.all(pagespdf15), "/MediaBox");
-//        jcpdf.toFile(pagespdf15, "testoutputs/03hard_box.pdf", false, false);
-//        System.out.println("---cpdf_removeCrop()");
-//        jcpdf.removeCrop(pagespdf16, jcpdf.all(pagespdf16));
-//        jcpdf.toFile(pagespdf16, "testoutputs/03remove_crop.pdf", false, false);
-//        System.out.println("---cpdf_removeTrim()");
-//        jcpdf.removeTrim(pagespdf17, jcpdf.all(pagespdf17));
-//        jcpdf.toFile(pagespdf17, "testoutputs/03remove_trim.pdf", false, false);
-//        System.out.println("---cpdf_removeArt()");
-//        jcpdf.removeArt(pagespdf18, jcpdf.all(pagespdf18));
-//        jcpdf.toFile(pagespdf18, "testoutputs/03remove_art.pdf", false, false);
-//        System.out.println("---cpdf_removeBleed()");
-//        jcpdf.removeBleed(pagespdf19, jcpdf.all(pagespdf19));
-//        jcpdf.toFile(pagespdf19, "testoutputs/03remove_bleed.pdf", false, false);
-//    }
-//   
-//    static void chapter4(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 4. Encryption */
-//        /* Encryption covered under Chapter 1 in cpdflib. */
-//    }
-//   
-//    static void chapter5(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 5. Compression */
-//        System.out.println("***** CHAPTER 5. Compression");
-//        int pdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_compress()");
-//        jcpdf.compress(pdf16);
-//        jcpdf.toFile(pdf16, "testoutputs/05compressed.pdf", false, false);
-//        System.out.println("---cpdf_decompress()");
-//        jcpdf.decompress(pdf16);
-//        jcpdf.toFile(pdf16, "testoutputs/05decompressed.pdf", false, false);
-//        System.out.println("---cpdf_squeezeInMemory()");
-//        jcpdf.squeezeInMemory(pdf16);
-//        jcpdf.toFile(pdf16, "testoutputs/05squeezedinmemory.pdf", false, false);
-//    }
+    static void chapter3(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 3. Pages */
+        System.out.println("***** CHAPTER 3. Pages");
+        Jcpdf.Pdf pagespdf1 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf8 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf9 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf12 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf13 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf14 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf15 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf18 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf pagespdf19 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_scalePages()");
+        jcpdf.scalePages(pagespdf1, jcpdf.all(pagespdf1), 1.5, 1.8);
+        jcpdf.toFile(pagespdf1, "testoutputs/03scalepages.pdf", false, false);
+        System.out.println("---cpdf_scaleToFit()");
+        jcpdf.scaleToFit(pagespdf2, jcpdf.all(pagespdf2), 1.5, 1.8, 0.9);
+        jcpdf.toFile(pagespdf2, "testoutputs/03scaletofit.pdf", false, false);
+        System.out.println("---cpdf_scaleToFitPaper()");
+        jcpdf.scaleToFitPaper(pagespdf3, jcpdf.all(pagespdf3), jcpdf.a4portrait, 0.8);
+        jcpdf.toFile(pagespdf3, "testoutputs/03scaletofitpaper.pdf", false, false);
+        System.out.println("---cpdf_scaleContents()");
+        jcpdf.scaleContents(pagespdf4, jcpdf.all(pagespdf4), jcpdf.topLeft, 20.0, 20.0, 2.0);
+        jcpdf.toFile(pagespdf4, "testoutputs/03scalecontents.pdf", false, false);
+        System.out.println("---cpdf_shiftContents()");
+        jcpdf.shiftContents(pagespdf5, jcpdf.all(pagespdf5), 1.5, 1.25);
+        jcpdf.toFile(pagespdf5, "testoutputs/03shiftcontents.pdf", false, false);
+        System.out.println("---cpdf_rotate()");
+        jcpdf.rotate(pagespdf6, jcpdf.all(pagespdf6), 90);
+        jcpdf.toFile(pagespdf6, "testoutputs/03rotate.pdf", false, false);
+        System.out.println("---cpdf_rotateBy()");
+        jcpdf.rotateBy(pagespdf7, jcpdf.all(pagespdf7), 90);
+        jcpdf.toFile(pagespdf7, "testoutputs/03rotateby.pdf", false, false);
+        System.out.println("---cpdf_rotateContents()");
+        jcpdf.rotateContents(pagespdf8, jcpdf.all(pagespdf8), 35.0);
+        jcpdf.toFile(pagespdf8, "testoutputs/03rotatecontents.pdf", false, false);
+        System.out.println("---cpdf_upright()");
+        jcpdf.upright(pagespdf9, jcpdf.all(pagespdf9));
+        jcpdf.toFile(pagespdf9, "testoutputs/03upright.pdf", false, false);
+        System.out.println("---cpdf_hFlip()");
+        jcpdf.hFlip(pagespdf10, jcpdf.all(pagespdf10));
+        jcpdf.toFile(pagespdf10, "testoutputs/03hflip.pdf", false, false);
+        System.out.println("---cpdf_vFlip()");
+        jcpdf.vFlip(pagespdf11, jcpdf.all(pagespdf11));
+        jcpdf.toFile(pagespdf11, "testoutputs/03vflip.pdf", false, false);
+        System.out.println("---cpdf_crop()");
+        jcpdf.crop(pagespdf12, jcpdf.all(pagespdf12), 0.0, 0.0, 400.0, 500.0);
+        jcpdf.toFile(pagespdf12, "testoutputs/03crop.pdf", false, false);
+        System.out.println("---cpdf_trimMarks()");
+        jcpdf.trimMarks(pagespdf13, jcpdf.all(pagespdf13));
+        jcpdf.toFile(pagespdf13, "testoutputs/03trim_marks.pdf", false, false);
+        System.out.println("---cpdf_showBoxes()");
+        jcpdf.showBoxes(pagespdf14, jcpdf.all(pagespdf14));
+        jcpdf.toFile(pagespdf14, "testoutputs/03show_boxes.pdf", false, false);
+        System.out.println("---cpdf_hardBox()");
+        jcpdf.hardBox(pagespdf15, jcpdf.all(pagespdf15), "/MediaBox");
+        jcpdf.toFile(pagespdf15, "testoutputs/03hard_box.pdf", false, false);
+        System.out.println("---cpdf_removeCrop()");
+        jcpdf.removeCrop(pagespdf16, jcpdf.all(pagespdf16));
+        jcpdf.toFile(pagespdf16, "testoutputs/03remove_crop.pdf", false, false);
+        System.out.println("---cpdf_removeTrim()");
+        jcpdf.removeTrim(pagespdf17, jcpdf.all(pagespdf17));
+        jcpdf.toFile(pagespdf17, "testoutputs/03remove_trim.pdf", false, false);
+        System.out.println("---cpdf_removeArt()");
+        jcpdf.removeArt(pagespdf18, jcpdf.all(pagespdf18));
+        jcpdf.toFile(pagespdf18, "testoutputs/03remove_art.pdf", false, false);
+        System.out.println("---cpdf_removeBleed()");
+        jcpdf.removeBleed(pagespdf19, jcpdf.all(pagespdf19));
+        jcpdf.toFile(pagespdf19, "testoutputs/03remove_bleed.pdf", false, false);
+    }
+   
+    static void chapter4(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 4. Encryption */
+        /* Encryption covered under Chapter 1 in cpdflib. */
+    }
+   
+    static void chapter5(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 5. Compression */
+        System.out.println("***** CHAPTER 5. Compression");
+        Jcpdf.Pdf pdf16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_compress()");
+        jcpdf.compress(pdf16);
+        jcpdf.toFile(pdf16, "testoutputs/05compressed.pdf", false, false);
+        System.out.println("---cpdf_decompress()");
+        jcpdf.decompress(pdf16);
+        jcpdf.toFile(pdf16, "testoutputs/05decompressed.pdf", false, false);
+        System.out.println("---cpdf_squeezeInMemory()");
+        jcpdf.squeezeInMemory(pdf16);
+        jcpdf.toFile(pdf16, "testoutputs/05squeezedinmemory.pdf", false, false);
+    }
 //   
 //    static void chapter6(Jcpdf jcpdf) throws Jcpdf.CpdfError
 //    {
@@ -825,9 +825,9 @@ public class Testjcpdf
             chapter0(jcpdf);
             chapter1(jcpdf);
             chapter2(jcpdf);
-//            chapter3(jcpdf);
-//            chapter4(jcpdf);
-//            chapter5(jcpdf);
+            chapter3(jcpdf);
+            chapter4(jcpdf);
+            chapter5(jcpdf);
 //            chapter6(jcpdf);
 //            chapter7(jcpdf);
 //            chapter8(jcpdf);

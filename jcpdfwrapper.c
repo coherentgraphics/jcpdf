@@ -542,135 +542,154 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_selectPages
 /* CHAPTER 3. Pages */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scalePages
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble sx, jdouble sy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble sx, jdouble sy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_scalePages(pdf, range, sx, sy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scaleToFit
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble w, jdouble h, jdouble scale)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble w, jdouble h, jdouble scale)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_scaleToFit(pdf, range, w, h, scale);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scaleToFitPaper
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint papersize, jdouble scale)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jint papersize, jdouble scale)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_scaleToFitPaper(pdf, range, papersize, scale);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_shiftContents
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble dx, jdouble dy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble dx, jdouble dy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_shiftContents(pdf, range, dx, dy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scaleContents
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint anchor, jdouble p1, jdouble p2, jdouble scale)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jint anchor, jdouble p1, jdouble p2, jdouble scale)
 {
+    int pdf = getPDF(env, jobj, opdf);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
     cpdf_scaleContents(pdf, range, p, scale);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotate
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint angle)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jint angle)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_rotate(pdf, range, angle);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotateBy
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint angle)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jint angle)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_rotateBy(pdf, range, angle);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotateContents
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble angle)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble angle)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_rotateContents(pdf, range, angle);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_upright
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_upright(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hFlip
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_hFlip(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_vFlip
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_vFlip(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_crop
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble x, jdouble y, jdouble w, jdouble h)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble x, jdouble y, jdouble w, jdouble h)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_crop(pdf, range, x, y, w, h);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeCrop
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeCrop(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeTrim
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeTrim(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeArt
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeArt(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeBleed
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeBleed(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_trimMarks
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_trimMarks(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_showBoxes
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_showBoxes(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hardBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jstring box)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jstring box)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_box = (*env)->GetStringUTFChars(env, box, 0);
     cpdf_hardBox(pdf, range, str_box);
     checkerror(env);
@@ -679,22 +698,25 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hardBox
 /* CHAPTER 5. Compression */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_compress
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_compress(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decompress
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_decompress(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_squeezeInMemory
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_squeezeInMemory(pdf);
     checkerror(env);
 }
