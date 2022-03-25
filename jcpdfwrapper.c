@@ -897,7 +897,7 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_combinePages
   (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2)
 {
     int pdf = getPDF(env, jobj, opdf);
-    int pdf2 = getPDF(env, jobj, opdf);
+    int pdf2 = getPDF(env, jobj, opdf2);
     int result = cpdf_combinePages(pdf, pdf2);
     checkerror(env);
     return makePDF(env, jobj, result);
@@ -1049,152 +1049,171 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_annotationsJSON
 /* CHAPTER 11. Document Information and Metadata */
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getVersion
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_getVersion(pdf);
     checkerror(env);
     return result;
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getMajorVersion
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_getMajorVersion(pdf);
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getTitle
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getTitle(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getAuthor
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getAuthor(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getSubject
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getSubject(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getKeywords
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getKeywords(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreator
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getCreator(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getProducer
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getProducer(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreationDate
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getCreationDate(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getModificationDate
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getModificationDate(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getTitleXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getTitleXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getAuthorXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getAuthorXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getSubjectXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getSubjectXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getKeywordsXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getKeywords(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreatorXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getCreatorXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getProducerXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getProducerXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreationDateXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getCreationDateXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getModificationDateXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getModificationDateXMP(pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitle
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setTitle(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1202,8 +1221,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitle
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAuthor
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setAuthor(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1211,8 +1231,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAuthor
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSubject
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setSubject(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1220,8 +1241,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSubject
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setKeywords
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setKeywords(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1229,8 +1251,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setKeywords
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreator
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setCreator(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1238,8 +1261,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreator
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setProducer
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setProducer(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1247,8 +1271,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setProducer
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreationDate
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setCreationDate(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1256,8 +1281,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreationDate
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setModificationDate
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setModificationDate(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1265,8 +1291,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setModificationDate
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitleXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setTitleXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1274,8 +1301,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitleXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAuthorXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setAuthorXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1283,8 +1311,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAuthorXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSubjectXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setSubjectXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1292,8 +1321,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSubjectXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setKeywordsXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setKeywordsXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1301,8 +1331,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setKeywordsXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreatorXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setCreatorXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1310,8 +1341,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreatorXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setProducerXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setProducerXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1319,8 +1351,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setProducerXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreationDateXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setCreationDateXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1328,8 +1361,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreationDateXMP
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setModificationDateXMP
-  (JNIEnv * env, jobject jobj, jint pdf, jstring str)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_setModificationDateXMP(pdf, str_str);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -1365,16 +1399,18 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_dateStringOfComponents
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getPageRotation
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_getPageRotation(pdf, pagenumber);
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jstring boxname)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jstring boxname)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_boxname = (*env)->GetStringUTFChars(env, boxname, 0);
     int result = cpdf_hasBox(pdf, pagenumber, str_boxname);
     (*env)->ReleaseStringUTFChars(env, boxname, str_boxname);
@@ -1383,8 +1419,9 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getMediaBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     double da, db, dc, dd;
     double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
     cpdf_getMediaBox(pdf, pagenumber, &da, &db, &dc, &dd);
@@ -1397,8 +1434,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getMediaBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getCropBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     double da, db, dc, dd;
     double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
     cpdf_getCropBox(pdf, pagenumber, &da, &db, &dc, &dd);
@@ -1411,8 +1449,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getCropBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getArtBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     double da, db, dc, dd;
     double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
     cpdf_getArtBox(pdf, pagenumber, &da, &db, &dc, &dd);
@@ -1425,8 +1464,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getArtBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getTrimBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     double da, db, dc, dd;
     double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
     cpdf_getTrimBox(pdf, pagenumber, &da, &db, &dc, &dd);
@@ -1439,8 +1479,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getTrimBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getBleedBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint pagenumber, jdoubleArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     double da, db, dc, dd;
     double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
     cpdf_getBleedBox(pdf, pagenumber, &da, &db, &dc, &dd);
@@ -1453,133 +1494,152 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getBleedBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMediabox
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setMediabox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCropBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setCropBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTrimBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setTrimBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setArtBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setArtBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBleedBox
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setBleedBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrapped
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_markTrapped(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrapped
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_markUntrapped(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrappedXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_markTrappedXMP(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrappedXMP
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_markUntrappedXMP(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageLayout
-  (JNIEnv * env, jobject jobj, jint pdf, jint layout)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint layout)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setPageLayout(pdf, layout);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageMode
-  (JNIEnv * env, jobject jobj, jint pdf, jint mode)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint mode)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setPageMode(pdf, mode);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideToolbar
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_hideToolbar(pdf, flag);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideMenubar
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_hideMenubar(pdf, flag);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideWindowUi
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_hideWindowUi(pdf, flag);
     checkerror(env);
 }
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_fitWindow
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_fitWindow(pdf, flag);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_centerWindow
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_centerWindow(pdf, flag);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_displayDocTitle
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean flag)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_displayDocTitle(pdf, flag);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_openAtPage
-  (JNIEnv * env, jobject jobj, jint pdf, jboolean fit, jint pagenumber)
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean fit, jint pagenumber)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_openAtPage(pdf, fit, pagenumber);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataFromFile
-  (JNIEnv * env, jobject jobj, jint pdf, jstring filename)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring filename)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_setMetadataFromFile(pdf, str_filename);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
@@ -1587,8 +1647,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataFromFile
 }
 
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_getMetadata
-  (JNIEnv * env, jobject obj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int len = 0;
     void* memory = cpdf_getMetadata(pdf, &len);
     jbyteArray b = (*env)->NewByteArray(env, len);
@@ -1599,8 +1660,9 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_getMetadata
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataFromByteArray
-  (JNIEnv * env, jobject jobj, jint pdf, jbyteArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     signed char* memory = (*env)->GetByteArrayElements(env, data, 0); 
     cpdf_setMetadataFromByteArray(pdf, memory, length);
@@ -1609,22 +1671,25 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataFromByteArray
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeMetadata
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeMetadata(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_createMetadata
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_createMetadata(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataDate
-  (JNIEnv * env, jobject jobj, jint pdf, jstring date)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring date)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_date = (*env)->GetStringUTFChars(env, date, 0);
     cpdf_setMetadataDate(pdf, str_date);
     (*env)->ReleaseStringUTFChars(env, date, str_date);
@@ -1632,8 +1697,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataDate
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addPageLabels
-  (JNIEnv * env, jobject jobj, jint pdf, jint style, jstring prefix, jint offset, jint range, jboolean progress)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint style, jstring prefix, jint offset, jint range, jboolean progress)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_prefix = (*env)->GetStringUTFChars(env, prefix, 0);
     cpdf_addPageLabels(pdf, style, str_prefix, offset, range, progress);
     (*env)->ReleaseStringUTFChars(env, prefix, str_prefix);
@@ -1641,15 +1707,17 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addPageLabels
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removePageLabels
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removePageLabels(pdf);
     checkerror(env);
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startGetPageLabels
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_startGetPageLabels(pdf);
     checkerror(env);
     return result;
@@ -1695,8 +1763,9 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getPageLabelPrefix
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getPageLabelStringForPage
-  (JNIEnv * env, jobject jobj, jint pdf, jint n)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint n)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_getPageLabelStringForPage(pdf, n));
     checkerror(env);
     return result;
