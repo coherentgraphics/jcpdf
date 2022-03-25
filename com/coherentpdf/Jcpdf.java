@@ -17,7 +17,7 @@ public class Jcpdf {
       }
       public void close()
       {
-        System.out.format("*****************deletePDF: %d\n", pdf);
+        //System.out.format("*****************deletePDF: %d\n", pdf);
         deletePdf(pdf);
       }
     }
@@ -243,12 +243,12 @@ public class Jcpdf {
     public native int fromJSON(String filename) throws CpdfError;
     public native byte[] outputJSONMemory(int pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
     public native int fromJSONMemory(byte[] data) throws CpdfError;
-    public native int startGetOCGList(int pdf) throws CpdfError;
+    public native int startGetOCGList(Pdf pdf) throws CpdfError;
     public native String OCGListEntry(int serial) throws CpdfError;
     public native void endGetOCGList() throws CpdfError;
-    public native void OCGCoalesce(int pdf) throws CpdfError;
-    public native void OCGRename(int pdf, String f, String t) throws CpdfError;
-    public native void OCGOrderAll(int pdf) throws CpdfError;
+    public native void OCGCoalesce(Pdf pdf) throws CpdfError;
+    public native void OCGRename(Pdf pdf, String f, String t) throws CpdfError;
+    public native void OCGOrderAll(Pdf pdf) throws CpdfError;
     public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
     public native Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError;

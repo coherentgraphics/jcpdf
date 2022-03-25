@@ -709,26 +709,26 @@ public class Testjcpdf
 //        jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);
 //    }
 //   
-//    static void chapter16(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 16. Optional Content Groups */
-//        System.out.println("***** CHAPTER 16. Optional Content Groups");
-//        int ocg = jcpdf.fromFile("testinputs/has_ocgs.pdf", "");
-//        System.out.println("---cpdf: Get OCG List");
-//        int n2 = jcpdf.startGetOCGList(ocg);
-//        for(int x = 0; x < n2; x++)
-//        {
-//            System.out.println(jcpdf.OCGListEntry(x));
-//        }
-//        jcpdf.endGetOCGList();
-//        System.out.println("---cpdf_OCGCoalesce()");
-//        jcpdf.OCGCoalesce(ocg);
-//        System.out.println("---cpdf_OCGRename()");
-//        jcpdf.OCGRename(ocg, "From", "To");
-//        System.out.println("---cpdf_OCGOrderAll()");
-//        jcpdf.OCGOrderAll(ocg);
-//    }
-//    
+    static void chapter16(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 16. Optional Content Groups */
+        System.out.println("***** CHAPTER 16. Optional Content Groups");
+        Jcpdf.Pdf ocg = jcpdf.fromFile("testinputs/has_ocgs.pdf", "");
+        System.out.println("---cpdf: Get OCG List");
+        int n2 = jcpdf.startGetOCGList(ocg);
+        for(int x = 0; x < n2; x++)
+        {
+            System.out.println(jcpdf.OCGListEntry(x));
+        }
+        jcpdf.endGetOCGList();
+        System.out.println("---cpdf_OCGCoalesce()");
+        jcpdf.OCGCoalesce(ocg);
+        System.out.println("---cpdf_OCGRename()");
+        jcpdf.OCGRename(ocg, "From", "To");
+        System.out.println("---cpdf_OCGOrderAll()");
+        jcpdf.OCGOrderAll(ocg);
+    }
+    
     static void chapter17(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 17. Creating New PDFs */
@@ -838,7 +838,7 @@ public class Testjcpdf
 //            chapter13(jcpdf);
 //            chapter14(jcpdf);
 //            chapter15(jcpdf);
-//            chapter16(jcpdf);
+            chapter16(jcpdf);
             chapter17(jcpdf);
 //            chapter18(jcpdf);
         }

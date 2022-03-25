@@ -1957,8 +1957,9 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromJSONMemory
 /* CHAPTER 16. Optional Content Groups */
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startGetOCGList
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_startGetOCGList(pdf);
     checkerror(env);
     return result;
@@ -1980,15 +1981,17 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endGetOCGList
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_OCGCoalesce
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_OCGCoalesce(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_OCGRename
-  (JNIEnv * env, jobject jobj, jint pdf, jstring f, jstring t)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring f, jstring t)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_f = (*env)->GetStringUTFChars(env, f, 0);
     const char *str_t = (*env)->GetStringUTFChars(env, t, 0);
     cpdf_OCGRename(pdf, str_f, str_t);
@@ -1998,8 +2001,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_OCGRename
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_OCGOrderAll
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_OCGOrderAll(pdf);
     checkerror(env);
 }
