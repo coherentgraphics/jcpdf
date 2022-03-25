@@ -8,11 +8,25 @@ public class Jcpdf {
         super(errorMessage);
       }
     }
+    public class Pdf implements AutoCloseable
+    {
+      int pdf = -1;
+      public Pdf(int pdf)
+      {
+        this.pdf = pdf;
+      }
+      public void close()
+      {
+        System.out.format("*****************deletePDF: %d\n", pdf);
+        deletePdf(pdf);
+      }
+    }
     public Jcpdf()
     {
       System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
+    public native void deletePdf(int pdf);
     public native void startup() throws CpdfError;
     public native String version() throws CpdfError;
     public native void setFast() throws CpdfError;

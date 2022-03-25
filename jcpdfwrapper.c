@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "cpdflibwrapper.h"
 
-
 void ThrowByName(JNIEnv *env, const char *name, const char* msg)
 {
     jclass cls = (*env)->FindClass(env, name);
@@ -21,6 +20,7 @@ void checkerror(JNIEnv *env)
 }
 
 /* CHAPTER 0. Preliminaries */
+
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
   (JNIEnv * env, jobject jobj)
 {
@@ -120,6 +120,12 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazy
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
     checkerror(env);
     return result;
+}
+
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_deletePdf(pdf);
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startEnumeratePDFs
@@ -322,6 +328,12 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_blankRange
     jint result = cpdf_blankRange();
     checkerror(env);
     return result;
+}
+
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
+  (JNIEnv * env, jobject jobj, jint range)
+{
+    cpdf_deleteRange(range);
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_pages
