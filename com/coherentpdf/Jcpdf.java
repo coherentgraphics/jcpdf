@@ -222,7 +222,9 @@ public class Jcpdf {
     public native int getAttachmentPage(int serial) throws CpdfError;
     public native byte[] getAttachmentData(int serial) throws CpdfError;
     public native void endGetAttachments() throws CpdfError; 
-    public native int startGetImageResolution(int pdf, double res) throws CpdfError;
+
+    /* CHAPTER 13. Images. */
+    public native int startGetImageResolution(Pdf pdf, double res) throws CpdfError;
     public native int getImageResolutionPageNumber(int serial) throws CpdfError;
     public native String getImageResolutionImageName(int serial) throws CpdfError;
     public native int getImageResolutionXPixels(int serial) throws CpdfError;
@@ -230,19 +232,25 @@ public class Jcpdf {
     public native double getImageResolutionXRes(int serial) throws CpdfError;
     public native double getImageResolutionYRes(int serial) throws CpdfError;
     public native void endGetImageResolution() throws CpdfError;
-    public native void startGetFontInfo(int pdf) throws CpdfError;
+
+    /* CHAPTER 14. Fonts. */
+    public native void startGetFontInfo(Pdf pdf) throws CpdfError;
     public native int numberFonts() throws CpdfError;
     public native String getFontName(int serial) throws CpdfError;
     public native int getFontPage(int serial) throws CpdfError;
     public native String getFontType(int setial) throws CpdfError;
     public native String getFontEncoding(int serial) throws CpdfError;
     public native void endGetFontInfo() throws CpdfError;
-    public native void removeFonts(int pdf) throws CpdfError;
-    public native void copyFont(int from_pdf, int to_pdf, int range, int pagenumber, String fontname) throws CpdfError;
-    public native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, int pdf) throws CpdfError;
-    public native int fromJSON(String filename) throws CpdfError;
-    public native byte[] outputJSONMemory(int pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
-    public native int fromJSONMemory(byte[] data) throws CpdfError;
+    public native void removeFonts(Pdf pdf) throws CpdfError;
+    public native void copyFont(Pdf from_pdf, Pdf to_pdf, int range, int pagenumber, String fontname) throws CpdfError;
+
+    /* CHAPTER 15. PDF and JSON */
+    public native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
+    public native Pdf fromJSON(String filename) throws CpdfError;
+    public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
+    public native Pdf fromJSONMemory(byte[] data) throws CpdfError;
+    
+    /* CHAPTER 16. Optional Content Groups */
     public native int startGetOCGList(Pdf pdf) throws CpdfError;
     public native String OCGListEntry(int serial) throws CpdfError;
     public native void endGetOCGList() throws CpdfError;
@@ -253,22 +261,24 @@ public class Jcpdf {
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
     public native Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError;
     public native Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError;
-    public native void draft(int pdf, int range, boolean boxes) throws CpdfError;
-    public native void removeAllText(int pdf, int range) throws CpdfError;
-    public native void blackText(int pdf, int range) throws CpdfError;
-    public native void blackLines(int pdf, int range) throws CpdfError;
-    public native void blackFills(int pdf, int range) throws CpdfError;
-    public native void thinLines(int pdf, int range, double minwidth) throws CpdfError;
-    public native void copyId(int pdf, int pdf2) throws CpdfError;
-    public native void removeId(int pdf) throws CpdfError;
-    public native void setVersion(int pdf, int version) throws CpdfError;
-    public native void setFullVersion(int pdf, int major, int minor) throws CpdfError;
-    public native void removeDictEntry(int pdf, String str) throws CpdfError;
-    public native void removeDictEntrySearch(int pdf, String str, String searchterm) throws CpdfError;
-    public native void replaceDictEntry(int pdf, String key, String newvalue) throws CpdfError;
-    public native void replaceDictEntrySearch(int pdf, String key, String newvalue, String searchterm) throws CpdfError;
-    public native byte[] getDictEntries(int pdf, String key) throws CpdfError;
-    public native void removeClipping(int pdf, int range) throws CpdfError;
+
+    /* CHAPTER 18. Miscellaneous */
+    public native void draft(Pdf pdf, int range, boolean boxes) throws CpdfError;
+    public native void removeAllText(Pdf pdf, int range) throws CpdfError;
+    public native void blackText(Pdf pdf, int range) throws CpdfError;
+    public native void blackLines(Pdf pdf, int range) throws CpdfError;
+    public native void blackFills(Pdf pdf, int range) throws CpdfError;
+    public native void thinLines(Pdf pdf, int range, double minwidth) throws CpdfError;
+    public native void copyId(Pdf pdf, Pdf pdf2) throws CpdfError;
+    public native void removeId(Pdf pdf) throws CpdfError;
+    public native void setVersion(Pdf pdf, int version) throws CpdfError;
+    public native void setFullVersion(Pdf pdf, int major, int minor) throws CpdfError;
+    public native void removeDictEntry(Pdf pdf, String str) throws CpdfError;
+    public native void removeDictEntrySearch(Pdf pdf, String str, String searchterm) throws CpdfError;
+    public native void replaceDictEntry(Pdf pdf, String key, String newvalue) throws CpdfError;
+    public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
+    public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
+    public native void removeClipping(Pdf pdf, int range) throws CpdfError;
 
     public int noEdit = 0;
     public int noPrint = 1;

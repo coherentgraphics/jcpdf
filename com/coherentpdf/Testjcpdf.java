@@ -19,6 +19,7 @@ public class Testjcpdf
 
     static void chapter1(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
+        /* CHAPTER 1. Basics */
         System.out.println("***** CHAPTER 1. Basics");
         System.out.println("---cpdf_fromFile()");
         Jcpdf.Pdf pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
@@ -644,71 +645,71 @@ public class Testjcpdf
 //        jcpdf.toFile(attachments, "testoutputs/12removed_attachments.pdf", false, false);
 //    }
 //   
-//    static void chapter13(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 13. Images. */
-//        System.out.println("***** CHAPTER 13. Images");
-//        System.out.println("---cpdf: get image resolution");
-//        int image_pdf = jcpdf.fromFile("testinputs/image.pdf", "");
-//        int im_n = jcpdf.startGetImageResolution(image_pdf, 2.0);
-//        for (int im = 0; im < im_n; im++)
-//        {
-//            int im_p = jcpdf.getImageResolutionPageNumber(im);
-//            String im_name = jcpdf.getImageResolutionImageName(im);
-//            int im_xp = jcpdf.getImageResolutionXPixels(im);
-//            int im_yp = jcpdf.getImageResolutionYPixels(im);
-//            double im_xres = jcpdf.getImageResolutionXRes(im);
-//            double im_yres = jcpdf.getImageResolutionYRes(im);
-//            System.out.format("IMAGE: %d, %s, %d, %d, %f, %f\n", im_p, im_name, im_xp, im_yp, im_xres, im_yres);
-//        }
-//        jcpdf.endGetImageResolution();
-//    }
-//   
-//    static void chapter14(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 14. Fonts. */
-//        System.out.println("***** CHAPTER 14. Fonts");
-//        System.out.println("---cpdf: Get Fonts");
-//        int fonts = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int fonts2 = jcpdf.fromFile("testinputs/frontmatter.pdf", "");
-//        jcpdf.startGetFontInfo(fonts);
-//        int n_fonts = jcpdf.numberFonts();
-//        for (int ff = 0; ff < n_fonts; ff++)
-//        {
-//            int page = jcpdf.getFontPage(ff);
-//            String f_name = jcpdf.getFontName(ff);
-//            String type = jcpdf.getFontType(ff);
-//            String encoding = jcpdf.getFontEncoding(ff);
-//            System.out.format("Page %d, font %s has type %s and encoding %s\n", page, f_name, type, encoding);
-//        }
-//        jcpdf.endGetFontInfo();
-//        System.out.println("---cpdf_removeFonts()");
-//        jcpdf.removeFonts(fonts);
-//        jcpdf.toFile(fonts, "testoutputs/14remove_fonts.pdf", false, false);
-//        System.out.println("---cpdf_copyFont()");
-//        jcpdf.copyFont(fonts, fonts2, jcpdf.all(fonts), 1, "/Font");
-//    }
-//   
-//    static void chapter15(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 15. PDF and JSON */
-//        System.out.println("***** CHAPTER 15. PDF and JSON");
-//        int jsonpdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_outputJSON()");
-//        jcpdf.outputJSON("testoutputs/15json.json", false, false, false, jsonpdf);
-//        jcpdf.outputJSON("testoutputs/15jsonnostream.json", false, true, false, jsonpdf);
-//        jcpdf.outputJSON("testoutputs/15jsonparsed.json", true, false, false, jsonpdf);
-//        jcpdf.outputJSON("testoutputs/15jsondecomp.json", false, false, true, jsonpdf);
-//        System.out.println("---cpdf_fromJSON()");
-//        int fromjsonpdf = jcpdf.fromJSON("testoutputs/15jsonparsed.json");
-//        jcpdf.toFile(fromjsonpdf, "testoutputs/15fromjson.pdf", false, false);
-//        System.out.println("---cpdf_outputJSONMemory()");
-//        byte[] jbuf = jcpdf.outputJSONMemory(fromjsonpdf, false, false, false);
-//        System.out.println("---cpdf_fromJSONMemory()");
-//        int jfrommem = jcpdf.fromJSONMemory(jbuf);
-//        jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);
-//    }
-//   
+    static void chapter13(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 13. Images. */
+        System.out.println("***** CHAPTER 13. Images");
+        System.out.println("---cpdf: get image resolution");
+        Jcpdf.Pdf image_pdf = jcpdf.fromFile("testinputs/image.pdf", "");
+        int im_n = jcpdf.startGetImageResolution(image_pdf, 2.0);
+        for (int im = 0; im < im_n; im++)
+        {
+            int im_p = jcpdf.getImageResolutionPageNumber(im);
+            String im_name = jcpdf.getImageResolutionImageName(im);
+            int im_xp = jcpdf.getImageResolutionXPixels(im);
+            int im_yp = jcpdf.getImageResolutionYPixels(im);
+            double im_xres = jcpdf.getImageResolutionXRes(im);
+            double im_yres = jcpdf.getImageResolutionYRes(im);
+            System.out.format("IMAGE: %d, %s, %d, %d, %f, %f\n", im_p, im_name, im_xp, im_yp, im_xres, im_yres);
+        }
+        jcpdf.endGetImageResolution();
+    }
+   
+    static void chapter14(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 14. Fonts. */
+        System.out.println("***** CHAPTER 14. Fonts");
+        System.out.println("---cpdf: Get Fonts");
+        Jcpdf.Pdf fonts = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf fonts2 = jcpdf.fromFile("testinputs/frontmatter.pdf", "");
+        jcpdf.startGetFontInfo(fonts);
+        int n_fonts = jcpdf.numberFonts();
+        for (int ff = 0; ff < n_fonts; ff++)
+        {
+            int page = jcpdf.getFontPage(ff);
+            String f_name = jcpdf.getFontName(ff);
+            String type = jcpdf.getFontType(ff);
+            String encoding = jcpdf.getFontEncoding(ff);
+            System.out.format("Page %d, font %s has type %s and encoding %s\n", page, f_name, type, encoding);
+        }
+        jcpdf.endGetFontInfo();
+        System.out.println("---cpdf_removeFonts()");
+        jcpdf.removeFonts(fonts);
+        jcpdf.toFile(fonts, "testoutputs/14remove_fonts.pdf", false, false);
+        System.out.println("---cpdf_copyFont()");
+        jcpdf.copyFont(fonts, fonts2, jcpdf.all(fonts), 1, "/Font");
+    }
+   
+    static void chapter15(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 15. PDF and JSON */
+        System.out.println("***** CHAPTER 15. PDF and JSON");
+        Jcpdf.Pdf jsonpdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_outputJSON()");
+        jcpdf.outputJSON("testoutputs/15json.json", false, false, false, jsonpdf);
+        jcpdf.outputJSON("testoutputs/15jsonnostream.json", false, true, false, jsonpdf);
+        jcpdf.outputJSON("testoutputs/15jsonparsed.json", true, false, false, jsonpdf);
+        jcpdf.outputJSON("testoutputs/15jsondecomp.json", false, false, true, jsonpdf);
+        System.out.println("---cpdf_fromJSON()");
+        Jcpdf.Pdf fromjsonpdf = jcpdf.fromJSON("testoutputs/15jsonparsed.json");
+        jcpdf.toFile(fromjsonpdf, "testoutputs/15fromjson.pdf", false, false);
+        System.out.println("---cpdf_outputJSONMemory()");
+        byte[] jbuf = jcpdf.outputJSONMemory(fromjsonpdf, false, false, false);
+        System.out.println("---cpdf_fromJSONMemory()");
+        Jcpdf.Pdf jfrommem = jcpdf.fromJSONMemory(jbuf);
+        jcpdf.toFile(jfrommem, "testoutputs/15fromJSONMemory.pdf", false, false);
+    }
+   
     static void chapter16(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 16. Optional Content Groups */
@@ -746,77 +747,77 @@ public class Testjcpdf
         jcpdf.toFile(ttpdf, "testoutputs/01ttpdf.pdf", false, false);
         jcpdf.toFile(ttpdfpaper, "testoutputs/01ttpdfpaper.pdf", false, false);
     }
-//
-//    static void chapter18(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 18. Miscellaneous */
-//        System.out.println("***** CHAPTER 18. Miscellaneous");
-//        int misc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc8 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc9 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc12 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc13 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc14 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc15 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misc16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int misclogo = jcpdf.fromFile("testinputs/logo.pdf", "");
-//        System.out.println("---cpdf_draft()");
-//        jcpdf.draft(misc, jcpdf.all(misc), true);
-//        jcpdf.toFile(misc, "testoutputs/17draft.pdf", false, false);
-//        System.out.println("---cpdf_removeAllText()");
-//        jcpdf.removeAllText(misc2, jcpdf.all(misc2));
-//        jcpdf.toFile(misc2, "testoutputs/17removealltext.pdf", false, false);
-//        System.out.println("---cpdf_blackText()");
-//        jcpdf.blackText(misc3, jcpdf.all(misc3));
-//        jcpdf.toFile(misc3, "testoutputs/17blacktext.pdf", false, false);
-//        System.out.println("---cpdf_blackLines()");
-//        jcpdf.blackLines(misc4, jcpdf.all(misc4));
-//        jcpdf.toFile(misc4, "testoutputs/17blacklines.pdf", false, false);
-//        System.out.println("---cpdf_blackFills()");
-//        jcpdf.blackFills(misc5, jcpdf.all(misc5));
-//        jcpdf.toFile(misc5, "testoutputs/17blackfills.pdf", false, false);
-//        System.out.println("---cpdf_thinLines()");
-//        jcpdf.thinLines(misc6, jcpdf.all(misc6), 2.0);
-//        jcpdf.toFile(misc6, "testoutputs/17thinlines.pdf", false, false);
-//        System.out.println("---cpdf_copyId()");
-//        jcpdf.copyId(misclogo, misc7);
-//        jcpdf.toFile(misc7, "testoutputs/17copyid.pdf", false, false);
-//        System.out.println("---cpdf_removeId()");
-//        jcpdf.removeId(misc8);
-//        jcpdf.toFile(misc8, "testoutputs/17removeid.pdf", false, false);
-//        System.out.println("---cpdf_setVersion()");
-//        jcpdf.setVersion(misc9, 1);
-//        jcpdf.toFile(misc9, "testoutputs/17setversion.pdf", false, false);
-//        System.out.println("---cpdf_setFullVersion()");
-//        jcpdf.setFullVersion(misc10, 2, 0);
-//        jcpdf.toFile(misc10, "testoutputs/17setfullversion.pdf", false, false);
-//        System.out.println("---cpdf_removeDictEntry()");
-//        jcpdf.removeDictEntry(misc11, "/Producer");
-//        jcpdf.toFile(misc11, "testoutputs/17removedictentry.pdf", false, false);
-//        System.out.println("---cpdf_removeDictEntrySearch()");
-//        jcpdf.removeDictEntrySearch(misc13, "/Producer", "1");
-//        jcpdf.toFile(misc13, "testoutputs/17removedictentrysearch.pdf", false, false);
-//        System.out.println("---cpdf_replaceDictEntry()");
-//        jcpdf.replaceDictEntry(misc14, "/Producer", "{\"I\" : 1}");
-//        jcpdf.toFile(misc14, "testoutputs/17replacedictentry.pdf", false, false);
-//        System.out.println("---cpdf_replaceDictEntrySearch()");
-//        jcpdf.replaceDictEntrySearch(misc15, "/Producer", "1", "2");
-//        jcpdf.toFile(misc15, "testoutputs/17replacedictentrysearch.pdf", false, false);
-//        System.out.println("---cpdf_getDictEntries()");
-//        byte[] entries = jcpdf.getDictEntries(misc16, "/Producer");
-//        System.out.format("length of entries data = %d\n", entries.length);
-//        System.out.println("---cpdf_removeClipping()");
-//        jcpdf.removeClipping(misc12, jcpdf.all(misc12));
-//        jcpdf.toFile(misc12, "testoutputs/17removeclipping.pdf", false, false);
-//    }
+
+    static void chapter18(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 18. Miscellaneous */
+        System.out.println("***** CHAPTER 18. Miscellaneous");
+        Jcpdf.Pdf misc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc8 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc9 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc12 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc13 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc14 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc15 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misc16 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf misclogo = jcpdf.fromFile("testinputs/logo.pdf", "");
+        System.out.println("---cpdf_draft()");
+        jcpdf.draft(misc, jcpdf.all(misc), true);
+        jcpdf.toFile(misc, "testoutputs/17draft.pdf", false, false);
+        System.out.println("---cpdf_removeAllText()");
+        jcpdf.removeAllText(misc2, jcpdf.all(misc2));
+        jcpdf.toFile(misc2, "testoutputs/17removealltext.pdf", false, false);
+        System.out.println("---cpdf_blackText()");
+        jcpdf.blackText(misc3, jcpdf.all(misc3));
+        jcpdf.toFile(misc3, "testoutputs/17blacktext.pdf", false, false);
+        System.out.println("---cpdf_blackLines()");
+        jcpdf.blackLines(misc4, jcpdf.all(misc4));
+        jcpdf.toFile(misc4, "testoutputs/17blacklines.pdf", false, false);
+        System.out.println("---cpdf_blackFills()");
+        jcpdf.blackFills(misc5, jcpdf.all(misc5));
+        jcpdf.toFile(misc5, "testoutputs/17blackfills.pdf", false, false);
+        System.out.println("---cpdf_thinLines()");
+        jcpdf.thinLines(misc6, jcpdf.all(misc6), 2.0);
+        jcpdf.toFile(misc6, "testoutputs/17thinlines.pdf", false, false);
+        System.out.println("---cpdf_copyId()");
+        jcpdf.copyId(misclogo, misc7);
+        jcpdf.toFile(misc7, "testoutputs/17copyid.pdf", false, false);
+        System.out.println("---cpdf_removeId()");
+        jcpdf.removeId(misc8);
+        jcpdf.toFile(misc8, "testoutputs/17removeid.pdf", false, false);
+        System.out.println("---cpdf_setVersion()");
+        jcpdf.setVersion(misc9, 1);
+        jcpdf.toFile(misc9, "testoutputs/17setversion.pdf", false, false);
+        System.out.println("---cpdf_setFullVersion()");
+        jcpdf.setFullVersion(misc10, 2, 0);
+        jcpdf.toFile(misc10, "testoutputs/17setfullversion.pdf", false, false);
+        System.out.println("---cpdf_removeDictEntry()");
+        jcpdf.removeDictEntry(misc11, "/Producer");
+        jcpdf.toFile(misc11, "testoutputs/17removedictentry.pdf", false, false);
+        System.out.println("---cpdf_removeDictEntrySearch()");
+        jcpdf.removeDictEntrySearch(misc13, "/Producer", "1");
+        jcpdf.toFile(misc13, "testoutputs/17removedictentrysearch.pdf", false, false);
+        System.out.println("---cpdf_replaceDictEntry()");
+        jcpdf.replaceDictEntry(misc14, "/Producer", "{\"I\" : 1}");
+        jcpdf.toFile(misc14, "testoutputs/17replacedictentry.pdf", false, false);
+        System.out.println("---cpdf_replaceDictEntrySearch()");
+        jcpdf.replaceDictEntrySearch(misc15, "/Producer", "1", "2");
+        jcpdf.toFile(misc15, "testoutputs/17replacedictentrysearch.pdf", false, false);
+        System.out.println("---cpdf_getDictEntries()");
+        byte[] entries = jcpdf.getDictEntries(misc16, "/Producer");
+        System.out.format("length of entries data = %d\n", entries.length);
+        System.out.println("---cpdf_removeClipping()");
+        jcpdf.removeClipping(misc12, jcpdf.all(misc12));
+        jcpdf.toFile(misc12, "testoutputs/17removeclipping.pdf", false, false);
+    }
 
     static public void main(String argv[]) {
         Jcpdf jcpdf = new Jcpdf();
@@ -835,12 +836,12 @@ public class Testjcpdf
             chapter10(jcpdf);
 //            chapter11(jcpdf);
 //            chapter12(jcpdf);
-//            chapter13(jcpdf);
-//            chapter14(jcpdf);
-//            chapter15(jcpdf);
+            chapter13(jcpdf);
+            chapter14(jcpdf);
+            chapter15(jcpdf);
             chapter16(jcpdf);
             chapter17(jcpdf);
-//            chapter18(jcpdf);
+            chapter18(jcpdf);
         }
         catch (Jcpdf.CpdfError e)
         {
