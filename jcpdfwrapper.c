@@ -127,7 +127,7 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazyRelease
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazy
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazy
   (JNIEnv * env, jobject jobj, jbyteArray data, jstring userpw)
 {
     int length = (*env)->GetArrayLength(env, data);
@@ -136,7 +136,7 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazy
     int result = cpdf_fromMemory(memory, length, str_userpw);
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
@@ -234,8 +234,9 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_range
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_all
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jint result = cpdf_all(pdf);
     checkerror(env);
     return result;
@@ -314,8 +315,9 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_isInRange
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_parsePagespec
-  (JNIEnv * env, jobject jobj, jint pdf, jstring pagespec)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring pagespec)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_pagespec = (*env)->GetStringUTFChars(env, pagespec, 0);
     jint result = cpdf_parsePagespec(pdf, str_pagespec);
     checkerror(env);
@@ -332,8 +334,9 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_validatePagespec
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_stringOfPagespec
-  (JNIEnv * env, jobject jobj, jint pdf, jint r)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint r)
 {
+    int pdf = getPDF(env, jobj, opdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_stringOfPagespec(pdf, r));
     checkerror(env);
     return result;
@@ -372,8 +375,9 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_pagesFast
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFile
-  (JNIEnv * env, jobject jobj, jint pdf, jstring filename, jboolean linearize, jboolean make_id)
+  (JNIEnv * env, jobject jobj, jobject opdf, jstring filename, jboolean linearize, jboolean make_id)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_toFile(pdf, str_filename, linearize, make_id);
     checkerror(env);
@@ -1960,20 +1964,20 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_OCGOrderAll
 
 /* CHAPTER 17. Creating New PDFs */
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_blankDocument
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankDocument
   (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint pages)
 {
     int pdf = cpdf_blankDocument(w, h, pages);
     checkerror(env);
-    return pdf;
+    return makePDF(env, jobj, pdf);
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_blankDocumentPaper
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankDocumentPaper
   (JNIEnv * env, jobject jobj, jint papersize, jint pages)
 {
     int pdf = cpdf_blankDocumentPaper(papersize, pages);
     checkerror(env);
-    return pdf;
+    return makePDF(env, jobj, pdf);
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_textToPDF

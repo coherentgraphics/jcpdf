@@ -36,7 +36,7 @@ public class Jcpdf {
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
     public native Pdf fromMemory(byte[] data, String userpw) throws CpdfError;
     public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
-    public native int fromMemoryLazy(byte[] data, String userpw) throws CpdfError;
+    public native Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError;
     public native int startEnumeratePDFs() throws CpdfError;
     public native int enumeratePDFsKey(int n) throws CpdfError;
     public native String enumeratePDFsInfo(int n) throws CpdfError;
@@ -48,7 +48,7 @@ public class Jcpdf {
     public native double mmOfPt(double f) throws CpdfError;
     public native double inOfPt(double f) throws CpdfError;
     public native int range(int from, int to) throws CpdfError;
-    public native int all(int pdf) throws CpdfError;
+    public native int all(Pdf pdf) throws CpdfError;
     public native int odd(int r) throws CpdfError;
     public native int even(int r) throws CpdfError;
     public native int rangeUnion(int r, int s) throws CpdfError;
@@ -58,13 +58,13 @@ public class Jcpdf {
     public native int rangeGet(int r, int n) throws CpdfError;
     public native int rangeAdd(int r, int n) throws CpdfError;
     public native boolean isInRange(int r, int n) throws CpdfError;
-    public native int parsePagespec(int pdf, String pagespec) throws CpdfError;
+    public native int parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
     public native boolean validatePagespec(String pagespec) throws CpdfError;
-    public native String stringOfPagespec(int pdf, int r) throws CpdfError;
+    public native String stringOfPagespec(Pdf pdf, int r) throws CpdfError;
     public native int blankRange() throws CpdfError;
     public native int pages(int pdf) throws CpdfError;
     public native int pagesFast(String userpw, String filename) throws CpdfError;
-    public native void toFile(int pdf, String filename, boolean linearize, boolean make_id) throws CpdfError;
+    public native void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError;
     public native void toFileExt(int pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError;
     public native boolean isEncrypted(int pdf) throws CpdfError;
     public native boolean isLinearized(String filename) throws CpdfError;
@@ -249,8 +249,8 @@ public class Jcpdf {
     public native void OCGCoalesce(int pdf) throws CpdfError;
     public native void OCGRename(int pdf, String f, String t) throws CpdfError;
     public native void OCGOrderAll(int pdf) throws CpdfError;
-    public native int blankDocument(double w, double h, int pages) throws CpdfError;
-    public native int blankDocumentPaper(int papersize, int pages) throws CpdfError;
+    public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
+    public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
     public native int textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError;
     public native int textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError;
     public native void draft(int pdf, int range, boolean boxes) throws CpdfError;
