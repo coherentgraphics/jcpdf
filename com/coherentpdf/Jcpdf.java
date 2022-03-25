@@ -100,40 +100,48 @@ public class Jcpdf {
     public native void compress(Pdf pdf) throws CpdfError;
     public native void decompress(Pdf pdf) throws CpdfError;
     public native void squeezeInMemory(Pdf pdf) throws CpdfError;
-    public native void startGetBookmarkInfo(int pdf) throws CpdfError;
+    
+    /* CHAPTER 6. Bookmarks */
+    public native void startGetBookmarkInfo(Pdf pdf) throws CpdfError;
     public native int numberBookmarks() throws CpdfError;
     public native int getBookmarkLevel(int serial) throws CpdfError;
-    public native int getBookmarkPage(int pdf, int serial) throws CpdfError;
+    public native int getBookmarkPage(Pdf pdf, int serial) throws CpdfError;
     public native String getBookmarkText(int serial) throws CpdfError;
     public native boolean getBookmarkOpenStatus(int serial) throws CpdfError;
     public native void endGetBookmarkInfo() throws CpdfError;
     public native void startSetBookmarkInfo(int n) throws CpdfError;
     public native void setBookmarkLevel(int serial, int level) throws CpdfError;
-    public native void setBookmarkPage(int pdf, int serial, int pagenum) throws CpdfError;
+    public native void setBookmarkPage(Pdf pdf, int serial, int pagenum) throws CpdfError;
     public native void setBookmarkOpenStatus(int serial, boolean open) throws CpdfError;
     public native void setBookmarkText(int serial, String text) throws CpdfError;
-    public native void endSetBookmarkInfo(int pdf) throws CpdfError;
-    public native byte[] getBookmarksJSON(int pdf) throws CpdfError;
-    public native void setBookmarksJSON(int pdf, byte[] data) throws CpdfError;
-    public native void tableOfContents(int pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError;
-    public native void addText(boolean metrics, int pdf, int range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fonrtsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError;
-    public native void addTextSimple(int pdf, int range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
-    public native void removeText(int pdf, int range) throws CpdfError;
+    public native void endSetBookmarkInfo(Pdf pdf) throws CpdfError;
+    public native byte[] getBookmarksJSON(Pdf pdf) throws CpdfError;
+    public native void setBookmarksJSON(Pdf pdf, byte[] data) throws CpdfError;
+    public native void tableOfContents(Pdf pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError;
+
+
+    /* CHAPTER 8. Logos, Watermarks and Stamps */
+    public native void addText(boolean metrics, Pdf pdf, int range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fonrtsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError;
+    public native void addTextSimple(Pdf pdf, int range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
+    public native void removeText(Pdf pdf, int range) throws CpdfError;
     public native int textWidth(int font, String text) throws CpdfError;
-    public native void stampOn(int pdf, int pdf2, int range) throws CpdfError;
-    public native void stampUnder(int pdf, int pdf2, int range) throws CpdfError;
-    public native void stampExtended(int pdf, int pdf2, int range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
-    public native int combinePages(int pdf, int pdf2) throws CpdfError;
-    public native String stampAsXObject(int pdf, int range, int stamp_pdf) throws CpdfError;
-    public native void addContent(String s, boolean before, int pdf, int range) throws CpdfError; 
-    public native void impose(int pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
-    public native void twoUp(int pdf) throws CpdfError;
-    public native void twoUpStack(int pdf) throws CpdfError;
-    public native void padBefore(int pdf, int range) throws CpdfError;
-    public native void padAfter(int pdf, int range) throws CpdfError;
-    public native void padEvery(int pdf, int n) throws CpdfError;
-    public native void padMultiple(int pdf, int n) throws CpdfError;
-    public native void padMultipleBefore(int pdf, int n) throws CpdfError;
+    public native void stampOn(Pdf pdf, Pdf pdf2, int range) throws CpdfError;
+    public native void stampUnder(Pdf pdf, Pdf pdf2, int range) throws CpdfError;
+    public native void stampExtended(Pdf pdf, Pdf pdf2, int range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
+    public native Pdf combinePages(Pdf pdf, Pdf pdf2) throws CpdfError;
+    public native String stampAsXObject(Pdf pdf, int range, Pdf stamp_pdf) throws CpdfError;
+    public native void addContent(String s, boolean before, Pdf pdf, int range) throws CpdfError; 
+    
+    /* CHAPTER 9. Multipage facilities */
+    public native void impose(Pdf pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
+    public native void twoUp(Pdf pdf) throws CpdfError;
+    public native void twoUpStack(Pdf pdf) throws CpdfError;
+    public native void padBefore(Pdf pdf, int range) throws CpdfError;
+    public native void padAfter(Pdf pdf, int range) throws CpdfError;
+    public native void padEvery(Pdf pdf, int n) throws CpdfError;
+    public native void padMultiple(Pdf pdf, int n) throws CpdfError;
+    public native void padMultipleBefore(Pdf pdf, int n) throws CpdfError;
+
     public native byte[] annotationsJSON(Pdf pdf) throws CpdfError;
     public native int getVersion(int pdf) throws CpdfError;
     public native int getMajorVersion(int pdf) throws CpdfError;
@@ -211,12 +219,14 @@ public class Jcpdf {
     public native int getPageLabelRange(int n) throws CpdfError;
     public native String getPageLabelPrefix(int n) throws CpdfError;
     public native String getPageLabelStringForPage(int pdf, int n) throws CpdfError;
-    public native void attachFile(String filename, int pdf) throws CpdfError;
-    public native void attachFileToPage(String filename, int pdf, int pagenumber) throws CpdfError;
-    public native void attachFileFromMemory(byte[] data, String filename, int pdf) throws CpdfError;
-    public native void attachFileToPageFromMemory(byte[] data, String filename, int pdf, int pagenumber) throws CpdfError;
-    public native void removeAttachedFiles(int pdf) throws CpdfError;
-    public native void startGetAttachments(int pdf) throws CpdfError;
+    
+    /* CHAPTER 12. File Attachments */
+    public native void attachFile(String filename, Pdf pdf) throws CpdfError;
+    public native void attachFileToPage(String filename, Pdf pdf, int pagenumber) throws CpdfError;
+    public native void attachFileFromMemory(byte[] data, String filename, Pdf pdf) throws CpdfError;
+    public native void attachFileToPageFromMemory(byte[] data, String filename, Pdf pdf, int pagenumber) throws CpdfError;
+    public native void removeAttachedFiles(Pdf pdf) throws CpdfError;
+    public native void startGetAttachments(Pdf pdf) throws CpdfError;
     public native int numberGetAttachments() throws CpdfError;
     public native String getAttachmentName(int serial) throws CpdfError;
     public native int getAttachmentPage(int serial) throws CpdfError;

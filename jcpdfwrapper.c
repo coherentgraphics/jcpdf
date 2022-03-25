@@ -724,8 +724,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_squeezeInMemory
 /* CHAPTER 6. Bookmarks */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startGetBookmarkInfo
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_startGetBookmarkInfo(pdf);
     checkerror(env);
 }
@@ -747,8 +748,9 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getBookmarkLevel
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getBookmarkPage
-  (JNIEnv * env, jobject jobj, jint pdf, jint serial)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint serial)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_getBookmarkPage(pdf, serial);
     checkerror(env);
     return result;
@@ -792,8 +794,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarkLevel
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarkPage
-  (JNIEnv * env, jobject jobj, jint pdf, jint serial, jint pagenum)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint serial, jint pagenum)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_setBookmarkPage(pdf, serial, pagenum);
     checkerror(env);
 }
@@ -815,15 +818,17 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarkText
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endSetBookmarkInfo
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_endSetBookmarkInfo(pdf);
     checkerror(env);
 }
 
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_getBookmarksJSON
-  (JNIEnv * env, jobject obj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int len = 0;
     void* memory = cpdf_getBookmarksJSON(pdf, &len);
     jbyteArray b = (*env)->NewByteArray(env, len);
@@ -834,8 +839,9 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_getBookmarksJSON
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarksJSON
-  (JNIEnv * env, jobject jobj, jint pdf, jbyteArray data)
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     void* memory = (*env)->GetByteArrayElements(env, data, 0); 
     cpdf_setBookmarksJSON(pdf, memory, length);
@@ -844,8 +850,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarksJSON
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_tableOfContents
-  (JNIEnv * env, jobject jobj, jint pdf, jint font, jdouble fontsize, jstring title, jboolean bookmark)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint font, jdouble fontsize, jstring title, jboolean bookmark)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_title = (*env)->GetStringUTFChars(env, title, 0);
     cpdf_tableOfContents(pdf, font, fontsize, str_title, bookmark);
     (*env)->ReleaseStringUTFChars(env, title, str_title);
@@ -859,38 +866,47 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_tableOfContents
 /* CHAPTER 8. Logos, Watermarks and Stamps */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_stampOn
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
+    int pdf2 = getPDF(env, jobj, opdf2);
     cpdf_stampOn(pdf, pdf2, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_stampUnder
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
+    int pdf2 = getPDF(env, jobj, opdf2);
     cpdf_stampUnder(pdf, pdf2, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_stampExtended
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2, jint range, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
 {
+    int pdf = getPDF(env, jobj, opdf);
+    int pdf2 = getPDF(env, jobj, opdf2);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
     cpdf_stampExtended(pdf, pdf2, range, isover, scale_stamp_to_fit, p, relative_to_cropbox);
     checkerror(env);
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_combinePages
-  (JNIEnv * env, jobject jobj, jint pdf, jint pdf2)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_combinePages
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2)
 {
+    int pdf = getPDF(env, jobj, opdf);
+    int pdf2 = getPDF(env, jobj, opdf);
     int result = cpdf_combinePages(pdf, pdf2);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
-  (JNIEnv * env, jobject jobj, jboolean metrics, jint pdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
+  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
@@ -901,8 +917,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
 }
 
   JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addTextSimple
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
     cpdf_addTextSimple(pdf, range, str_text, p, font, fontsize);
@@ -911,8 +928,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeText
-  (JNIEnv * env, jobject jobj, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeText(pdf, range);
     checkerror(env);
 }
@@ -928,16 +946,19 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_textWidth
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_stampAsXObject
-  (JNIEnv * env, jobject jobj, jint pdf, jint range, jint stamp_pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jobject ostamp_pdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
+    int stamp_pdf = getPDF(env, jobj, ostamp_pdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_stampAsXObject(pdf, range, stamp_pdf));
     checkerror(env);
     return result;
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addContent
-  (JNIEnv * env, jobject jobj, jstring str, jboolean before, jint pdf, jint range)
+  (JNIEnv * env, jobject jobj, jstring str, jboolean before, jobject opdf, jint range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_addContent(str_str, before, pdf, range);
     (*env)->ReleaseStringUTFChars(env, str, str_str);
@@ -947,57 +968,65 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addContent
 /* CHAPTER 9. Multipage facilities */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_impose
-  (JNIEnv * env, jobject jobj, jint pdf, jdouble x, jdouble y, jboolean fit, jboolean columns, jboolean rtl, jboolean btt, jboolean center, jdouble margin, jdouble spacing, jdouble linewidth)
+  (JNIEnv * env, jobject jobj, jobject opdf, jdouble x, jdouble y, jboolean fit, jboolean columns, jboolean rtl, jboolean btt, jboolean center, jdouble margin, jdouble spacing, jdouble linewidth)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_impose(pdf, x, y, fit, columns, rtl, btt, center, margin, spacing, linewidth);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_twoUp
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_twoUp(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_twoUpStack
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_twoUpStack(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padBefore
-  (JNIEnv * env, jobject jobj, jint pdf, int range)
+  (JNIEnv * env, jobject jobj, jobject opdf, int range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_padBefore(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padAfter
-  (JNIEnv * env, jobject jobj, jint pdf, int range)
+  (JNIEnv * env, jobject jobj, jobject opdf, int range)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_padAfter(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padEvery
-  (JNIEnv * env, jobject jobj, jint pdf, int n)
+  (JNIEnv * env, jobject jobj, jobject opdf, int n)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_padEvery(pdf, n);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padMultiple
-  (JNIEnv * env, jobject jobj, jint pdf, int n)
+  (JNIEnv * env, jobject jobj, jobject opdf, int n)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_padMultiple(pdf, n);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padMultipleBefore
-  (JNIEnv * env, jobject jobj, jint pdf, int n)
+  (JNIEnv * env, jobject jobj, jobject opdf, int n)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_padMultipleBefore(pdf, n);
     checkerror(env);
 }
@@ -1005,9 +1034,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padMultipleBefore
 /* CHAPTER 10. Annotations */
 
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_annotationsJSON
-  (JNIEnv * env, jobject obj, jobject opdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
-    int pdf = getPDF(env, obj, opdf);
+    int pdf = getPDF(env, jobj, opdf);
     int len = 0;
     void* memory = cpdf_annotationsJSON(pdf, &len);
     jbyteArray b = (*env)->NewByteArray(env, len);
@@ -1676,8 +1705,9 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getPageLabelStringForPage
 /* CHAPTER 12. File Attachments */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFile
-  (JNIEnv * env, jobject jobj, jstring filename, jint pdf)
+  (JNIEnv * env, jobject jobj, jstring filename, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_attachFile(str_filename, pdf);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
@@ -1685,8 +1715,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFile
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFileToPage
-  (JNIEnv * env, jobject jobj, jstring filename, jint pdf, jint pagenumber)
+  (JNIEnv * env, jobject jobj, jstring filename, jobject opdf, jint pagenumber)
 {
+    int pdf = getPDF(env, jobj, opdf);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
     cpdf_attachFileToPage(str_filename, pdf, pagenumber);
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
@@ -1694,8 +1725,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFileToPage
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFileFromMemory
-  (JNIEnv * env, jobject jobj, jbyteArray data, jstring filename, jint pdf)
+  (JNIEnv * env, jobject jobj, jbyteArray data, jstring filename, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     void* memory = (*env)->GetByteArrayElements(env, data, 0); 
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
@@ -1706,8 +1738,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFileFromMemory
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFileToPageFromMemory
-  (JNIEnv * env, jobject jobj, jbyteArray data, jstring filename, jint pdf, jint pagenumber)
+  (JNIEnv * env, jobject jobj, jbyteArray data, jstring filename, jobject opdf, jint pagenumber)
 {
+    int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     void* memory = (*env)->GetByteArrayElements(env, data, 0); 
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
@@ -1718,21 +1751,23 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_attachFileToPageFromMemory
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeAttachedFiles
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeAttachedFiles(pdf);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startGetAttachments
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf)
 {
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_startGetAttachments(pdf);
     checkerror(env);
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_numberGetAttachments
-  (JNIEnv * env, jobject jobj, jint pdf)
+  (JNIEnv * env, jobject jobj)
 {
     int result = cpdf_numberGetAttachments();
     checkerror(env);

@@ -251,154 +251,154 @@ public class Testjcpdf
         jcpdf.squeezeInMemory(pdf16);
         jcpdf.toFile(pdf16, "testoutputs/05squeezedinmemory.pdf", false, false);
     }
-//   
-//    static void chapter6(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 6. Bookmarks */
-//        System.out.println("***** CHAPTER 6. Bookmarks");
-//        int pdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf: get bookmarks");
-//        jcpdf.startGetBookmarkInfo(pdf17);
-//        int nb = jcpdf.numberBookmarks();
-//        System.out.format("There are %d bookmarks\n", nb);
-//        for (int b2 = 0; b2 < nb; b2++)
-//        {
-//            int level = jcpdf.getBookmarkLevel(b2);
-//            int page = jcpdf.getBookmarkPage(pdf17, b2);
-//            String text = jcpdf.getBookmarkText(b2);
-//            boolean open = jcpdf.getBookmarkOpenStatus(b2);
-//            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %d\n", level, page, text, open ? 1 : 0);
-//        }
-//        jcpdf.endGetBookmarkInfo();
-//        System.out.println("---cpdf: set bookmarks");
-//        jcpdf.startSetBookmarkInfo(1);
-//        jcpdf.setBookmarkLevel(0, 0);
-//        jcpdf.setBookmarkPage(pdf17, 0, 20);
-//        jcpdf.setBookmarkOpenStatus(0, true);
-//        jcpdf.setBookmarkText(0, "New bookmark!");
-//        jcpdf.endSetBookmarkInfo(pdf17);
-//        jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
-//        System.out.println("---cpdf_getBookmarksJSON()");
-//        int marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
-//        System.out.format("Contains %d bytes of data\n", marksdata.length);
-//        System.out.println("---cpdf_setBookmarksJSON()");
-//        jcpdf.setBookmarksJSON(marksjson, marksdata);
-//        jcpdf.toFile(marksjson, "testoutputs/06jsonmarks.pdf", false, false);
-//        System.out.println("---cpdf_tableOfContents()");
-//        int toc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        jcpdf.tableOfContents(toc, jcpdf.timesRoman, 12.0, "Table of Contents", false);
-//        jcpdf.toFile(toc, "testoutputs/06toc.pdf", false, false);
-//    }
-//   
+   
+    static void chapter6(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 6. Bookmarks */
+        System.out.println("***** CHAPTER 6. Bookmarks");
+        Jcpdf.Pdf pdf17 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf: get bookmarks");
+        jcpdf.startGetBookmarkInfo(pdf17);
+        int nb = jcpdf.numberBookmarks();
+        System.out.format("There are %d bookmarks\n", nb);
+        for (int b2 = 0; b2 < nb; b2++)
+        {
+            int level = jcpdf.getBookmarkLevel(b2);
+            int page = jcpdf.getBookmarkPage(pdf17, b2);
+            String text = jcpdf.getBookmarkText(b2);
+            boolean open = jcpdf.getBookmarkOpenStatus(b2);
+            System.out.format("Bookmark at level %d points to page %d and has text \"%s\" and open %d\n", level, page, text, open ? 1 : 0);
+        }
+        jcpdf.endGetBookmarkInfo();
+        System.out.println("---cpdf: set bookmarks");
+        jcpdf.startSetBookmarkInfo(1);
+        jcpdf.setBookmarkLevel(0, 0);
+        jcpdf.setBookmarkPage(pdf17, 0, 20);
+        jcpdf.setBookmarkOpenStatus(0, true);
+        jcpdf.setBookmarkText(0, "New bookmark!");
+        jcpdf.endSetBookmarkInfo(pdf17);
+        jcpdf.toFile(pdf17, "testoutputs/06newmarks.pdf", false, false);
+        System.out.println("---cpdf_getBookmarksJSON()");
+        Jcpdf.Pdf marksjson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        byte[] marksdata = jcpdf.getBookmarksJSON(marksjson);
+        System.out.format("Contains %d bytes of data\n", marksdata.length);
+        System.out.println("---cpdf_setBookmarksJSON()");
+        jcpdf.setBookmarksJSON(marksjson, marksdata);
+        jcpdf.toFile(marksjson, "testoutputs/06jsonmarks.pdf", false, false);
+        System.out.println("---cpdf_tableOfContents()");
+        Jcpdf.Pdf toc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        jcpdf.tableOfContents(toc, jcpdf.timesRoman, 12.0, "Table of Contents", false);
+        jcpdf.toFile(toc, "testoutputs/06toc.pdf", false, false);
+    }
+   
     static void chapter7(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 7. Presentations */
         /* Not included in the library version. */
     }
-//   
-//    static void chapter8(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 8. Logos, Watermarks and Stamps */
-//        System.out.println("***** CHAPTER 8. Logos, Watermarks and Stamps");
-//        int textfile = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_addText()");
-//        jcpdf.addText(false,
-//                     textfile,
-//                     jcpdf.all(textfile),
-//                     "Some Text~~~~~~~~~~!",
-//                     jcpdf.topLeft, 20.0, 20.0,
-//                     1.0,
-//                     1,
-//                     jcpdf.timesRoman,
-//                     20.0,
-//                     0.5,
-//                     0.5,
-//                     0.5,
-//                     false,
-//                     false,
-//                     true,
-//                     0.5,
-//                     jcpdf.leftJustify,
-//                     false,
-//                     false,
-//                     "",
-//                     1.0,
-//                     false);
-//        System.out.println("---cpdf_addTextSimple()");
-//        jcpdf.addTextSimple(textfile, jcpdf.all(textfile), "The text!", jcpdf.topLeft, 20.0, 20.0, jcpdf.timesRoman, 50.0);
-//        jcpdf.toFile(textfile, "testoutputs/08added_text.pdf", false, false);
-//        System.out.println("---cpdf_removeText()");
-//        jcpdf.removeText(textfile, jcpdf.all(textfile));
-//        jcpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
-//        System.out.println("---cpdf_textWidth()");
-//        int w = jcpdf.textWidth(jcpdf.timesRoman, "What is the width of this?");
-//        int stamp = jcpdf.fromFile("testinputs/logo.pdf", "");
-//        int stampee = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int stamp_range = jcpdf.all(stamp);
-//        System.out.println("---cpdf_stampOn()");
-//        jcpdf.stampOn(stamp, stampee, stamp_range);
-//        System.out.println("---cpdf_stampUnder()");
-//        jcpdf.stampUnder(stamp, stampee, stamp_range);
-//        System.out.println("---cpdf_stampExtended()");
-//        jcpdf.stampExtended(stamp, stampee, stamp_range, true, true, jcpdf.topLeft, 20.0, 20.0, true);
-//        jcpdf.toFile(stamp, "testoutputs/08stamp_after.pdf", false, false);
-//        jcpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);
-//        int c1 = jcpdf.fromFile("testinputs/logo.pdf", "");
-//        int c2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_combinePages()");
-//        int c3 = jcpdf.combinePages(c1, c2);
-//        jcpdf.toFile(c3, "testoutputs/08c3after.pdf", false, false);
-//        System.out.println("---cpdf_stampAsXObject()");
-//        int undoc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int ulogo = jcpdf.fromFile("testinputs/logo.pdf", "");
-//        String name = jcpdf.stampAsXObject(undoc, jcpdf.all(undoc), ulogo);
-//        String content = String.format("q 1 0 0 1 100 100 cm %s Do Q q 1 0 0 1 300 300 cm %s Do Q q 1 0 0 1 500 500 cm %s Do Q", name, name, name);
-//        System.out.println("---cpdf_addContent()");
-//        jcpdf.addContent(content, true, undoc, jcpdf.all(undoc));
-//        jcpdf.toFile(undoc, "testoutputs/08demo.pdf", false, false);
-//    }
-//   
-//    static void chapter9(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 9. Multipage facilities */
-//        System.out.println("***** CHAPTER 9. Multipage facilities");
-//        int mp = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp25 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp26 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        int mp7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_twoUp()");
-//        jcpdf.twoUp(mp);
-//        jcpdf.toFile(mp, "testoutputs/09mp.pdf", false, false);
-//        System.out.println("---cpdf_twoUpStack()");
-//        jcpdf.twoUpStack(mp2);
-//        jcpdf.toFile(mp2, "testoutputs/09mp2.pdf", false, false);
-//        System.out.println("---cpdf_impose()");
-//        jcpdf.impose(mp25, 5.0, 4.0, false, false, false, false, false, 40.0, 20.0, 2.0);
-//        jcpdf.toFile(mp25, "testoutputs/09mp25.pdf", false, false);
-//        jcpdf.impose(mp26, 2000.0, 1000.0, true, false, false, false, false, 40.0, 20.0, 2.0);
-//        jcpdf.toFile(mp26, "testoutputs/09mp26.pdf", false, false);
-//        System.out.println("---cpdf_padBefore()");
-//        jcpdf.padBefore(mp3, jcpdf.range(1, 10));
-//        jcpdf.toFile(mp3, "testoutputs/09mp3.pdf", false, false);
-//        System.out.println("---cpdf_padAfter()");
-//        jcpdf.padAfter(mp4, jcpdf.range(1, 10));
-//        jcpdf.toFile(mp4, "testoutputs/09mp4.pdf", false, false);
-//        System.out.println("---cpdf_padEvery()");
-//        jcpdf.padEvery(mp5, 5);
-//        jcpdf.toFile(mp5, "testoutputs/09mp5.pdf", false, false);
-//        System.out.println("---cpdf_padMultiple()");
-//        jcpdf.padMultiple(mp6, 10);
-//        jcpdf.toFile(mp6, "testoutputs/09mp6.pdf", false, false);
-//        System.out.println("---cpdf_padMultipleBefore()");
-//        jcpdf.padMultipleBefore(mp7, 23);
-//        jcpdf.toFile(mp7, "testoutputs/09mp7.pdf", false, false);
-//    }
+   
+    static void chapter8(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 8. Logos, Watermarks and Stamps */
+        System.out.println("***** CHAPTER 8. Logos, Watermarks and Stamps");
+        Jcpdf.Pdf textfile = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_addText()");
+        jcpdf.addText(false,
+                     textfile,
+                     jcpdf.all(textfile),
+                     "Some Text~~~~~~~~~~!",
+                     jcpdf.topLeft, 20.0, 20.0,
+                     1.0,
+                     1,
+                     jcpdf.timesRoman,
+                     20.0,
+                     0.5,
+                     0.5,
+                     0.5,
+                     false,
+                     false,
+                     true,
+                     0.5,
+                     jcpdf.leftJustify,
+                     false,
+                     false,
+                     "",
+                     1.0,
+                     false);
+        System.out.println("---cpdf_addTextSimple()");
+        jcpdf.addTextSimple(textfile, jcpdf.all(textfile), "The text!", jcpdf.topLeft, 20.0, 20.0, jcpdf.timesRoman, 50.0);
+        jcpdf.toFile(textfile, "testoutputs/08added_text.pdf", false, false);
+        System.out.println("---cpdf_removeText()");
+        jcpdf.removeText(textfile, jcpdf.all(textfile));
+        jcpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
+        System.out.println("---cpdf_textWidth()");
+        int w = jcpdf.textWidth(jcpdf.timesRoman, "What is the width of this?");
+        Jcpdf.Pdf stamp = jcpdf.fromFile("testinputs/logo.pdf", "");
+        Jcpdf.Pdf stampee = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        int stamp_range = jcpdf.all(stamp);
+        System.out.println("---cpdf_stampOn()");
+        jcpdf.stampOn(stamp, stampee, stamp_range);
+        System.out.println("---cpdf_stampUnder()");
+        jcpdf.stampUnder(stamp, stampee, stamp_range);
+        System.out.println("---cpdf_stampExtended()");
+        jcpdf.stampExtended(stamp, stampee, stamp_range, true, true, jcpdf.topLeft, 20.0, 20.0, true);
+        jcpdf.toFile(stamp, "testoutputs/08stamp_after.pdf", false, false);
+        jcpdf.toFile(stampee, "testoutputs/08stampee_after.pdf", false, false);
+        Jcpdf.Pdf c1 = jcpdf.fromFile("testinputs/logo.pdf", "");
+        Jcpdf.Pdf c2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_combinePages()");
+        Jcpdf.Pdf c3 = jcpdf.combinePages(c1, c2);
+        jcpdf.toFile(c3, "testoutputs/08c3after.pdf", false, false);
+        System.out.println("---cpdf_stampAsXObject()");
+        Jcpdf.Pdf undoc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf ulogo = jcpdf.fromFile("testinputs/logo.pdf", "");
+        String name = jcpdf.stampAsXObject(undoc, jcpdf.all(undoc), ulogo);
+        String content = String.format("q 1 0 0 1 100 100 cm %s Do Q q 1 0 0 1 300 300 cm %s Do Q q 1 0 0 1 500 500 cm %s Do Q", name, name, name);
+        System.out.println("---cpdf_addContent()");
+        jcpdf.addContent(content, true, undoc, jcpdf.all(undoc));
+        jcpdf.toFile(undoc, "testoutputs/08demo.pdf", false, false);
+    }
+   
+    static void chapter9(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 9. Multipage facilities */
+        System.out.println("***** CHAPTER 9. Multipage facilities");
+        Jcpdf.Pdf mp = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp25 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp26 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp3 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp4 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp5 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp6 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Pdf mp7 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_twoUp()");
+        jcpdf.twoUp(mp);
+        jcpdf.toFile(mp, "testoutputs/09mp.pdf", false, false);
+        System.out.println("---cpdf_twoUpStack()");
+        jcpdf.twoUpStack(mp2);
+        jcpdf.toFile(mp2, "testoutputs/09mp2.pdf", false, false);
+        System.out.println("---cpdf_impose()");
+        jcpdf.impose(mp25, 5.0, 4.0, false, false, false, false, false, 40.0, 20.0, 2.0);
+        jcpdf.toFile(mp25, "testoutputs/09mp25.pdf", false, false);
+        jcpdf.impose(mp26, 2000.0, 1000.0, true, false, false, false, false, 40.0, 20.0, 2.0);
+        jcpdf.toFile(mp26, "testoutputs/09mp26.pdf", false, false);
+        System.out.println("---cpdf_padBefore()");
+        jcpdf.padBefore(mp3, jcpdf.range(1, 10));
+        jcpdf.toFile(mp3, "testoutputs/09mp3.pdf", false, false);
+        System.out.println("---cpdf_padAfter()");
+        jcpdf.padAfter(mp4, jcpdf.range(1, 10));
+        jcpdf.toFile(mp4, "testoutputs/09mp4.pdf", false, false);
+        System.out.println("---cpdf_padEvery()");
+        jcpdf.padEvery(mp5, 5);
+        jcpdf.toFile(mp5, "testoutputs/09mp5.pdf", false, false);
+        System.out.println("---cpdf_padMultiple()");
+        jcpdf.padMultiple(mp6, 10);
+        jcpdf.toFile(mp6, "testoutputs/09mp6.pdf", false, false);
+        System.out.println("---cpdf_padMultipleBefore()");
+        jcpdf.padMultipleBefore(mp7, 23);
+        jcpdf.toFile(mp7, "testoutputs/09mp7.pdf", false, false);
+    }
    
     static void chapter10(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
@@ -611,40 +611,40 @@ public class Testjcpdf
 //        System.out.format("Label string is %s\n", pl);
 //    }
 //   
-//    static void chapter12(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 12. File Attachments */
-//        System.out.println("***** CHAPTER 12. File Attachments");
-//        int attachments = jcpdf.fromFile("testinputs/has_attachments.pdf", "");
-//        System.out.println("---cpdf_attachFile()");
-//        jcpdf.attachFile("testinputs/image.pdf", attachments);
-//        System.out.println("---cpdf_attachFileToPage()");
-//        jcpdf.attachFileToPage("testinputs/image.pdf", attachments, 1);
-//        System.out.println("---cpdf_attachFileFromMemory()");
-//        byte[] empty = {};
-//        jcpdf.attachFileFromMemory(empty, "metadata.txt", attachments);
-//        System.out.println("---cpdf_attachFileToPageFromMemory()");
-//        jcpdf.attachFileToPageFromMemory(empty, "metadata.txt", attachments, 1);
-//        jcpdf.toFile(attachments, "testoutputs/12with_attachments.pdf", false, false);
-//        System.out.println("---cpdf: get attachments");
-//        jcpdf.startGetAttachments(attachments);
-//        int n_a = jcpdf.numberGetAttachments();
-//        System.out.format("There are %d attachments to get\n", n_a);
-//        for (int aa = 0; aa < n_a; aa++)
-//        {
-//            String a_n = jcpdf.getAttachmentName(aa);
-//            System.out.format("Attachment %d is named %s\n", aa, a_n);
-//            int a_page = jcpdf.getAttachmentPage(aa);
-//            System.out.format("It is on page %d\n", a_page);
-//            byte[] a_data = jcpdf.getAttachmentData(aa);
-//            System.out.format("Contains %d bytes of data\n", a_data.length);
-//        }
-//        jcpdf.endGetAttachments();
-//        System.out.println("---cpdf_removeAttachedFiles()");
-//        jcpdf.removeAttachedFiles(attachments);
-//        jcpdf.toFile(attachments, "testoutputs/12removed_attachments.pdf", false, false);
-//    }
-//   
+    static void chapter12(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 12. File Attachments */
+        System.out.println("***** CHAPTER 12. File Attachments");
+        Jcpdf.Pdf attachments = jcpdf.fromFile("testinputs/has_attachments.pdf", "");
+        System.out.println("---cpdf_attachFile()");
+        jcpdf.attachFile("testinputs/image.pdf", attachments);
+        System.out.println("---cpdf_attachFileToPage()");
+        jcpdf.attachFileToPage("testinputs/image.pdf", attachments, 1);
+        System.out.println("---cpdf_attachFileFromMemory()");
+        byte[] empty = {};
+        jcpdf.attachFileFromMemory(empty, "metadata.txt", attachments);
+        System.out.println("---cpdf_attachFileToPageFromMemory()");
+        jcpdf.attachFileToPageFromMemory(empty, "metadata.txt", attachments, 1);
+        jcpdf.toFile(attachments, "testoutputs/12with_attachments.pdf", false, false);
+        System.out.println("---cpdf: get attachments");
+        jcpdf.startGetAttachments(attachments);
+        int n_a = jcpdf.numberGetAttachments();
+        System.out.format("There are %d attachments to get\n", n_a);
+        for (int aa = 0; aa < n_a; aa++)
+        {
+            String a_n = jcpdf.getAttachmentName(aa);
+            System.out.format("Attachment %d is named %s\n", aa, a_n);
+            int a_page = jcpdf.getAttachmentPage(aa);
+            System.out.format("It is on page %d\n", a_page);
+            byte[] a_data = jcpdf.getAttachmentData(aa);
+            System.out.format("Contains %d bytes of data\n", a_data.length);
+        }
+        jcpdf.endGetAttachments();
+        System.out.println("---cpdf_removeAttachedFiles()");
+        jcpdf.removeAttachedFiles(attachments);
+        jcpdf.toFile(attachments, "testoutputs/12removed_attachments.pdf", false, false);
+    }
+   
     static void chapter13(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 13. Images. */
@@ -829,13 +829,13 @@ public class Testjcpdf
             chapter3(jcpdf);
             chapter4(jcpdf);
             chapter5(jcpdf);
-//            chapter6(jcpdf);
+            chapter6(jcpdf);
             chapter7(jcpdf);
-//            chapter8(jcpdf);
-//            chapter9(jcpdf);
+            chapter8(jcpdf);
+            chapter9(jcpdf);
             chapter10(jcpdf);
 //            chapter11(jcpdf);
-//            chapter12(jcpdf);
+            chapter12(jcpdf);
             chapter13(jcpdf);
             chapter14(jcpdf);
             chapter15(jcpdf);
