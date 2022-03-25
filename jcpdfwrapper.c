@@ -81,7 +81,7 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromFile
     return makePDF(env, jobj, pdf);
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromFileLazy
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromFileLazy
   (JNIEnv * env, jobject jobj, jstring filename, jstring userpw)
 {
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
@@ -90,12 +90,13 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromFileLazy
     (*env)->ReleaseStringUTFChars(env, filename, str_filename);
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
     checkerror(env);
-    return pdf;
+    return makePDF(env, jobj, pdf);
 }
 
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_toMemory
-  (JNIEnv * env, jobject obj, jint pdf, jboolean linearize, jboolean make_id)
+  (JNIEnv * env, jobject obj, jobject opdf, jboolean linearize, jboolean make_id)
 {
+    int pdf = getPDF(env, obj, opdf);
     int len = 0;
     void* memory = cpdf_toMemory(pdf, linearize, make_id, &len);
     jbyteArray b = (*env)->NewByteArray(env, len);
@@ -105,7 +106,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_toMemory
     return b;
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromMemory
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromMemory
   (JNIEnv * env, jobject jobj, jbyteArray data, jstring userpw)
 {
     int length = (*env)->GetArrayLength(env, data);
@@ -115,7 +116,7 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_fromMemory
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
     (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
     checkerror(env);
-    return result;
+    return makePDF(env, jobj, result);
 }
 
 void* memory;

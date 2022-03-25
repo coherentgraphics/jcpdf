@@ -32,9 +32,9 @@ public class Jcpdf {
     public native void setFast() throws CpdfError;
     public native void setSlow() throws CpdfError;
     public native Pdf fromFile(String filename, String userpw) throws CpdfError;
-    public native int fromFileLazy(String filename, String userpw) throws CpdfError;
-    public native byte[] toMemory(int pdf, boolean linearize, boolean make_id) throws CpdfError;
-    public native int fromMemory(byte[] data, String userpw) throws CpdfError;
+    public native Pdf fromFileLazy(String filename, String userpw) throws CpdfError;
+    public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
+    public native Pdf fromMemory(byte[] data, String userpw) throws CpdfError;
     public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
     public native int fromMemoryLazy(byte[] data, String userpw) throws CpdfError;
     public native int startEnumeratePDFs() throws CpdfError;

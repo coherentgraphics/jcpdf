@@ -17,17 +17,17 @@ public class Testjcpdf
         System.out.println("---cpdf_clearError()");
     }
 
-//    static void chapter1(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        System.out.println("***** CHAPTER 1. Basics");
-//        System.out.println("---cpdf_fromFile()");
-//        int pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_fromFileLazy()");
-//        int pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
-//        System.out.println("---cpdf_toMemory()");
-//        byte[] mempdf = jcpdf.toMemory(pdf, false, false);
-//        System.out.println("---cpdf_fromMemory()");
-//        int frommem = jcpdf.fromMemory(mempdf, "");
+    static void chapter1(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        System.out.println("***** CHAPTER 1. Basics");
+        System.out.println("---cpdf_fromFile()");
+        Jcpdf.Pdf pdf = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_fromFileLazy()");
+        Jcpdf.Pdf pdf2 = jcpdf.fromFileLazy("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_toMemory()");
+        byte[] mempdf = jcpdf.toMemory(pdf, false, false);
+        System.out.println("---cpdf_fromMemory()");
+        Jcpdf.Pdf frommem = jcpdf.fromMemory(mempdf, "");
 //        jcpdf.toFile(frommem, "testoutputs/01fromMemory.pdf", false, false);
 //        System.out.println("---cpdf_fromMemoryLazy()");
 //        int frommemlazy = jcpdf.fromMemoryLazy(mempdf, "");
@@ -123,8 +123,8 @@ public class Testjcpdf
 //        jcpdf.decryptPdf(pdf10, "");
 //        System.out.println("---cpdf_decryptPdfOwner()");
 //        jcpdf.decryptPdfOwner(pdf10, "");
-//    }
-//   
+    }
+   
 //    static void chapter2(Jcpdf jcpdf) throws Jcpdf.CpdfError
 //    {
 //        /* CHAPTER 2. Merging and Splitting */
@@ -823,7 +823,7 @@ public class Testjcpdf
         try
         {
             chapter0(jcpdf);
-//            chapter1(jcpdf);
+            chapter1(jcpdf);
 //            chapter2(jcpdf);
 //            chapter3(jcpdf);
 //            chapter4(jcpdf);
