@@ -35,6 +35,18 @@ void checkerror(JNIEnv *env)
   }
 }
 
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_deletePdf(pdf);
+}
+
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
+  (JNIEnv * env, jobject jobj, jint range)
+{
+    cpdf_deleteRange(range);
+}
+
 /* CHAPTER 0. Preliminaries */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
@@ -139,11 +151,6 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazy
     return makePDF(env, jobj, result);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
-  (JNIEnv * env, jobject jobj, jint pdf)
-{
-    cpdf_deletePdf(pdf);
-}
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startEnumeratePDFs
   (JNIEnv * env, jobject jobj)
@@ -348,12 +355,6 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_blankRange
     jint result = cpdf_blankRange();
     checkerror(env);
     return result;
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
-  (JNIEnv * env, jobject jobj, jint range)
-{
-    cpdf_deleteRange(range);
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_pages

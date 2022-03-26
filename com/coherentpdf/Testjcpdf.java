@@ -57,19 +57,19 @@ public class Testjcpdf
         System.out.println("---cpdf_mmOfPt()");
         System.out.format("One point is %f millimetres\n", jcpdf.mmOfPt(1.0));
         System.out.println("---cpdf_range()");
-        int range = jcpdf.range(1, 10);
+        Jcpdf.Range range = jcpdf.range(1, 10);
         System.out.println("---cpdf_all()");
-        int all = jcpdf.all(pdf3);
+        Jcpdf.Range all = jcpdf.all(pdf3);
         System.out.println("---cpdf_even()");
-        int even = jcpdf.even(all);
+        Jcpdf.Range even = jcpdf.even(all);
         System.out.println("---cpdf_odd()");
-        int odd = jcpdf.odd(all);
+        Jcpdf.Range odd = jcpdf.odd(all);
         System.out.println("---cpdf_rangeUnion()");
-        int union = jcpdf.rangeUnion(even, odd);
+        Jcpdf.Range union = jcpdf.rangeUnion(even, odd);
         System.out.println("---cpdf_difference()");
-        int diff = jcpdf.difference(even, odd);
+        Jcpdf.Range diff = jcpdf.difference(even, odd);
         System.out.println("---cpdf_removeDuplicates()");
-        int revdup = jcpdf.removeDuplicates(even);
+        Jcpdf.Range revdup = jcpdf.removeDuplicates(even);
         System.out.println("---cpdf_rangeLength()");
         int length = jcpdf.rangeLength(even);
         System.out.println("---cpdf_rangeGet()");
@@ -79,7 +79,7 @@ public class Testjcpdf
         System.out.println("---cpdf_isInRange()");
         boolean isin = jcpdf.isInRange(even, 2);
         System.out.println("---cpdf_parsePagespec()");
-        int r = jcpdf.parsePagespec(pdf3, "1-5");
+        Jcpdf.Range r = jcpdf.parsePagespec(pdf3, "1-5");
         System.out.println("---cpdf_validatePagespec()");
         boolean valid = jcpdf.validatePagespec("1-4,5,6");
         System.out.format("Validating pagespec gives %d\n", valid ? 1 : 0);
@@ -87,7 +87,7 @@ public class Testjcpdf
         String ps = jcpdf.stringOfPagespec(pdf3, r);
         System.out.format("String of pagespec is %s\n", ps);
         System.out.println("---cpdf_blankRange()");
-        int b = jcpdf.blankRange();
+        Jcpdf.Range b = jcpdf.blankRange();
         Jcpdf.Pdf pdf10 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         System.out.println("---cpdf_pages()");
         int pages = jcpdf.pages(pdf10);
@@ -131,7 +131,7 @@ public class Testjcpdf
         /* CHAPTER 2. Merging and Splitting */
         System.out.println("***** CHAPTER 2. Merging and Splitting");
         Jcpdf.Pdf pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        int selectrange = jcpdf.range(1, 3);
+        Jcpdf.Range selectrange = jcpdf.range(1, 3);
         System.out.println("---cpdf_mergeSimple()");
         Jcpdf.Pdf[] arr = new Jcpdf.Pdf[] {pdf11, pdf11, pdf11};
         Jcpdf.Pdf merged = jcpdf.mergeSimple(arr);
@@ -140,7 +140,7 @@ public class Testjcpdf
         Jcpdf.Pdf merged2 = jcpdf.merge(arr, false, false);
         jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
         System.out.println("---cpdf_mergeSame()");
-        int[] ranges = new int[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
+        Jcpdf.Range[] ranges = new Jcpdf.Range[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
         Jcpdf.Pdf merged3 = jcpdf.mergeSame(arr, false, false, ranges);
         jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
         System.out.println("---cpdf_selectPages()");
@@ -335,7 +335,7 @@ public class Testjcpdf
         int w = jcpdf.textWidth(jcpdf.timesRoman, "What is the width of this?");
         Jcpdf.Pdf stamp = jcpdf.fromFile("testinputs/logo.pdf", "");
         Jcpdf.Pdf stampee = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-        int stamp_range = jcpdf.all(stamp);
+        Jcpdf.Range stamp_range = jcpdf.all(stamp);
         System.out.println("---cpdf_stampOn()");
         jcpdf.stampOn(stamp, stampee, stamp_range);
         System.out.println("---cpdf_stampUnder()");

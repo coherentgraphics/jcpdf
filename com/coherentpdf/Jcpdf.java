@@ -21,12 +21,26 @@ public class Jcpdf {
         deletePdf(pdf);
       }
     }
+    public class Range implements AutoCloseable
+    {
+      int range = -1;
+      public Range(int range)
+      {
+        this.range = range;
+      }
+      public void close()
+      {
+        //System.out.format("*****************deleteRange: %d\n", range);
+        deleteRange(range);
+      }
+    }
     public Jcpdf()
     {
       System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
     public native void deletePdf(int pdf);
+    public native void deleteRange(int range);
     public native void startup() throws CpdfError;
     public native String version() throws CpdfError;
     public native void setFast() throws CpdfError;
@@ -47,21 +61,21 @@ public class Jcpdf {
     public native double cmOfPt(double f) throws CpdfError;
     public native double mmOfPt(double f) throws CpdfError;
     public native double inOfPt(double f) throws CpdfError;
-    public native int range(int from, int to) throws CpdfError;
-    public native int all(Pdf pdf) throws CpdfError;
-    public native int odd(int r) throws CpdfError;
-    public native int even(int r) throws CpdfError;
-    public native int rangeUnion(int r, int s) throws CpdfError;
-    public native int difference(int r, int s) throws CpdfError;
-    public native int removeDuplicates(int r) throws CpdfError;
-    public native int rangeLength(int r) throws CpdfError;
-    public native int rangeGet(int r, int n) throws CpdfError;
-    public native int rangeAdd(int r, int n) throws CpdfError;
-    public native boolean isInRange(int r, int n) throws CpdfError;
-    public native int parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
+    public native Range range(int from, int to) throws CpdfError;
+    public native Range all(Pdf pdf) throws CpdfError;
+    public native Range odd(Range r) throws CpdfError;
+    public native Range even(Range r) throws CpdfError;
+    public native Range rangeUnion(Range r, Range s) throws CpdfError;
+    public native Range difference(Range r, Range s) throws CpdfError;
+    public native Range removeDuplicates(Range r) throws CpdfError;
+    public native int rangeLength(Range r) throws CpdfError;
+    public native int rangeGet(Range r, int n) throws CpdfError;
+    public native int rangeAdd(Range r, int n) throws CpdfError;
+    public native boolean isInRange(Range r, int n) throws CpdfError;
+    public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
     public native boolean validatePagespec(String pagespec) throws CpdfError;
-    public native String stringOfPagespec(Pdf pdf, int r) throws CpdfError;
-    public native int blankRange() throws CpdfError;
+    public native String stringOfPagespec(Pdf pdf, Range r) throws CpdfError;
+    public native Range blankRange() throws CpdfError;
     public native int pages(Pdf pdf) throws CpdfError;
     public native int pagesFast(String userpw, String filename) throws CpdfError;
     public native void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError;
@@ -76,27 +90,27 @@ public class Jcpdf {
     public native void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError;
     public native Pdf mergeSimple(Pdf[] pdfs) throws CpdfError;
     public native Pdf merge(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts) throws CpdfError;
-    public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, int[] ranges) throws CpdfError;
-    public native Pdf selectPages(Pdf pdf, int range) throws CpdfError;
-    public native void scalePages(Pdf pdf, int range, double sx, double sy) throws CpdfError;
-    public native void scaleToFit(Pdf pdf, int range, double w, double h, double scale) throws CpdfError;
-    public native void scaleToFitPaper(Pdf pdf, int range, int papersize, double scale) throws CpdfError;
-    public native void scaleContents(Pdf pdf, int range, int anchor, double p1, double p2, double scale) throws CpdfError;
-    public native void shiftContents(Pdf pdf, int range, double dx, double dy) throws CpdfError;
-    public native void rotate(Pdf pdf, int range, int angle) throws CpdfError;
-    public native void rotateBy(Pdf pdf, int range, int angle) throws CpdfError;
-    public native void rotateContents(Pdf pdf, int range, double angle) throws CpdfError;
-    public native void upright(Pdf pdf, int range) throws CpdfError;
-    public native void hFlip(Pdf pdf, int range) throws CpdfError;
-    public native void vFlip(Pdf pdf, int range) throws CpdfError;
-    public native void crop(Pdf pdf, int range, double x, double y, double w, double h) throws CpdfError;
-    public native void removeCrop(Pdf pdf, int range) throws CpdfError;
-    public native void removeTrim(Pdf pdf, int range) throws CpdfError;
-    public native void removeArt(Pdf pdf, int range) throws CpdfError;
-    public native void removeBleed(Pdf pdf, int range) throws CpdfError;
-    public native void trimMarks(Pdf pdf, int range) throws CpdfError;
-    public native void showBoxes(Pdf pdf, int range) throws CpdfError;
-    public native void hardBox(Pdf pdf, int range, String box) throws CpdfError;
+    public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, Range[] ranges) throws CpdfError;
+    public native Pdf selectPages(Pdf pdf, Range range) throws CpdfError;
+    public native void scalePages(Pdf pdf, Range range, double sx, double sy) throws CpdfError;
+    public native void scaleToFit(Pdf pdf, Range range, double w, double h, double scale) throws CpdfError;
+    public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
+    public native void scaleContents(Pdf pdf, Range range, int anchor, double p1, double p2, double scale) throws CpdfError;
+    public native void shiftContents(Pdf pdf, Range range, double dx, double dy) throws CpdfError;
+    public native void rotate(Pdf pdf, Range range, int angle) throws CpdfError;
+    public native void rotateBy(Pdf pdf, Range range, int angle) throws CpdfError;
+    public native void rotateContents(Pdf pdf, Range range, double angle) throws CpdfError;
+    public native void upright(Pdf pdf, Range range) throws CpdfError;
+    public native void hFlip(Pdf pdf, Range range) throws CpdfError;
+    public native void vFlip(Pdf pdf, Range range) throws CpdfError;
+    public native void crop(Pdf pdf, Range range, double x, double y, double w, double h) throws CpdfError;
+    public native void removeCrop(Pdf pdf, Range range) throws CpdfError;
+    public native void removeTrim(Pdf pdf, Range range) throws CpdfError;
+    public native void removeArt(Pdf pdf, Range range) throws CpdfError;
+    public native void removeBleed(Pdf pdf, Range range) throws CpdfError;
+    public native void trimMarks(Pdf pdf, Range range) throws CpdfError;
+    public native void showBoxes(Pdf pdf, Range range) throws CpdfError;
+    public native void hardBox(Pdf pdf, Range range, String box) throws CpdfError;
     public native void compress(Pdf pdf) throws CpdfError;
     public native void decompress(Pdf pdf) throws CpdfError;
     public native void squeezeInMemory(Pdf pdf) throws CpdfError;
@@ -121,23 +135,23 @@ public class Jcpdf {
 
 
     /* CHAPTER 8. Logos, Watermarks and Stamps */
-    public native void addText(boolean metrics, Pdf pdf, int range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fonrtsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError;
-    public native void addTextSimple(Pdf pdf, int range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
-    public native void removeText(Pdf pdf, int range) throws CpdfError;
+    public native void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError;
+    public native void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
+    public native void removeText(Pdf pdf, Range range) throws CpdfError;
     public native int textWidth(int font, String text) throws CpdfError;
-    public native void stampOn(Pdf pdf, Pdf pdf2, int range) throws CpdfError;
-    public native void stampUnder(Pdf pdf, Pdf pdf2, int range) throws CpdfError;
-    public native void stampExtended(Pdf pdf, Pdf pdf2, int range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
+    public native void stampOn(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
+    public native void stampUnder(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
+    public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
     public native Pdf combinePages(Pdf pdf, Pdf pdf2) throws CpdfError;
-    public native String stampAsXObject(Pdf pdf, int range, Pdf stamp_pdf) throws CpdfError;
-    public native void addContent(String s, boolean before, Pdf pdf, int range) throws CpdfError; 
+    public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
+    public native void addContent(String s, boolean before, Pdf pdf, Range range) throws CpdfError; 
     
     /* CHAPTER 9. Multipage facilities */
     public native void impose(Pdf pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
     public native void twoUp(Pdf pdf) throws CpdfError;
     public native void twoUpStack(Pdf pdf) throws CpdfError;
-    public native void padBefore(Pdf pdf, int range) throws CpdfError;
-    public native void padAfter(Pdf pdf, int range) throws CpdfError;
+    public native void padBefore(Pdf pdf, Range range) throws CpdfError;
+    public native void padAfter(Pdf pdf, Range range) throws CpdfError;
     public native void padEvery(Pdf pdf, int n) throws CpdfError;
     public native void padMultiple(Pdf pdf, int n) throws CpdfError;
     public native void padMultipleBefore(Pdf pdf, int n) throws CpdfError;
@@ -189,11 +203,11 @@ public class Jcpdf {
     public native void getTrimBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
     public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
-    public native void setMediabox(Pdf pdf, int range, double minx, double maxx, double miny, double maxy) throws CpdfError;
-    public native void setCropBox(Pdf pdf, int range, double minx, double maxx, double miny, double maxy) throws CpdfError;
-    public native void setTrimBox(Pdf pdf, int range, double minx, double maxx, double miny, double maxy) throws CpdfError;
-    public native void setArtBox(Pdf pdf, int range, double minx, double maxx, double miny, double maxy) throws CpdfError;
-    public native void setBleedBox(Pdf pdf, int range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    public native void setMediabox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    public native void setCropBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    public native void setTrimBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    public native void setArtBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    public native void setBleedBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
     public native void markTrapped(Pdf pdf) throws CpdfError;
     public native void markUntrapped(Pdf pdf) throws CpdfError;
     public native void markTrappedXMP(Pdf pdf) throws CpdfError;
@@ -213,7 +227,7 @@ public class Jcpdf {
     public native void removeMetadata(Pdf pdf) throws CpdfError;
     public native void createMetadata(Pdf pdf) throws CpdfError;
     public native void setMetadataDate(Pdf pdf, String date) throws CpdfError;
-    public native void addPageLabels(Pdf pdf, int style, String prefix, int offset, int range, boolean progress) throws CpdfError;
+    public native void addPageLabels(Pdf pdf, int style, String prefix, int offset, Range range, boolean progress) throws CpdfError;
     public native void removePageLabels(Pdf pdf) throws CpdfError;
     public native int startGetPageLabels(Pdf pdf) throws CpdfError;
     public native void endGetPageLabels() throws CpdfError;
@@ -255,7 +269,7 @@ public class Jcpdf {
     public native String getFontEncoding(int serial) throws CpdfError;
     public native void endGetFontInfo() throws CpdfError;
     public native void removeFonts(Pdf pdf) throws CpdfError;
-    public native void copyFont(Pdf from_pdf, Pdf to_pdf, int range, int pagenumber, String fontname) throws CpdfError;
+    public native void copyFont(Pdf from_pdf, Pdf to_pdf, Range range, int pagenumber, String fontname) throws CpdfError;
 
     /* CHAPTER 15. PDF and JSON */
     public native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
@@ -276,12 +290,12 @@ public class Jcpdf {
     public native Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError;
 
     /* CHAPTER 18. Miscellaneous */
-    public native void draft(Pdf pdf, int range, boolean boxes) throws CpdfError;
-    public native void removeAllText(Pdf pdf, int range) throws CpdfError;
-    public native void blackText(Pdf pdf, int range) throws CpdfError;
-    public native void blackLines(Pdf pdf, int range) throws CpdfError;
-    public native void blackFills(Pdf pdf, int range) throws CpdfError;
-    public native void thinLines(Pdf pdf, int range, double minwidth) throws CpdfError;
+    public native void draft(Pdf pdf, Range range, boolean boxes) throws CpdfError;
+    public native void removeAllText(Pdf pdf, Range range) throws CpdfError;
+    public native void blackText(Pdf pdf, Range range) throws CpdfError;
+    public native void blackLines(Pdf pdf, Range range) throws CpdfError;
+    public native void blackFills(Pdf pdf, Range range) throws CpdfError;
+    public native void thinLines(Pdf pdf, Range range, double minwidth) throws CpdfError;
     public native void copyId(Pdf pdf, Pdf pdf2) throws CpdfError;
     public native void removeId(Pdf pdf) throws CpdfError;
     public native void setVersion(Pdf pdf, int version) throws CpdfError;
@@ -291,7 +305,7 @@ public class Jcpdf {
     public native void replaceDictEntry(Pdf pdf, String key, String newvalue) throws CpdfError;
     public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
     public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
-    public native void removeClipping(Pdf pdf, int range) throws CpdfError;
+    public native void removeClipping(Pdf pdf, Range range) throws CpdfError;
 
     public int noEdit = 0;
     public int noPrint = 1;
