@@ -126,27 +126,27 @@ public class Testjcpdf
         jcpdf.decryptPdfOwner(pdf10, "");
     }
    
-//    static void chapter2(Jcpdf jcpdf) throws Jcpdf.CpdfError
-//    {
-//        /* CHAPTER 2. Merging and Splitting */
-//        System.out.println("***** CHAPTER 2. Merging and Splitting");
-//        Jcpdf.Pdf pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
-//        Jcpdf.Range selectrange = jcpdf.range(1, 3);
-//        System.out.println("---cpdf_mergeSimple()");
-//        Jcpdf.Pdf[] arr = new Jcpdf.Pdf[] {pdf11, pdf11, pdf11};
-//        Jcpdf.Pdf merged = jcpdf.mergeSimple(arr);
-//        jcpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
-//        System.out.println("---cpdf_merge()");
-//        Jcpdf.Pdf merged2 = jcpdf.merge(arr, false, false);
-//        jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
-//        System.out.println("---cpdf_mergeSame()");
-//        Jcpdf.Range[] ranges = new Jcpdf.Range[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
-//        Jcpdf.Pdf merged3 = jcpdf.mergeSame(arr, false, false, ranges);
-//        jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
-//        System.out.println("---cpdf_selectPages()");
-//        Jcpdf.Pdf pdf12 = jcpdf.selectPages(pdf11, selectrange);
-//        jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
-//    }
+    static void chapter2(Jcpdf jcpdf) throws Jcpdf.CpdfError
+    {
+        /* CHAPTER 2. Merging and Splitting */
+        System.out.println("***** CHAPTER 2. Merging and Splitting");
+        Jcpdf.Pdf pdf11 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        Jcpdf.Range selectrange = jcpdf.range(1, 3);
+        System.out.println("---cpdf_mergeSimple()");
+        Jcpdf.Pdf[] arr = new Jcpdf.Pdf[] {pdf11, pdf11, pdf11};
+        Jcpdf.Pdf merged = jcpdf.mergeSimple(arr);
+        jcpdf.toFile(merged, "testoutputs/02merged.pdf", false, true);
+        System.out.println("---cpdf_merge()");
+        Jcpdf.Pdf merged2 = jcpdf.merge(arr, false, false);
+        jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
+        System.out.println("---cpdf_mergeSame()");
+        Jcpdf.Range[] ranges = new Jcpdf.Range[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
+        Jcpdf.Pdf merged3 = jcpdf.mergeSame(arr, false, false, ranges);
+        jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
+        System.out.println("---cpdf_selectPages()");
+        Jcpdf.Pdf pdf12 = jcpdf.selectPages(pdf11, selectrange);
+        jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
+    }
 //   
 //    static void chapter3(Jcpdf jcpdf) throws Jcpdf.CpdfError
 //    {
@@ -825,7 +825,7 @@ public class Testjcpdf
         {
             chapter0(jcpdf);
             chapter1(jcpdf);
-//            chapter2(jcpdf);
+            chapter2(jcpdf);
 //            chapter3(jcpdf);
 //            chapter4(jcpdf);
 //            chapter5(jcpdf);

@@ -548,7 +548,7 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_merge
 }
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_mergeSame
-  (JNIEnv * env, jobject jobj, jobjectArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts, jintArray data2)
+  (JNIEnv * env, jobject jobj, jobjectArray data, jboolean retain_numbering, jboolean remove_duplicate_fonts, jobjectArray data2)
 {
     int len = (*env)->GetArrayLength(env, data);
     int* perms = malloc(len * sizeof(int));
@@ -556,17 +556,23 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_mergeSame
     {
         perms[x] = getPDF(env, jobj, (*env)->GetObjectArrayElement(env, data, x));
     }
-    int* ranges = (*env)->GetIntArrayElements(env, data2, 0);
+    int* ranges = malloc(len * sizeof(int));
+    for (int x = 0; x < len; x++)
+    {
+        ranges[x] = getRange(env, jobj, (*env)->GetObjectArrayElement(env, data2, x));
+    }
     int result = cpdf_mergeSame(perms, len, retain_numbering, remove_duplicate_fonts, ranges);
-    (*env)->ReleaseIntArrayElements(env, data2, ranges, 0);
+    free(perms);
+    free(ranges);
     checkerror(env);
     return makePDF(env, jobj, result);
 }
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_selectPages
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange)
 {
     int pdf = getPDF(env, jobj, opdf);
+    int range = getRange(env, jobj, orange);
     int result = cpdf_selectPages(pdf, range);
     checkerror(env);
     return makePDF(env, jobj, result);
