@@ -24,6 +24,25 @@ int getPDF(JNIEnv * env, jobject jobj, jobject opdf)
    return result;
 }
 
+jobject makeRange(JNIEnv * env, jobject jobj, jint range)
+{
+    jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Range");
+    if (class == NULL) return NULL;
+    jmethodID cid = (*env)->GetMethodID(env, class, "<init>", "(Lcom/coherentpdf/Jcpdf;I)V");
+    if (cid == NULL) return NULL;
+    return (*env)->NewObject(env, class, cid, jobj, range);
+}
+
+int getRange(JNIEnv * env, jobject jobj, jobject orange)
+{
+   jclass class = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$Range");
+   if (class == NULL) fprintf(stderr, "***getpdf: class null\n");
+   jfieldID fid = (*env)->GetFieldID(env, class, "range", "I");
+   if (class == NULL) fprintf(stderr, "***getpdf: fid null\n");
+   int result = (*env)->GetIntField(env, orange, fid);
+   return result;
+}
+
 void checkerror(JNIEnv *env)
 {
   if (cpdf_lastError != 0)
@@ -232,106 +251,118 @@ JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_mmOfPt
     return result;
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_range
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_range
   (JNIEnv * env, jobject jobj, jint f, jint t)
 {
     jint result = cpdf_range(f, t);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_all
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_all
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
     jint result = cpdf_all(pdf);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_even
-  (JNIEnv * env, jobject jobj, jint r)
+JNIEXPORT jobject
+  JNICALL Java_com_coherentpdf_Jcpdf_even
+  (JNIEnv * env, jobject jobj, jobject or)
 {
+    int r = getRange(env, jobj, or);
     jint result = cpdf_even(r);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_odd
-  (JNIEnv * env, jobject jobj, jint r)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_odd
+  (JNIEnv * env, jobject jobj, jobject or)
 {
+    int r = getRange(env, jobj, or);
     jint result = cpdf_odd(r);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_rangeUnion
-  (JNIEnv * env, jobject jobj, jint r, jint s)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_rangeUnion
+  (JNIEnv * env, jobject jobj, jobject or, jobject os)
 {
+    int r = getRange(env, jobj, or);
+    int s = getRange(env, jobj, os);
     jint result = cpdf_rangeUnion(r, s);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_difference
-  (JNIEnv * env, jobject jobj, jint r, jint s)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_difference
+  (JNIEnv * env, jobject jobj, jobject or, jobject os)
 {
+    int r = getRange(env, jobj, or);
+    int s = getRange(env, jobj, os);
     jint result = cpdf_difference(r, s);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_removeDuplicates
-  (JNIEnv * env, jobject jobj, jint r)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_removeDuplicates
+  (JNIEnv * env, jobject jobj, jobject or)
 {
+    int r = getRange(env, jobj, or);
     jint result = cpdf_removeDuplicates(r);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_rangeLength
-  (JNIEnv * env, jobject jobj, jint r)
+  (JNIEnv * env, jobject jobj, jobject or)
 {
+    int r = getRange(env, jobj, or);
     jint result = cpdf_rangeLength(r);
     checkerror(env);
     return result;
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_rangeGet
-  (JNIEnv * env, jobject jobj, jint r, jint n)
+  (JNIEnv * env, jobject jobj, jobject or, jint n)
 {
+    int r = getRange(env, jobj, or);
     jint result = cpdf_rangeGet(r, n);
     checkerror(env);
     return result;
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_rangeAdd
-  (JNIEnv * env, jobject jobj, jint r, jint n)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_rangeAdd
+  (JNIEnv * env, jobject jobj, jobject or, jint n)
 {
+    int r = getRange(env, jobj, or);
     jint result = cpdf_rangeAdd(r, n);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_isInRange
-  (JNIEnv * env, jobject jobj, jint r, jint n)
+  (JNIEnv * env, jobject jobj, jobject or, jint n)
 {
+    int r = getRange(env, jobj, or);
     jboolean result = cpdf_isInRange(r, n);
     checkerror(env);
     return result;
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_parsePagespec
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_parsePagespec
   (JNIEnv * env, jobject jobj, jobject opdf, jstring pagespec)
 {
     int pdf = getPDF(env, jobj, opdf);
     const char *str_pagespec = (*env)->GetStringUTFChars(env, pagespec, 0);
     jint result = cpdf_parsePagespec(pdf, str_pagespec);
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_validatePagespec
+JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_validatePagespec
   (JNIEnv * env, jobject jobj, jstring pagespec)
 {
     const char *str_pagespec = (*env)->GetStringUTFChars(env, pagespec, 0);
@@ -341,20 +372,21 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_validatePagespec
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_stringOfPagespec
-  (JNIEnv * env, jobject jobj, jobject opdf, jint r)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
     int pdf = getPDF(env, jobj, opdf);
+    int r = getRange(env, jobj, or);
     jstring result = (*env)->NewStringUTF(env, cpdf_stringOfPagespec(pdf, r));
     checkerror(env);
     return result;
 }
 
-JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_blankRange
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankRange
   (JNIEnv * env, jobject jobj)
 {
     jint result = cpdf_blankRange();
     checkerror(env);
-    return result;
+    return makeRange(env, jobj, result);
 }
 
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_pages
