@@ -39,6 +39,7 @@ public class Jcpdf {
       System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
+    public native void onExit();
     public native void deletePdf(int pdf);
     public native void deleteRange(int range);
     public native void startup() throws CpdfError;
@@ -70,7 +71,7 @@ public class Jcpdf {
     public native Range removeDuplicates(Range r) throws CpdfError;
     public native int rangeLength(Range r) throws CpdfError;
     public native int rangeGet(Range r, int n) throws CpdfError;
-    public native int rangeAdd(Range r, int n) throws CpdfError;
+    public native Range rangeAdd(Range r, int n) throws CpdfError;
     public native boolean isInRange(Range r, int n) throws CpdfError;
     public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
     public native boolean validatePagespec(String pagespec) throws CpdfError;

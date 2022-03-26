@@ -67,6 +67,12 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
     cpdf_deleteRange(range);
 }
 
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_onExit
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_onExit();
+}
+
 /* CHAPTER 0. Preliminaries */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
