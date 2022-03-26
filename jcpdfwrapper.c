@@ -925,26 +925,29 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_tableOfContents
 /* CHAPTER 8. Logos, Watermarks and Stamps */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_stampOn
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jobject orange)
 {
     int pdf = getPDF(env, jobj, opdf);
     int pdf2 = getPDF(env, jobj, opdf2);
+    int range = getRange(env, jobj, orange);
     cpdf_stampOn(pdf, pdf2, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_stampUnder
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jobject orange)
 {
     int pdf = getPDF(env, jobj, opdf);
     int pdf2 = getPDF(env, jobj, opdf2);
+    int range = getRange(env, jobj, orange);
     cpdf_stampUnder(pdf, pdf2, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_stampExtended
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jobject orange, jboolean isover, jboolean scale_stamp_to_fit, jint anchor, jdouble p1, jdouble p2, jboolean relative_to_cropbox)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     int pdf2 = getPDF(env, jobj, opdf2);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
@@ -963,8 +966,9 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_combinePages
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
-  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
+  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jobject orange, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
     const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
@@ -976,8 +980,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
 }
 
   JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addTextSimple
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jstring text, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jstring text, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
@@ -987,8 +992,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeText
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_removeText(pdf, range);
     checkerror(env);
@@ -1005,8 +1011,9 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_textWidth
 }
 
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_stampAsXObject
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jobject ostamp_pdf)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jobject ostamp_pdf)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     int stamp_pdf = getPDF(env, jobj, ostamp_pdf);
     jstring result = (*env)->NewStringUTF(env, cpdf_stampAsXObject(pdf, range, stamp_pdf));
@@ -1015,8 +1022,9 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_stampAsXObject
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addContent
-  (JNIEnv * env, jobject jobj, jstring str, jboolean before, jobject opdf, jint range)
+  (JNIEnv * env, jobject jobj, jstring str, jboolean before, jobject opdf, jobject orange)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
     cpdf_addContent(str_str, before, pdf, range);
@@ -1051,17 +1059,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_twoUpStack
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padBefore
-  (JNIEnv * env, jobject jobj, jobject opdf, int range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange)
 {
     int pdf = getPDF(env, jobj, opdf);
+    int range = getRange(env, jobj, orange);
     cpdf_padBefore(pdf, range);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padAfter
-  (JNIEnv * env, jobject jobj, jobject opdf, int range)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange)
 {
     int pdf = getPDF(env, jobj, opdf);
+    int range = getRange(env, jobj, orange);
     cpdf_padAfter(pdf, range);
     checkerror(env);
 }
@@ -1553,40 +1563,45 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getBleedBox
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMediabox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_setMediabox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCropBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_setCropBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTrimBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_setTrimBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setArtBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_setArtBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBleedBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint range, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_setBleedBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
@@ -1756,8 +1771,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMetadataDate
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addPageLabels
-  (JNIEnv * env, jobject jobj, jobject opdf, jint style, jstring prefix, jint offset, jint range, jboolean progress)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint style, jstring prefix, jint offset, jobject orange, jboolean progress)
 {
+    int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
     const char *str_prefix = (*env)->GetStringUTFChars(env, prefix, 0);
     cpdf_addPageLabels(pdf, style, str_prefix, offset, range, progress);
@@ -2069,10 +2085,11 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeFonts
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_copyFont
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jint range, jint pagenumber, jstring fontname)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject opdf2, jobject orange, jint pagenumber, jstring fontname)
 {
     int from_pdf = getPDF(env, jobj, opdf);
     int to_pdf = getPDF(env, jobj, opdf2);
+    int range = getRange(env, jobj, orange);
     const char *str_fontname = (*env)->GetStringUTFChars(env, fontname, 0);
     cpdf_copyFont(from_pdf, to_pdf, range, pagenumber, str_fontname);
     (*env)->ReleaseStringUTFChars(env, fontname, str_fontname);
