@@ -165,7 +165,8 @@ public class Testjcpdf
             jcpdf.toFile(merged2, "testoutputs/02merged2.pdf", false, true);
             merged2.close();
             System.out.println("---cpdf_mergeSame()");
-            Jcpdf.Range[] ranges = new Jcpdf.Range[] {jcpdf.all(pdf11), jcpdf.all(pdf11), jcpdf.all(pdf11)};
+            Jcpdf.Range all = jcpdf.all(pdf11);
+            Jcpdf.Range[] ranges = new Jcpdf.Range[] {all, all, all};
             Jcpdf.Pdf merged3 = jcpdf.mergeSame(arr, false, false, ranges);
             jcpdf.toFile(merged3, "testoutputs/02merged3.pdf", false, false);
             merged3.close();
@@ -173,6 +174,8 @@ public class Testjcpdf
             Jcpdf.Pdf pdf12 = jcpdf.selectPages(pdf11, selectrange);
             jcpdf.toFile(pdf12, "testoutputs/02selected.pdf", false, false);
             pdf12.close();
+            selectrange.close();
+            all.close();
         }
     }
    
