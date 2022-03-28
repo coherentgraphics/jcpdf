@@ -1166,148 +1166,147 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getMajorVersion
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getTitle
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetTitle
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getTitle(pdf));
+    char* result = cpdf_getTitle(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getAuthor
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetAuthor
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getAuthor(pdf));
+    char* result = cpdf_getAuthor(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getSubject
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetSubject
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getSubject(pdf));
+    char* result = cpdf_getSubject(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getKeywords
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetKeywords
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getKeywords(pdf));
+    char* result = cpdf_getKeywords(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreator
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreator
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getCreator(pdf));
+    char* result = cpdf_getCreator(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getProducer
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetProducer
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getProducer(pdf));
+    char* result = cpdf_getProducer(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreationDate
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreationDate
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getCreationDate(pdf));
+    char* result = cpdf_getCreationDate(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getModificationDate
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDate
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getModificationDate(pdf));
+    char* result = cpdf_getModificationDate(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
+}
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetTitleXMP
+  (JNIEnv * env, jobject jobj, jobject opdf)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    char* result = cpdf_getTitleXMP(pdf);
+    checkerror(env);
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getTitleXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetAuthorXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getTitleXMP(pdf));
+    char* result = cpdf_getAuthorXMP(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getAuthorXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetSubjectXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getAuthorXMP(pdf));
+    char* result = cpdf_getSubjectXMP(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getSubjectXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetKeywordsXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getSubjectXMP(pdf));
+    char* result = cpdf_getKeywordsXMP(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getKeywordsXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreatorXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getKeywords(pdf));
+    char* result = cpdf_getCreatorXMP(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreatorXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetProducerXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getCreatorXMP(pdf));
+    char* result = cpdf_getProducerXMP(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getProducerXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreationDateXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getProducerXMP(pdf));
+    char* result = cpdf_getCreationDateXMP(pdf);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getCreationDateXMP
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDateXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getCreationDateXMP(pdf));
+    char* result = cpdf_getModificationDateXMP(pdf);
     checkerror(env);
-    return result;
-}
-
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getModificationDateXMP
-  (JNIEnv * env, jobject jobj, jobject opdf)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getModificationDateXMP(pdf));
-    checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitle
