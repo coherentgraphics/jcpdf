@@ -50,7 +50,6 @@ void checkerror(JNIEnv *env)
   {
       cpdf_clearError();
       jclass cls = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$CpdfError");
-      //FIXME make sure lastErrorStrinng is a copy here - shouldn't we be making a Java string? Check?
       if (cls != NULL) (*env)->ThrowNew(env, cls, cpdf_lastErrorString);
       (*env)->DeleteLocalRef(env, cls);
   }
@@ -72,6 +71,25 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_onExit
   (JNIEnv * env, jobject jobj)
 {
     cpdf_onExit();
+}
+
+char * cstring_of_jbytes(jbyte * bytes, int length)
+{
+    char* memory = (char *) bytes;
+    char* str = malloc((length + 1) * sizeof(char));
+    for (int x = 0; x < length; x++) {str[x] = memory[x];};
+    str[length] = 0;
+    return str;
+}
+
+jbyteArray jbytearray_of_string(JNIEnv *env, char* str)
+{
+    int len = strlen(str);
+    jbyteArray data = (*env)->NewByteArray(env, len);
+    jbyte *bytes = (*env)->GetByteArrayElements(env, data, 0);
+    for (int i = 0; i < len; i++) { bytes[i] = str[i]; }
+    (*env)->ReleaseByteArrayElements(env, data, bytes, 0);
+    return data;
 }
 
 /* CHAPTER 0. Preliminaries */
@@ -104,15 +122,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
 {
     cpdf_setSlow();
     checkerror(env);
-}
-
-char * cstring_of_jbytes(jbyte * bytes, int length)
-{
-    char* memory = (char *) bytes;
-    char* str = malloc((length + 1) * sizeof(char));
-    for (int x = 0; x < length; x++) {str[x] = memory[x];};
-    str[length] = 0;
-    return str;
 }
 
 /* CHAPTER 1. Basics */
@@ -400,13 +409,8 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XstringOfPagespec
     int pdf = getPDF(env, jobj, opdf);
     int r = getRange(env, jobj, or);
     char* str = cpdf_stringOfPagespec(pdf, r);
-    int len = strlen(str) + 1;
-    jbyteArray data = (*env)->NewByteArray(env, len);
-    jbyte *bytes = (*env)->GetByteArrayElements(env, data, 0);
-    for (int i = 0; i < len; i++) { bytes[i] = str[i]; }
-    (*env)->ReleaseByteArrayElements(env, data, bytes, 0);
     checkerror(env);
-    return data;
+    return jbytearray_of_string(env, str);
 }
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankRange
