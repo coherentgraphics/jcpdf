@@ -846,12 +846,12 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getBookmarkPage
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getBookmarkText
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetBookmarkText
   (JNIEnv * env, jobject jobj, jint serial)
 {
-    jstring result = (*env)->NewStringUTF(env, cpdf_getBookmarkText(serial));
+    char* result = cpdf_getBookmarkText(serial);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_getBookmarkOpenStatus
@@ -1860,21 +1860,21 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endGetPageLabels
     checkerror(env);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getPageLabelPrefix
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetPageLabelPrefix
   (JNIEnv * env, jobject jobj, jint n)
 {
-    jstring result = (*env)->NewStringUTF(env, cpdf_getPageLabelPrefix(n));
+    char* result = cpdf_getPageLabelPrefix(n);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getPageLabelStringForPage
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetPageLabelStringForPage
   (JNIEnv * env, jobject jobj, jobject opdf, jint n)
 {
     int pdf = getPDF(env, jobj, opdf);
-    jstring result = (*env)->NewStringUTF(env, cpdf_getPageLabelStringForPage(pdf, n));
+    char* result = cpdf_getPageLabelStringForPage(pdf, n);
     checkerror(env);
-    return result;
+    return jbytearray_of_string(env, result);
 }
 
 /* CHAPTER 12. File Attachments */

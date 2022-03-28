@@ -137,7 +137,11 @@ public class Jcpdf {
     public native int numberBookmarks() throws CpdfError;
     public native int getBookmarkLevel(int serial) throws CpdfError;
     public native int getBookmarkPage(Pdf pdf, int serial) throws CpdfError;
-    public native String getBookmarkText(int serial) throws CpdfError;
+    native byte[] XgetBookmarkText(int serial) throws CpdfError;
+    public String getBookmarkText(int serial) throws CpdfError
+    {
+        return decodeUTF8(XgetBookmarkText(serial));
+    }
     public native boolean getBookmarkOpenStatus(int serial) throws CpdfError;
     public native void endGetBookmarkInfo() throws CpdfError;
     public native void startSetBookmarkInfo(int n) throws CpdfError;
@@ -251,8 +255,16 @@ public class Jcpdf {
     public native int getPageLabelOffset(int n) throws CpdfError;
     public native int getPageLabelStyle(int n) throws CpdfError;
     public native int getPageLabelRange(int n) throws CpdfError;
-    public native String getPageLabelPrefix(int n) throws CpdfError;
-    public native String getPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
+    native byte[] XgetPageLabelPrefix(int n) throws CpdfError;
+    public String getPageLabelPrefix(int n) throws CpdfError
+    {
+        return decodeUTF8(XgetPageLabelPrefix(n));
+    }
+    native byte[] XgetPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
+    public String getPageLabelStringForPage(Pdf pdf, int n) throws CpdfError
+    {
+        return decodeUTF8(XgetPageLabelStringForPage(pdf, n));
+    }
     
     /* CHAPTER 12. File Attachments */
     public native void attachFile(String filename, Pdf pdf) throws CpdfError;
