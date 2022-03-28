@@ -105,16 +105,31 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
     checkerror(env);
 }
 
+char * cstring_of_jbytes(jbyte * bytes, int length)
+{
+    char* memory = (char *) bytes;
+    char* str = malloc((length + 1) * sizeof(char));
+    for (int x = 0; x < length; x++) {str[x] = memory[x];};
+    str[length] = 0;
+    return str;
+}
+
 /* CHAPTER 1. Basics */
 
-JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromFile
-  (JNIEnv * env, jobject jobj, jstring filename, jstring userpw)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFile
+  (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
 {
-    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
-    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
-    int pdf = cpdf_fromFile(str_filename, str_userpw);
-    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
-    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int pdf = cpdf_fromFile(str, str2);
+    free(str);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     checkerror(env);
     return makePDF(env, jobj, pdf);
 }

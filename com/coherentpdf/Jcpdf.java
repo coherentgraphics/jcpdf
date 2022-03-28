@@ -1,4 +1,5 @@
 package com.coherentpdf;
+import java.nio.charset.Charset;
 
 public class Jcpdf {
     public static class CpdfError extends Exception
@@ -39,6 +40,15 @@ public class Jcpdf {
       System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
+    private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
+    //String decodeUTF8(byte[] bytes)
+    //{
+    //    return new String(bytes, UTF8_CHARSET);
+    //}
+    byte[] encodeUTF8(String string)
+    {
+        return string.getBytes(UTF8_CHARSET);
+    }
     public native void onExit();
     public native void deletePdf(int pdf);
     public native void deleteRange(int range);
@@ -46,7 +56,11 @@ public class Jcpdf {
     public native String version() throws CpdfError;
     public native void setFast() throws CpdfError;
     public native void setSlow() throws CpdfError;
-    public native Pdf fromFile(String filename, String userpw) throws CpdfError;
+    public native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
+    public Pdf fromFile(String filename, String userpw) throws CpdfError
+    { 
+      return XfromFile(encodeUTF8(filename), encodeUTF8(userpw));
+    }
     public native Pdf fromFileLazy(String filename, String userpw) throws CpdfError;
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
     public native Pdf fromMemory(byte[] data, String userpw) throws CpdfError;
