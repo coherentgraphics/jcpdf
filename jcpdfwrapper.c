@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "cpdflibwrapper.h"
 
 /* Internal helper functions */
@@ -393,14 +394,19 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_validatePagespec
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_stringOfPagespec
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XstringOfPagespec
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
     int pdf = getPDF(env, jobj, opdf);
     int r = getRange(env, jobj, or);
-    jstring result = (*env)->NewStringUTF(env, cpdf_stringOfPagespec(pdf, r));
+    char* str = cpdf_stringOfPagespec(pdf, r);
+    int len = strlen(str) + 1;
+    jbyteArray data = (*env)->NewByteArray(env, len);
+    jbyte *bytes = (*env)->GetByteArrayElements(env, data, 0);
+    for (int i = 0; i < len; i++) { bytes[i] = str[i]; }
+    (*env)->ReleaseByteArrayElements(env, data, bytes, 0);
     checkerror(env);
-    return result;
+    return data;
 }
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankRange

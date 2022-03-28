@@ -18,7 +18,6 @@ public class Jcpdf {
       }
       public void close()
       {
-        //System.out.format("*****************deletePDF: %d\n", pdf);
         deletePdf(pdf);
       }
     }
@@ -31,7 +30,6 @@ public class Jcpdf {
       }
       public void close()
       {
-        //System.out.format("*****************deleteRange: %d\n", range);
         deleteRange(range);
       }
     }
@@ -41,10 +39,10 @@ public class Jcpdf {
       System.loadLibrary("jcpdf");
     }
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
-    //String decodeUTF8(byte[] bytes)
-    //{
-    //    return new String(bytes, UTF8_CHARSET);
-    //}
+    String decodeUTF8(byte[] bytes)
+    {
+        return new String(bytes, UTF8_CHARSET);
+    }
     byte[] encodeUTF8(String string)
     {
         return string.getBytes(UTF8_CHARSET);
@@ -56,7 +54,7 @@ public class Jcpdf {
     public native String version() throws CpdfError;
     public native void setFast() throws CpdfError;
     public native void setSlow() throws CpdfError;
-    public native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
+    native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
     public Pdf fromFile(String filename, String userpw) throws CpdfError
     { 
       return XfromFile(encodeUTF8(filename), encodeUTF8(userpw));
@@ -89,7 +87,11 @@ public class Jcpdf {
     public native boolean isInRange(Range r, int n) throws CpdfError;
     public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
     public native boolean validatePagespec(String pagespec) throws CpdfError;
-    public native String stringOfPagespec(Pdf pdf, Range r) throws CpdfError;
+    native byte[] XstringOfPagespec(Pdf pdf, Range r) throws CpdfError;
+    public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
+    {
+        return decodeUTF8(XstringOfPagespec(pdf, r));    
+    }
     public native Range blankRange() throws CpdfError;
     public native int pages(Pdf pdf) throws CpdfError;
     public native int pagesFast(String userpw, String filename) throws CpdfError;
