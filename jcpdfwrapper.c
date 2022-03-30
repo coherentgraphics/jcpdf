@@ -524,23 +524,29 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_encryptionKind
     return result;
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decryptPdf
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring userpw)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XdecryptPdf
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
-    cpdf_decryptPdf(pdf, str_userpw);
-    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_decryptPdf(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decryptPdfOwner
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring ownerpw)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XdecryptPdfOwner
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_ownerpw = (*env)->GetStringUTFChars(env, ownerpw, 0);
-    cpdf_decryptPdf(pdf, str_ownerpw);
-    (*env)->ReleaseStringUTFChars(env, ownerpw, str_ownerpw);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_decryptPdf(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
@@ -916,12 +922,15 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarkOpenStatus
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarkText
-  (JNIEnv * env, jobject jobj, jint serial, jstring text)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetBookmarkText
+  (JNIEnv * env, jobject jobj, jint serial, jbyteArray data)
 {
-    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
-    cpdf_setBookmarkText(serial, str_text);
-    (*env)->ReleaseStringUTFChars(env, text, str_text);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_setBookmarkText(serial, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
@@ -957,13 +966,16 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarksJSON
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_tableOfContents
-  (JNIEnv * env, jobject jobj, jobject opdf, jint font, jdouble fontsize, jstring title, jboolean bookmark)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtableOfContents
+  (JNIEnv * env, jobject jobj, jobject opdf, jint font, jdouble fontsize, jbyteArray data, jboolean bookmark)
 {
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_title = (*env)->GetStringUTFChars(env, title, 0);
-    cpdf_tableOfContents(pdf, font, fontsize, str_title, bookmark);
-    (*env)->ReleaseStringUTFChars(env, title, str_title);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_tableOfContents(pdf, font, fontsize, str, bookmark);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
@@ -1014,29 +1026,38 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_combinePages
     return makePDF(env, jobj, result);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addText
-  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jobject orange, jstring text, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jstring filename, jdouble linewidth, jboolean embed_fonts)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XaddText
+  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jobject orange, jbyteArray data, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jbyteArray data2, jdouble linewidth, jboolean embed_fonts)
 {
     int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
-    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
-    cpdf_addText(metrics, pdf, range, str_text, p, linespacing, bates, font, fontsize, r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, str_filename, linewidth, embed_fonts);
-    (*env)->ReleaseStringUTFChars(env, text, str_text);
-    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
+    cpdf_addText(metrics, pdf, range, str, p, linespacing, bates, font, fontsize, r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, str2, linewidth, embed_fonts);
+    free(str);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     checkerror(env);
 }
 
-  JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_addTextSimple
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jstring text, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
+  JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XaddTextSimple
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jbyteArray data, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
 {
     int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_text = (*env)->GetStringUTFChars(env, text, 0);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
-    cpdf_addTextSimple(pdf, range, str_text, p, font, fontsize);
-    (*env)->ReleaseStringUTFChars(env, text, str_text);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_addTextSimple(pdf, range, str, p, font, fontsize);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 

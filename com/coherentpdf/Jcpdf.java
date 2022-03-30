@@ -115,8 +115,16 @@ public class Jcpdf {
     public native int toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError;
     public native boolean hasPermission(Pdf pdf, int permission) throws CpdfError;
     public native int encryptionKind(Pdf pdf) throws CpdfError;
-    public native void decryptPdf(Pdf pdf, String userpw) throws CpdfError;
-    public native void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError;
+    native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
+    public void decryptPdf(Pdf pdf, String userpw) throws CpdfError
+    {
+        XdecryptPdf(pdf, encodeUTF8(userpw));
+    }
+    native void XdecryptPdfOwner(Pdf pdf, byte[] ownerpw) throws CpdfError;
+    public void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError
+    {
+        XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
+    }
     public native Pdf mergeSimple(Pdf[] pdfs) throws CpdfError;
     public native Pdf merge(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts) throws CpdfError;
     public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, Range[] ranges) throws CpdfError;
@@ -160,16 +168,32 @@ public class Jcpdf {
     public native void setBookmarkLevel(int serial, int level) throws CpdfError;
     public native void setBookmarkPage(Pdf pdf, int serial, int pagenum) throws CpdfError;
     public native void setBookmarkOpenStatus(int serial, boolean open) throws CpdfError;
-    public native void setBookmarkText(int serial, String text) throws CpdfError;
+    native void XsetBookmarkText(int serial, byte[] text) throws CpdfError;
+    public void setBookmarkText(int serial, String text) throws CpdfError
+    {
+        XsetBookmarkText(serial, encodeUTF8(text));
+    }
     public native void endSetBookmarkInfo(Pdf pdf) throws CpdfError;
     public native byte[] getBookmarksJSON(Pdf pdf) throws CpdfError;
     public native void setBookmarksJSON(Pdf pdf, byte[] data) throws CpdfError;
-    public native void tableOfContents(Pdf pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError;
-
+    native void XtableOfContents(Pdf pdf, int font, double fontsize, byte[] title, boolean bookmark) throws CpdfError;
+    public void tableOfContents(Pdf pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError
+    {
+        XtableOfContents(pdf, font, fontsize, encodeUTF8(title), bookmark);
+    }
 
     /* CHAPTER 8. Logos, Watermarks and Stamps */
-    public native void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError;
-    public native void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
+    native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
+    public void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError
+    {
+        XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2, linespacing, bates, font, fontsize,
+                r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, encodeUTF8(filename), linewidth, embed_fonts);
+    }
+    native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
+    public void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError
+    {
+        XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font, fontsize);
+    }
     public native void removeText(Pdf pdf, Range range) throws CpdfError;
     native int XtextWidth(int font, byte[] text) throws CpdfError;
     public int textWidth(int font, String test) throws CpdfError
