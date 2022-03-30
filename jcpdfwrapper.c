@@ -460,21 +460,29 @@ JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_XpagesFast
     return result;
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFile
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring filename, jboolean linearize, jboolean make_id)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtoFile
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data, jboolean linearize, jboolean make_id)
 {
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
-    cpdf_toFile(pdf, str_filename, linearize, make_id);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_toFile(pdf, str, linearize, make_id);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileExt
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring filename, jboolean linearize, jboolean make_id, jboolean preserve_objstm, jboolean create_objstm, jboolean compress_objstm)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtoFileExt
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data, jboolean linearize, jboolean make_id, jboolean preserve_objstm, jboolean create_objstm, jboolean compress_objstm)
 {
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
-    cpdf_toFileExt(pdf, str_filename, linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_toFileExt(pdf, str, linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 

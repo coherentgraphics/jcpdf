@@ -111,8 +111,16 @@ public class Jcpdf {
     {
         return XpagesFast(encodeUTF8(userpw), encodeUTF8(filename));
     }
-    public native void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError;
-    public native void toFileExt(Pdf pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError;
+    native void XtoFile(Pdf pdf, byte[] filename, boolean linearize, boolean make_id) throws CpdfError;
+    public void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError
+    {
+        XtoFile(pdf, encodeUTF8(filename), linearize, make_id);
+    }
+    native void XtoFileExt(Pdf pdf, byte[] filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError;
+    public void toFileExt(Pdf pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError
+    {
+        XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
+    }
     public native boolean isEncrypted(Pdf pdf) throws CpdfError;
     native boolean XisLinearized(byte[] filename) throws CpdfError;
     public boolean isLinearized(String filename) throws CpdfError
