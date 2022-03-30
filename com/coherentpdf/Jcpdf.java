@@ -59,7 +59,11 @@ public class Jcpdf {
     { 
       return XfromFile(encodeUTF8(filename), encodeUTF8(userpw));
     }
-    public native Pdf fromFileLazy(String filename, String userpw) throws CpdfError;
+    native Pdf XfromFileLazy(byte[] filename, byte[] userpw) throws CpdfError;
+    public Pdf fromFileLazy(String filename, String userpw) throws CpdfError
+    {
+      return XfromFileLazy(encodeUTF8(filename), encodeUTF8(userpw));
+    }
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
     public native Pdf fromMemory(byte[] data, String userpw) throws CpdfError;
     public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
@@ -94,11 +98,19 @@ public class Jcpdf {
     }
     public native Range blankRange() throws CpdfError;
     public native int pages(Pdf pdf) throws CpdfError;
-    public native int pagesFast(String userpw, String filename) throws CpdfError;
+    native int XpagesFast(byte[] userpw, byte[] filename) throws CpdfError;
+    public int pagesFast(String userpw, String filename) throws CpdfError
+    {
+        return XpagesFast(encodeUTF8(userpw), encodeUTF8(filename));
+    }
     public native void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError;
     public native void toFileExt(Pdf pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError;
     public native boolean isEncrypted(Pdf pdf) throws CpdfError;
-    public native boolean isLinearized(String filename) throws CpdfError;
+    native boolean XisLinearized(byte[] filename) throws CpdfError;
+    public boolean isLinearized(String filename) throws CpdfError
+    {
+        return XisLinearized(encodeUTF8(filename));
+    }
     public native int toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError;
     public native int toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError;
     public native boolean hasPermission(Pdf pdf, int permission) throws CpdfError;
@@ -159,13 +171,21 @@ public class Jcpdf {
     public native void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError;
     public native void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
     public native void removeText(Pdf pdf, Range range) throws CpdfError;
-    public native int textWidth(int font, String text) throws CpdfError;
+    native int XtextWidth(int font, byte[] text) throws CpdfError;
+    public int textWidth(int font, String test) throws CpdfError
+    {
+        return XtextWidth(font, encodeUTF8(test));
+    }
     public native void stampOn(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
     public native void stampUnder(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
     public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
     public native Pdf combinePages(Pdf pdf, Pdf pdf2) throws CpdfError;
     public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
-    public native void addContent(String s, boolean before, Pdf pdf, Range range) throws CpdfError; 
+    native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range) throws CpdfError;
+    public void addContent(String s, boolean before, Pdf pdf, Range range) throws CpdfError
+    {
+        XaddContent(encodeUTF8(s), before, pdf, range);
+    }
     
     /* CHAPTER 9. Multipage facilities */
     public native void impose(Pdf pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
@@ -306,13 +326,21 @@ public class Jcpdf {
     public native void centerWindow(Pdf pdf, boolean flag) throws CpdfError;
     public native void displayDocTitle(Pdf pdf, boolean flag) throws CpdfError;
     public native void openAtPage(Pdf pdf, boolean fit, int pagenumber) throws CpdfError;
-    public native void setMetadataFromFile(Pdf pdf, String filename) throws CpdfError;
+    native void XsetMetadataFromFile(Pdf pdf, byte[] filename) throws CpdfError;
+    public void setMetadataFromFile(Pdf pdf, String filename) throws CpdfError
+    {
+        XsetMetadataFromFile(pdf, encodeUTF8(filename));
+    }
     public native void setMetadataFromByteArray(Pdf pdf, byte[] data) throws CpdfError;
     public native byte[] getMetadata(Pdf pdf) throws CpdfError;
     public native void removeMetadata(Pdf pdf) throws CpdfError;
     public native void createMetadata(Pdf pdf) throws CpdfError;
     public native void setMetadataDate(Pdf pdf, String date) throws CpdfError;
-    public native void addPageLabels(Pdf pdf, int style, String prefix, int offset, Range range, boolean progress) throws CpdfError;
+    native void XaddPageLabels(Pdf pdf, int style, byte[] prefix, int offset, Range range, boolean progress) throws CpdfError;
+    public void addPageLabels(Pdf pdf, int style, String prefix, int offset, Range range, boolean progress) throws CpdfError
+    {
+        XaddPageLabels(pdf, style, encodeUTF8(prefix), offset, range, progress);
+    }
     public native void removePageLabels(Pdf pdf) throws CpdfError;
     public native int startGetPageLabels(Pdf pdf) throws CpdfError;
     public native void endGetPageLabels() throws CpdfError;
@@ -331,10 +359,26 @@ public class Jcpdf {
     }
     
     /* CHAPTER 12. File Attachments */
-    public native void attachFile(String filename, Pdf pdf) throws CpdfError;
-    public native void attachFileToPage(String filename, Pdf pdf, int pagenumber) throws CpdfError;
-    public native void attachFileFromMemory(byte[] data, String filename, Pdf pdf) throws CpdfError;
-    public native void attachFileToPageFromMemory(byte[] data, String filename, Pdf pdf, int pagenumber) throws CpdfError;
+    native void XattachFile(byte[] filename, Pdf pdf) throws CpdfError;
+    native void XattachFileToPage(byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
+    native void XattachFileFromMemory(byte[] data, byte[] filename, Pdf pdf) throws CpdfError;
+    native void XattachFileToPageFromMemory(byte[] data, byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
+    public void attachFile(String filename, Pdf pdf) throws CpdfError
+    {
+        XattachFile(encodeUTF8(filename), pdf);
+    }
+    public void attachFileToPage(String filename, Pdf pdf, int pagenumber) throws CpdfError
+    {
+        XattachFileToPage(encodeUTF8(filename), pdf, pagenumber);
+    }
+    public void attachFileFromMemory(byte[] data, String filename, Pdf pdf) throws CpdfError
+    {
+        XattachFileFromMemory(data, encodeUTF8(filename), pdf);
+    }
+    public void attachFileToPageFromMemory(byte[] data, String filename, Pdf pdf, int pagenumber) throws CpdfError
+    {
+        XattachFileToPageFromMemory(data, encodeUTF8(filename), pdf, pagenumber);
+    }
     public native void removeAttachedFiles(Pdf pdf) throws CpdfError;
     public native void startGetAttachments(Pdf pdf) throws CpdfError;
     public native int numberGetAttachments() throws CpdfError;
@@ -365,8 +409,18 @@ public class Jcpdf {
     public native void copyFont(Pdf from_pdf, Pdf to_pdf, Range range, int pagenumber, String fontname) throws CpdfError;
 
     /* CHAPTER 15. PDF and JSON */
-    public native void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
-    public native Pdf fromJSON(String filename) throws CpdfError;
+    native void XoutputJSON(byte[] filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
+    public void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError
+    {
+        XoutputJSON(encodeUTF8(filename), parse_content, no_stream_data, decompress_streams, pdf);
+    }
+    
+    native Pdf XfromJSON(byte[] filename) throws CpdfError;
+    public Pdf fromJSON(String filename) throws CpdfError
+    {
+        return XfromJSON(encodeUTF8(filename));
+    }
+
     public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
     public native Pdf fromJSONMemory(byte[] data) throws CpdfError;
     
@@ -379,8 +433,16 @@ public class Jcpdf {
     public native void OCGOrderAll(Pdf pdf) throws CpdfError;
     public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
-    public native Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError;
-    public native Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError;
+    native Pdf XtextToPDF(double w, double h, int font, double fontsize, byte[] filename) throws CpdfError;
+    native Pdf XtextToPDFPaper(int papersize, int font, double fontsize, byte[] filename) throws CpdfError;
+    public Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError
+    {
+        return XtextToPDF(w, h, font, fontsize, encodeUTF8(filename));
+    }
+    public Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError
+    {
+        return XtextToPDFPaper(papersize, font, fontsize, encodeUTF8(filename));
+    }
 
     /* CHAPTER 18. Miscellaneous */
     public native void draft(Pdf pdf, Range range, boolean boxes) throws CpdfError;
