@@ -175,15 +175,18 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_toMemory
     return b;
 }
 
-JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromMemory
-  (JNIEnv * env, jobject jobj, jbyteArray data, jstring userpw)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromMemory
+  (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
 {
     int length = (*env)->GetArrayLength(env, data);
     void* memory = (*env)->GetByteArrayElements(env, data, 0); 
-    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
-    int result = cpdf_fromMemory(memory, length, str_userpw);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int result = cpdf_fromMemory(memory, length, str2);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
-    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
     checkerror(env);
     return makePDF(env, jobj, result);
 }
@@ -196,14 +199,17 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazyRelease
     (*env)->ReleaseByteArrayElements(env, data, memory, 0);
 }
 
-JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_fromMemoryLazy
-  (JNIEnv * env, jobject jobj, jbyteArray data, jstring userpw)
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromMemoryLazy
+  (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
 {
     int length = (*env)->GetArrayLength(env, data);
     memory = (*env)->GetByteArrayElements(env, data, 0); 
-    const char *str_userpw = (*env)->GetStringUTFChars(env, userpw, 0);
-    int result = cpdf_fromMemory(memory, length, str_userpw);
-    (*env)->ReleaseStringUTFChars(env, userpw, str_userpw);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int result = cpdf_fromMemoryLazy(memory, length, str2);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     checkerror(env);
     return makePDF(env, jobj, result);
 }

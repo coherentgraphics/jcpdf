@@ -65,9 +65,17 @@ public class Jcpdf {
       return XfromFileLazy(encodeUTF8(filename), encodeUTF8(userpw));
     }
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
-    public native Pdf fromMemory(byte[] data, String userpw) throws CpdfError;
+    native Pdf XfromMemory(byte[] data, byte[] userpw) throws CpdfError;
+    public Pdf fromMemory(byte[] data, String userpw) throws CpdfError
+    {
+        return XfromMemory(data, encodeUTF8(userpw));
+    }
     public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
-    public native Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError;
+    native Pdf XfromMemoryLazy(byte[] data, byte[] userpw) throws CpdfError;
+    public Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError
+    {
+        return XfromMemoryLazy(data, encodeUTF8(userpw));
+    }
     public native int startEnumeratePDFs() throws CpdfError;
     public native int enumeratePDFsKey(int n) throws CpdfError;
     public native String enumeratePDFsInfo(int n) throws CpdfError;
