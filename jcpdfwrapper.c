@@ -1386,163 +1386,211 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDateXMP
     return jbytearray_of_string(env, result);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitle
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitle
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setTitle(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setTitle(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAuthor
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetAuthor
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setAuthor(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setAuthor(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSubject
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetSubject
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setSubject(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setSubject(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setKeywords
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetKeywords
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setKeywords(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setKeywords(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreator
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreator
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setCreator(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setCreator(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setProducer
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetProducer
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setProducer(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setProducer(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreationDate
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreationDate
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setCreationDate(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setCreationDate(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setModificationDate
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetModificationDate
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setModificationDate(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setModificationDate(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTitleXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitleXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setTitleXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setTitleXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAuthorXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetAuthorXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setAuthorXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setAuthorXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSubjectXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetSubjectXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setSubjectXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setSubjectXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setKeywordsXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetKeywordsXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setKeywordsXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setKeywordsXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreatorXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreatorXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setCreatorXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setCreatorXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setProducerXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetProducerXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setProducerXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setProducerXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCreationDateXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreationDateXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setCreationDateXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setCreationDateXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setModificationDateXMP
-  (JNIEnv * env, jobject jobj, jobject opdf, jstring str)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetModificationDateXMP
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_str = (*env)->GetStringUTFChars(env, str, 0);
-    cpdf_setModificationDateXMP(pdf, str_str);
-    (*env)->ReleaseStringUTFChars(env, str, str_str);
+    cpdf_setModificationDateXMP(pdf, str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
 

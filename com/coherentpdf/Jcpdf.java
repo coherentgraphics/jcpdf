@@ -331,22 +331,86 @@ public class Jcpdf {
     {
         return decodeUTF8(XgetModificationDateXMP(pdf)); 
     }
-    public native void setTitle(Pdf pdf, String str) throws CpdfError;
-    public native void setAuthor(Pdf pdf, String str) throws CpdfError;
-    public native void setSubject(Pdf pdf, String str) throws CpdfError;
-    public native void setKeywords(Pdf pdf, String str) throws CpdfError;
-    public native void setCreator(Pdf pdf, String str) throws CpdfError;
-    public native void setProducer(Pdf pdf, String str) throws CpdfError;
-    public native void setCreationDate(Pdf pdf, String str) throws CpdfError;
-    public native void setModificationDate(Pdf pdf, String str) throws CpdfError;
-    public native void setTitleXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setAuthorXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setSubjectXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setKeywordsXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setCreatorXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setProducerXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setCreationDateXMP(Pdf pdf, String str) throws CpdfError;
-    public native void setModificationDateXMP(Pdf pdf, String str) throws CpdfError;
+    native void XsetTitle(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetAuthor(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetSubject(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetKeywords(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetCreator(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetProducer(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetCreationDate(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetModificationDate(Pdf pdf, byte[] str) throws CpdfError;
+    public void setTitle(Pdf pdf, String str) throws CpdfError
+    {
+        XsetTitle(pdf, encodeUTF8(str));
+    }
+    public void setAuthor(Pdf pdf, String str) throws CpdfError
+    {
+        XsetAuthor(pdf, encodeUTF8(str));
+    }
+    public void setSubject(Pdf pdf, String str) throws CpdfError
+    {
+        XsetSubject(pdf, encodeUTF8(str));
+    }
+    public void setKeywords(Pdf pdf, String str) throws CpdfError
+    {
+        XsetKeywords(pdf, encodeUTF8(str));
+    }
+    public void setCreator(Pdf pdf, String str) throws CpdfError
+    {
+        XsetCreator(pdf, encodeUTF8(str));
+    }
+    public void setProducer(Pdf pdf, String str) throws CpdfError
+    {
+        XsetProducer(pdf, encodeUTF8(str));
+    }
+    public void setCreationDate(Pdf pdf, String str) throws CpdfError
+    {
+        XsetCreationDate(pdf, encodeUTF8(str));
+    }
+    public void setModificationDate(Pdf pdf, String str) throws CpdfError
+    {
+        XsetModificationDate(pdf, encodeUTF8(str));
+    }
+    native void XsetTitleXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetAuthorXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetSubjectXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetKeywordsXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetCreatorXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetProducerXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetCreationDateXMP(Pdf pdf, byte[] str) throws CpdfError;
+    native void XsetModificationDateXMP(Pdf pdf, byte[] str) throws CpdfError;
+    public void setTitleXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetTitleXMP(pdf, encodeUTF8(str));
+    }
+    public void setAuthorXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetAuthorXMP(pdf, encodeUTF8(str));
+    }
+    public void setSubjectXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetSubjectXMP(pdf, encodeUTF8(str));
+    }
+    public void setKeywordsXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetKeywordsXMP(pdf, encodeUTF8(str));
+    }
+    public void setCreatorXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetCreatorXMP(pdf, encodeUTF8(str));
+    }
+    public void setProducerXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetProducerXMP(pdf, encodeUTF8(str));
+    }
+    public void setCreationDateXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetCreationDateXMP(pdf, encodeUTF8(str));
+    }
+    public void setModificationDateXMP(Pdf pdf, String str) throws CpdfError
+    {
+        XsetModificationDateXMP(pdf, encodeUTF8(str));
+    }
     public native void getDateComponents(String datestring, int[] r) throws CpdfError;
     public native String dateStringOfComponents(int year, int month, int day, int hour, int minute, int second, int hour_offset, int minute_offset) throws CpdfError;
     public native void getMediaBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
