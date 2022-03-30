@@ -2,6 +2,11 @@ package com.coherentpdf;
 import java.nio.charset.Charset;
 
 public class Jcpdf {
+    public Jcpdf()
+    {
+      System.loadLibrary("cpdf");
+      System.loadLibrary("jcpdf");
+    }
     public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
@@ -32,11 +37,6 @@ public class Jcpdf {
       {
         deleteRange(range);
       }
-    }
-    public Jcpdf()
-    {
-      System.loadLibrary("cpdf");
-      System.loadLibrary("jcpdf");
     }
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
     String decodeUTF8(byte[] bytes)
