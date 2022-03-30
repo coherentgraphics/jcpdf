@@ -486,37 +486,55 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtoFileExt
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileEncrypted
-  (JNIEnv * env, jobject jobj, jobject opdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jstring filename)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtoFileEncrypted
+  (JNIEnv * env, jobject jobj, jobject opdf, jint encryption_method, jintArray intdata, jbyteArray data, jbyteArray data2, jboolean linearize, jboolean makeid, jbyteArray data3)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int length3 = (*env)->GetArrayLength(env, data3);
+    jbyte* memory3 = (*env)->GetByteArrayElements(env, data3, 0);
+    char* str3 = cstring_of_jbytes(memory3, length3);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
-    const char *str_user_password = (*env)->GetStringUTFChars(env, user_password, 0);
-    const char *str_owner_password = (*env)->GetStringUTFChars(env, owner_password, 0);
-    int len = (*env)->GetArrayLength(env, data);
-    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
-    cpdf_toFileEncrypted(pdf, encryption_method, perms, len, str_owner_password, str_user_password, linearize, makeid, str_filename);
-    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
-    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
-    (*env)->ReleaseStringUTFChars(env, user_password, str_user_password);
-    (*env)->ReleaseStringUTFChars(env, owner_password, str_owner_password);
+    int len = (*env)->GetArrayLength(env, intdata);
+    int* perms = (*env)->GetIntArrayElements(env, intdata, 0); 
+    cpdf_toFileEncrypted(pdf, encryption_method, perms, len, str, str2, linearize, makeid, str3);
+    (*env)->ReleaseIntArrayElements(env, intdata, perms, 0);
+    free(str);
+    free(str2);
+    free(str3);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
+    (*env)->ReleaseByteArrayElements(env, data3, (jbyte *) memory3, 0);
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_toFileEncryptedExt
-  (JNIEnv * env, jobject jobj, jobject opdf, jint encryption_method, jintArray data, jstring owner_password, jstring user_password, jboolean linearize, jboolean makeid, jboolean preserve_objstm, jboolean generate_objstm, jboolean compress_objstm, jstring filename)
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtoFileEncryptedExt
+  (JNIEnv * env, jobject jobj, jobject opdf, jint encryption_method, jintArray intdata, jbyteArray data, jbyteArray data2, jboolean linearize, jboolean makeid, jboolean preserve_objstm, jboolean generate_objstm, jboolean compress_objstm, jbyteArray data3)
 {
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int length3 = (*env)->GetArrayLength(env, data3);
+    jbyte* memory3 = (*env)->GetByteArrayElements(env, data3, 0);
+    char* str3 = cstring_of_jbytes(memory3, length3);
     int pdf = getPDF(env, jobj, opdf);
-    const char *str_filename = (*env)->GetStringUTFChars(env, filename, 0);
-    const char *str_user_password = (*env)->GetStringUTFChars(env, user_password, 0);
-    const char *str_owner_password = (*env)->GetStringUTFChars(env, owner_password, 0);
-    int len = (*env)->GetArrayLength(env, data);
-    int* perms = (*env)->GetIntArrayElements(env, data, 0); 
-    cpdf_toFileEncryptedExt(pdf, encryption_method, perms, len, str_owner_password, str_user_password, linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, str_filename);
-    (*env)->ReleaseIntArrayElements(env, data, perms, 0);
-    (*env)->ReleaseStringUTFChars(env, filename, str_filename);
-    (*env)->ReleaseStringUTFChars(env, user_password, str_user_password);
-    (*env)->ReleaseStringUTFChars(env, owner_password, str_owner_password);
+    int len = (*env)->GetArrayLength(env, intdata);
+    int* perms = (*env)->GetIntArrayElements(env, intdata, 0); 
+    cpdf_toFileEncryptedExt(pdf, encryption_method, perms, len, str, str2, linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, str3);
+    (*env)->ReleaseIntArrayElements(env, intdata, perms, 0);
+    free(str);
+    free(str2);
+    free(str3);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
+    (*env)->ReleaseByteArrayElements(env, data3, (jbyte *) memory3, 0);
     checkerror(env);
 }
 

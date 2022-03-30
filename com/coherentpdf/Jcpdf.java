@@ -127,8 +127,16 @@ public class Jcpdf {
     {
         return XisLinearized(encodeUTF8(filename));
     }
-    public native int toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError;
-    public native int toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError;
+    native int XtoFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, byte[] filename) throws CpdfError;
+    public int toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError
+    {
+        return XtoFileEncrypted(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, encodeUTF8(filename));
+    }
+    native int XtoFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, byte[] filename) throws CpdfError;
+    public int toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError
+    {
+        return XtoFileEncryptedExt(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, encodeUTF8(filename));
+    }
     public native boolean hasPermission(Pdf pdf, int permission) throws CpdfError;
     public native int encryptionKind(Pdf pdf) throws CpdfError;
     native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
