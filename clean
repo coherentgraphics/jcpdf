@@ -2,3 +2,8 @@ rm -f Jcpdf.h com/coherentpdf/*.class com_coherentpdf_Jcpdf.h libjcpdf.dylib jcp
 rm -rf testoutputs/*.pdf testoutputs/*.json testoutputs/*.txt
 rm -f merged.pdf
 rm -f coherentpdf.jar
+rm -f *.html *.css *.js
+rm -rf element-list
+rm -rf resources
+rm -rf script-dir
+rm -rf com/coherentpdf/*.html
