@@ -1071,33 +1071,168 @@ public class Jcpdf {
 
     /** Sets the PDF to open, possibly with zoom-to-fit, at the given page number. */
     public native void openAtPage(Pdf pdf, boolean fit, int pagenumber) throws CpdfError;
+
     native void XsetMetadataFromFile(Pdf pdf, byte[] filename) throws CpdfError;
+
+    /** Sets the XMP metadata of a document, given a file name. */
     public void setMetadataFromFile(Pdf pdf, String filename) throws CpdfError
     {
         XsetMetadataFromFile(pdf, encodeUTF8(filename));
     }
+
+    /** Sets the XMP metadata from an array of bytes. */
     public native void setMetadataFromByteArray(Pdf pdf, byte[] data) throws CpdfError;
+    
+    /** Returns the XMP metadata from a document. */
     public native byte[] getMetadata(Pdf pdf) throws CpdfError;
+    
+    /** Removes the XMP metadata from a document. */
     public native void removeMetadata(Pdf pdf) throws CpdfError;
+    
+    /** Builds fresh XMP metadata as best it can from
+    existing metadata in the document. */
     public native void createMetadata(Pdf pdf) throws CpdfError;
+
+    /** Sets the metadata date for a PDF. The date
+    is given in PDF date format -- cpdf will convert it to XMP format. The
+    date "now" means now. */
     public native void setMetadataDate(Pdf pdf, String date) throws CpdfError;
+
     native void XaddPageLabels(Pdf pdf, int style, byte[] prefix, int offset, Range range, boolean progress) throws CpdfError;
+    
+    /** Adds page labels. The prefix is prefix text for each label. The range is the page range the
+    labels apply to. Offset can be used to shift the numbering up or down. */
     public void addPageLabels(Pdf pdf, int style, String prefix, int offset, Range range, boolean progress) throws CpdfError
     {
         XaddPageLabels(pdf, style, encodeUTF8(prefix), offset, range, progress);
     }
+
+    /** Removes the page labels from the document. */
     public native void removePageLabels(Pdf pdf) throws CpdfError;
+    
+    /** Gets page label data. Call startGetPageLabels to find out how many
+    there are, then use these serial numbers to get the style, prefix, offset
+    and start value (note not a range). Call endGetPageLabels to clean up.
+    
+    For example, a document might have five pages of introduction with roman
+    numerals, followed by the rest of the pages in decimal arabic, numbered from
+    one:
+    
+    labelstyle = LowercaseRoman<br/>
+    labelprefix = ""<br/>
+    startpage = 1<br/>
+    startvalue = 1<br/>
+    
+    labelstyle = DecimalArabic<br/>
+    labelprefix = ""<br/>
+    startpage = 6<br/>
+    startvalue = 1<br> */
     public native int startGetPageLabels(Pdf pdf) throws CpdfError;
+    
+    /** Gets page label data. Call startGetPageLabels to find out how many
+    there are, then use these serial numbers to get the style, prefix, offset
+    and start value (note not a range). Call endGetPageLabels to clean up.
+    
+    For example, a document might have five pages of introduction with roman
+    numerals, followed by the rest of the pages in decimal arabic, numbered from
+    one:
+    
+    labelstyle = LowercaseRoman<br/>
+    labelprefix = ""<br/>
+    startpage = 1<br/>
+    startvalue = 1<br/>
+    
+    labelstyle = DecimalArabic<br/>
+    labelprefix = ""<br/>
+    startpage = 6<br/>
+    startvalue = 1<br> */
     public native void endGetPageLabels() throws CpdfError;
+    
+    /** Gets page label data. Call startGetPageLabels to find out how many
+    there are, then use these serial numbers to get the style, prefix, offset
+    and start value (note not a range). Call endGetPageLabels to clean up.
+    
+    For example, a document might have five pages of introduction with roman
+    numerals, followed by the rest of the pages in decimal arabic, numbered from
+    one:
+    
+    labelstyle = LowercaseRoman<br/>
+    labelprefix = ""<br/>
+    startpage = 1<br/>
+    startvalue = 1<br/>
+    
+    labelstyle = DecimalArabic<br/>
+    labelprefix = ""<br/>
+    startpage = 6<br/>
+    startvalue = 1<br> */
     public native int getPageLabelOffset(int n) throws CpdfError;
+    
+    /** Gets page label data. Call startGetPageLabels to find out how many
+    there are, then use these serial numbers to get the style, prefix, offset
+    and start value (note not a range). Call endGetPageLabels to clean up.
+    
+    For example, a document might have five pages of introduction with roman
+    numerals, followed by the rest of the pages in decimal arabic, numbered from
+    one:
+    
+    labelstyle = LowercaseRoman<br/>
+    labelprefix = ""<br/>
+    startpage = 1<br/>
+    startvalue = 1<br/>
+    
+    labelstyle = DecimalArabic<br/>
+    labelprefix = ""<br/>
+    startpage = 6<br/>
+    startvalue = 1<br> */
     public native int getPageLabelStyle(int n) throws CpdfError;
+    
+    /** Gets page label data. Call startGetPageLabels to find out how many
+    there are, then use these serial numbers to get the style, prefix, offset
+    and start value (note not a range). Call endGetPageLabels to clean up.
+    
+    For example, a document might have five pages of introduction with roman
+    numerals, followed by the rest of the pages in decimal arabic, numbered from
+    one:
+    
+    labelstyle = LowercaseRoman<br/>
+    labelprefix = ""<br/>
+    startpage = 1<br/>
+    startvalue = 1<br/>
+    
+    labelstyle = DecimalArabic<br/>
+    labelprefix = ""<br/>
+    startpage = 6<br/>
+    startvalue = 1<br> */
+    
     public native int getPageLabelRange(int n) throws CpdfError;
+    
     native byte[] XgetPageLabelPrefix(int n) throws CpdfError;
+    
+    /** Gets page label data. Call startGetPageLabels to find out how many
+    there are, then use these serial numbers to get the style, prefix, offset
+    and start value (note not a range). Call endGetPageLabels to clean up.
+    
+    For example, a document might have five pages of introduction with roman
+    numerals, followed by the rest of the pages in decimal arabic, numbered from
+    one:
+    
+    labelstyle = LowercaseRoman<br/>
+    labelprefix = ""<br/>
+    startpage = 1<br/>
+    startvalue = 1<br/>
+    
+    labelstyle = DecimalArabic<br/>
+    labelprefix = ""<br/>
+    startpage = 6<br/>
+    startvalue = 1<br> */
     public String getPageLabelPrefix(int n) throws CpdfError
     {
         return decodeUTF8(XgetPageLabelPrefix(n));
     }
+
     native byte[] XgetPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
+    
+    /** Calculates the full label string for a given page, and returns it. */
     public String getPageLabelStringForPage(Pdf pdf, int n) throws CpdfError
     {
         return decodeUTF8(XgetPageLabelStringForPage(pdf, n));
