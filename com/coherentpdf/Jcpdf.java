@@ -649,44 +649,100 @@ public class Jcpdf {
 
     /* CHAPTER 8. Logos, Watermarks and Stamps */
     native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
+
+    /** Adds text to the pages in the given range. */
     public void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError
     {
         XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2, linespacing, bates, font, fontsize,
                 r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, encodeUTF8(filename), linewidth, embed_fonts);
     }
     native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
+    
+    /** Adds text with most parameters default. */
     public void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError
     {
         XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font, fontsize);
     }
+    
+    /** Removes any text added by cpdf from the given pages. */
     public native void removeText(Pdf pdf, Range range) throws CpdfError;
+
     native int XtextWidth(int font, byte[] text) throws CpdfError;
+    
+    /** Returns the width of a given string in the given font in thousandths of a point. */
     public int textWidth(int font, String test) throws CpdfError
     {
         return XtextWidth(font, encodeUTF8(test));
     }
+
+    /** Stamps stamp_pdf on top of all the
+    pages in the document which are in the range. The stamp is placed with its
+    origin at the origin of the target document. */
     public native void stampOn(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
+
+    /** Stamps stamp_pdf under all the
+    pages in the document which are in the range. The stamp is placed with its
+    origin at the origin of the target document. */
     public native void stampUnder(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
+
+    /** A stamping function with extra features. - isover
+    true, pdf goes over pdf2, isover false, pdf goes under pdf2 -
+    scale_stamp_to_fit scales the stamp to fit the page - pos gives the
+    position to put the stamp - relative_to_cropbox: if true, pos is relative
+    to cropbox not mediabox. */
     public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
+    
+    /** Combines the PDFs page-by-page, putting each page of 'over' over each page of 'under'. */
     public native Pdf combinePages(Pdf pdf, Pdf pdf2) throws CpdfError;
+    
+    /** Stamps stamp_pdf onto the pages
+    in the given range in pdf as a shared Form XObject. The name of the
+    newly-created XObject is returned. */
     public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
+
     native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range) throws CpdfError;
+    
+    /** Adds page content before (if
+    true) or after (if false) the existing content to pages in the given range
+    in the given PDF. */
     public void addContent(String s, boolean before, Pdf pdf, Range range) throws CpdfError
     {
         XaddContent(encodeUTF8(s), before, pdf, range);
     }
     
     /* CHAPTER 9. Multipage facilities */
+    
+    /** Imposes a PDF. There are two modes: imposing x * y, or imposing
+    to fit a page of size x * y. This is controlled by fit. Columns imposes by
+    columns rather than rows. rtl is right-to-left, btt bottom-to-top. Center is
+    unused for now. Margin is the margin around the output, spacing the spacing
+    between imposed inputs. */
     public native void impose(Pdf pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
+
+    /** Imposes a document two up. twoUpStack does so by shrinking the page size, to fit two pages on one. */
     public native void twoUp(Pdf pdf) throws CpdfError;
+    
+    /** Impose a document two up. twoUpStack does so by doubling the page size, to fit two pages on one. */
     public native void twoUpStack(Pdf pdf) throws CpdfError;
+
+    /** Adds a blank page before each page in the given range. */
     public native void padBefore(Pdf pdf, Range range) throws CpdfError;
+
+    /** Adds a blank page after each page in the given range. */
     public native void padAfter(Pdf pdf, Range range) throws CpdfError;
+
+    /** Adds a blank page after every n pages. */
     public native void padEvery(Pdf pdf, int n) throws CpdfError;
+
+    /** Adds pages at the end to pad the file to a multiple of n pages in length. */
     public native void padMultiple(Pdf pdf, int n) throws CpdfError;
+
+    /** Adds pages at the beginning to pad the file to a multiple of n pages in length. */
     public native void padMultipleBefore(Pdf pdf, int n) throws CpdfError;
 
     /* CHAPTER 10. Annotations */
+    
+    /** Returns the annotations from a PDF in JSON format. */
     public native byte[] annotationsJSON(Pdf pdf) throws CpdfError;
     
     /* CHAPTER 11. Document Information and Metadata */
