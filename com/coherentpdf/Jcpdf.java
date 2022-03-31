@@ -332,65 +332,143 @@ public class Jcpdf {
     /** Converts a figure in points to millimetres (72 points to 1 inch) */
     public native double inOfPt(double f) throws CpdfError;
 
+    /** The page range containing all page numbers from one page number to another. */
     public native Range range(int from, int to) throws CpdfError;
+
+    /** The page range contaning all pages in a given document. */
     public native Range all(Pdf pdf) throws CpdfError;
+
+    /** The page range containing all odd-numbered pages from an existing range. */
     public native Range odd(Range r) throws CpdfError;
+
+    /** The page range containing all even-numbered pages from an existing range. */
     public native Range even(Range r) throws CpdfError;
+
+    /** The union of two ranges - all those pages in either. */
     public native Range rangeUnion(Range r, Range s) throws CpdfError;
+
+    /** The range containing all pages in the first given range which are not in the second. */
     public native Range difference(Range r, Range s) throws CpdfError;
+    
+    /** Remove duplicates from a range, returning a new one. */
     public native Range removeDuplicates(Range r) throws CpdfError;
+
+    /** The length of a range. */
     public native int rangeLength(Range r) throws CpdfError;
+
+    /** Get a page number from a range at the given offset. */
     public native int rangeGet(Range r, int n) throws CpdfError;
+    
+    /** Add a page number to a range, returning a new one. */
     public native Range rangeAdd(Range r, int n) throws CpdfError;
+
+    /** Test to see if a given number is in a page range. */
     public native boolean isInRange(Range r, int n) throws CpdfError;
+
+    /** The range containing no pages. */
+    public native Range blankRange() throws CpdfError;
+
+    /** Parses a page specification with reference
+    to a given PDF (the PDF is supplied so that page ranges which reference
+    pages which do not exist are rejected). */
     public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
+    
+    /** Validates a page specification so far as is
+    possible in the absence of the actual document. Result is true if valid. */
     public native boolean validatePagespec(String pagespec) throws CpdfError;
+
     native byte[] XstringOfPagespec(Pdf pdf, Range r) throws CpdfError;
+    
+    /** Builds a page specification from a page
+    range. For example, the range containing 1,2,3,6,7,8 in a document of 8
+    pages might yield "1-3,6-end" */
     public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
     {
         return decodeUTF8(XstringOfPagespec(pdf, r));    
     }
-    public native Range blankRange() throws CpdfError;
+
+    /** Returns the number of pages in a PDF. */
     public native int pages(Pdf pdf) throws CpdfError;
+
     native int XpagesFast(byte[] userpw, byte[] filename) throws CpdfError;
+
+    /** Returns the number of pages in a given
+    PDF, with given user password. It tries to do this as fast as
+    possible, without loading the whole file. */
     public int pagesFast(String userpw, String filename) throws CpdfError
     {
         return XpagesFast(encodeUTF8(userpw), encodeUTF8(filename));
     }
+
     native void XtoFile(Pdf pdf, byte[] filename, boolean linearize, boolean make_id) throws CpdfError;
+    
+    /** Writes the file to a given
+    filename. If linearize is true, it will be linearized if a linearizer is
+    available. If make_id is true, it will be given a new ID. */
     public void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError
     {
         XtoFile(pdf, encodeUTF8(filename), linearize, make_id);
     }
+    
     native void XtoFileExt(Pdf pdf, byte[] filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError;
+
+    /** Writes the file to a given filename. If
+    make_id is true, it will be given a new ID.  If preserve_objstm is true,
+    existing object streams will be preserved. If generate_objstm is true,
+    object streams will be generated even if not originally present. If
+    compress_objstm is true, object streams will be compressed (what we
+    usually want). WARNING: the pdf argument will be invalid after this call,
+    and should be not be used again. */
     public void toFileExt(Pdf pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError
     {
         XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
     }
+
+    /** Returns true if a documented is encrypted, false otherwise. */
     public native boolean isEncrypted(Pdf pdf) throws CpdfError;
+
     native boolean XisLinearized(byte[] filename) throws CpdfError;
+    
+    /** Finds out if a document is linearized as quickly as possible without loading it. */
     public boolean isLinearized(String filename) throws CpdfError
     {
         return XisLinearized(encodeUTF8(filename));
     }
     native int XtoFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, byte[] filename) throws CpdfError;
+
+    /** Writes a file as encrypted. The encryption method and permissions are drawn from Jcpdf's fields, documented above. */
     public int toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError
     {
         return XtoFileEncrypted(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, encodeUTF8(filename));
     }
     native int XtoFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, byte[] filename) throws CpdfError;
+
+    /** Writes a file as encrypted with extra parameters. WARNING: the pdf
+     argument will be invalid after this call, and should not be used again.
+     */
     public int toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError
     {
         return XtoFileEncryptedExt(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, encodeUTF8(filename));
     }
+
+    /** Returns true if the given permission (restriction) is present. */
     public native boolean hasPermission(Pdf pdf, int permission) throws CpdfError;
+    
+    /** Returns the encryption method currently in use on a document. */
     public native int encryptionKind(Pdf pdf) throws CpdfError;
     native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
+    
+    /** Attempts to decrypt a PDF using the given
+    user password. An exception is raised if the decryption fails. */
     public void decryptPdf(Pdf pdf, String userpw) throws CpdfError
     {
         XdecryptPdf(pdf, encodeUTF8(userpw));
     }
+
     native void XdecryptPdfOwner(Pdf pdf, byte[] ownerpw) throws CpdfError;
+
+    /** Attempts to decrypt a PDF using the given owner password. Raises an
+    exception if the decryption fails. */
     public void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError
     {
         XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
