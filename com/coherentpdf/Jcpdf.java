@@ -1433,55 +1433,124 @@ public class Jcpdf {
 
     /* CHAPTER 15. PDF and JSON */
     native void XoutputJSON(byte[] filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
+    
+    /** Outputs a PDF
+    in JSON format to the given filename. If parse_content is true, page content
+    is parsed. If no_stream_data is true, all stream data is suppressed entirely. */
     public void outputJSON(String filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError
     {
         XoutputJSON(encodeUTF8(filename), parse_content, no_stream_data, decompress_streams, pdf);
     }
-    
+
+    /** Like outputJSON, but it writes to a byte array in memory. */
+    public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
+
+
     native Pdf XfromJSON(byte[] filename) throws CpdfError;
+    
+    /** Loads a PDF from a JSON file given its filename. */
     public Pdf fromJSON(String filename) throws CpdfError
     {
         return XfromJSON(encodeUTF8(filename));
     }
 
-    public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
+    /** Loads a PDF from a JSON file in memory */
     public native Pdf fromJSONMemory(byte[] data) throws CpdfError;
     
     /* CHAPTER 16. Optional Content Groups */
+    
+    /** Begins retrieving optional content group names. The serial number 0..n - 1 is returned. */
     public native int startGetOCGList(Pdf pdf) throws CpdfError;
     public native String OCGListEntry(int serial) throws CpdfError;
     public native void endGetOCGList() throws CpdfError;
+
+    /** Coalesces optional content groups. For example, if we merge or stamp two
+    files both with an OCG called "Layer 1", we will have two different optional
+    content groups. This function will merge the two into a single optional
+    content group. */
     public native void OCGCoalesce(Pdf pdf) throws CpdfError;
+
+    /** Renames an optional content group. */
     public native void OCGRename(Pdf pdf, String f, String t) throws CpdfError;
+    
+    /** Ensures that every optional content group appears in the OCG order list. */
     public native void OCGOrderAll(Pdf pdf) throws CpdfError;
+
+
+    /* CHAPTER 17. Creating New PDFs */
+    
+    /** Creates a blank document with
+    pages of the given width (in points), height (in points), and number of
+    pages. */
     public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
+
+    /** Makes a blank document given a page size and number of pages. */
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
+    
     native Pdf XtextToPDF(double w, double h, int font, double fontsize, byte[] filename) throws CpdfError;
     native Pdf XtextToPDFPaper(int papersize, int font, double fontsize, byte[] filename) throws CpdfError;
+    
+    /** Typesets a UTF8 text file
+    ragged right on a page of size w * h in points in the given font and font
+    size. */
     public Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError
     {
         return XtextToPDF(w, h, font, fontsize, encodeUTF8(filename));
     }
+    
+    /** Typesets a UTF8 text file ragged right on a page of the given size in the given font and font size. */
     public Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError
     {
         return XtextToPDFPaper(papersize, font, fontsize, encodeUTF8(filename));
     }
 
     /* CHAPTER 18. Miscellaneous */
+    
+    /** Removes images on the given pages, replacing them with crossed boxes if 'boxes' is true. */
     public native void draft(Pdf pdf, Range range, boolean boxes) throws CpdfError;
+    
+    /** Removes all text from the given pages in a given document. */
     public native void removeAllText(Pdf pdf, Range range) throws CpdfError;
+    
+    /** Blackens all text on the given pages. */
     public native void blackText(Pdf pdf, Range range) throws CpdfError;
+    
+    /** Blackens all lines on the given pages. */
     public native void blackLines(Pdf pdf, Range range) throws CpdfError;
+    
+    /** Blackens all fills on the given pages. */
     public native void blackFills(Pdf pdf, Range range) throws CpdfError;
+    
+    /** Thickens every line less than min_thickness to min_thickness. Thickness given in points. */
     public native void thinLines(Pdf pdf, Range range, double minwidth) throws CpdfError;
+    
+    /** Copies the /ID from one document to another. */
     public native void copyId(Pdf pdf, Pdf pdf2) throws CpdfError;
+    
+    /** Removes a document's /ID. */
     public native void removeId(Pdf pdf) throws CpdfError;
+    
+    /** Sets the minor version number of a document. */
     public native void setVersion(Pdf pdf, int version) throws CpdfError;
+    
+    /** Sets the full version number of a document. */
     public native void setFullVersion(Pdf pdf, int major, int minor) throws CpdfError;
+    
+    /** Removes any dictionary entry with the given key anywhere in the document. */
     public native void removeDictEntry(Pdf pdf, String str) throws CpdfError;
+    
+    /** Removes any dictionary entry with the given key whose value matches the given search term. */
     public native void removeDictEntrySearch(Pdf pdf, String str, String searchterm) throws CpdfError;
+    
+    /** Replaces the value associated with the given key. */
     public native void replaceDictEntry(Pdf pdf, String key, String newvalue) throws CpdfError;
+    
+    /** Replaces the value associated with the given key if the existing value matches the search term. */
     public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
+    
+    /** Returns a JSON array containing any and all values associated with the given key, and fills in its length. */
     public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
+    
+    /** Removes all clipping from pages in the given range. */
     public native void removeClipping(Pdf pdf, Range range) throws CpdfError;
 }
