@@ -874,38 +874,56 @@ public class Jcpdf {
     native void XsetProducer(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetCreationDate(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetModificationDate(Pdf pdf, byte[] str) throws CpdfError;
+    
+    /** Sets the title of a document. */
     public void setTitle(Pdf pdf, String str) throws CpdfError
     {
         XsetTitle(pdf, encodeUTF8(str));
     }
+
+
+    /** Sets the author of a document. */
     public void setAuthor(Pdf pdf, String str) throws CpdfError
     {
         XsetAuthor(pdf, encodeUTF8(str));
     }
+
+    /** Sets the subject of a document. */
     public void setSubject(Pdf pdf, String str) throws CpdfError
     {
         XsetSubject(pdf, encodeUTF8(str));
     }
+
+    /** Sets the keywords of a document. */
     public void setKeywords(Pdf pdf, String str) throws CpdfError
     {
         XsetKeywords(pdf, encodeUTF8(str));
     }
+
+    /** Sets the creator of a document. */
     public void setCreator(Pdf pdf, String str) throws CpdfError
     {
         XsetCreator(pdf, encodeUTF8(str));
     }
+
+    /** Sets the producer of a document. */
     public void setProducer(Pdf pdf, String str) throws CpdfError
     {
         XsetProducer(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the creation date of a document. */
     public void setCreationDate(Pdf pdf, String str) throws CpdfError
     {
         XsetCreationDate(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the modification date of a document. */
     public void setModificationDate(Pdf pdf, String str) throws CpdfError
     {
         XsetModificationDate(pdf, encodeUTF8(str));
     }
+    
     native void XsetTitleXMP(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetAuthorXMP(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetSubjectXMP(Pdf pdf, byte[] str) throws CpdfError;
@@ -914,64 +932,144 @@ public class Jcpdf {
     native void XsetProducerXMP(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetCreationDateXMP(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetModificationDateXMP(Pdf pdf, byte[] str) throws CpdfError;
+    
+    /** Sets the XMP title of a document. */
     public void setTitleXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetTitleXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP author of a document. */
     public void setAuthorXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetAuthorXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP subject of a document. */
     public void setSubjectXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetSubjectXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP keywords of a document. */
     public void setKeywordsXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetKeywordsXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP creator of a document. */
     public void setCreatorXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetCreatorXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP producer of a document. */
     public void setProducerXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetProducerXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP creation date of a document. */
     public void setCreationDateXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetCreationDateXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Sets the XMP modification date of a document. */
     public void setModificationDateXMP(Pdf pdf, String str) throws CpdfError
     {
         XsetModificationDateXMP(pdf, encodeUTF8(str));
     }
+    
+    /** Returns the components from a PDF date string in an array of length 8. */
     public native void getDateComponents(String datestring, int[] r) throws CpdfError;
+
+    /** Builds a PDF date string from individual components. */
     public native String dateStringOfComponents(int year, int month, int day, int hour, int minute, int second, int hour_offset, int minute_offset) throws CpdfError;
+
+    /** These functions get a box given the document, page number, min x, max x,
+    min y, max y in points. Only succeeds if such a box exists, as checked by
+    hasBox. */
     public native void getMediaBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    
+    /** These functions get a box given the document, page number, min x, max x,
+    min y, max y in points. Only succeeds if such a box exists, as checked by
+    hasBox. */
     public native void getCropBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    
+    /** These functions get a box given the document, page number, min x, max x,
+    min y, max y in points. Only succeeds if such a box exists, as checked by
+    hasBox. */
     public native void getBleedBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    
+    /** These functions get a box given the document, page number, min x, max x,
+    min y, max y in points. Only succeeds if such a box exists, as checked by
+    hasBox. */
     public native void getArtBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    
+    /** These functions get a box given the document, page number, min x, max x,
+    min y, max y in points. Only succeeds if such a box exists, as checked by
+    hasBox. */
     public native void getTrimBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
-    public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
-    public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
+
+    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setMediabox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    
+    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setCropBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    
+    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setTrimBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    
+    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setArtBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    
+    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setBleedBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+
+    /** Gets the viewing rotation for a given page. */
+    public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
+
+    /** Returns true, if that page has the given box. E.g "/CropBox". */
+    public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
+
+    /** Marks a document as trapped. */
     public native void markTrapped(Pdf pdf) throws CpdfError;
+    
+    /** Marks a document as untrapped. */
     public native void markUntrapped(Pdf pdf) throws CpdfError;
+    
+    /** Marks a document as trapped in XMP metadata. */
     public native void markTrappedXMP(Pdf pdf) throws CpdfError;
+
+    /** Marks a document as untrapped in XMP metadata. */
     public native void markUntrappedXMP(Pdf pdf) throws CpdfError;
+
+    /** Sets the page layout for a document. */
     public native void setPageLayout(Pdf pdf, int layout) throws CpdfError;
+    
+    /** Sets the page mode for a document. */
     public native void setPageMode(Pdf pdf, int mode) throws CpdfError;
+    
+    /** Sets the hide toolbar flag. */
     public native void hideToolbar(Pdf pdf, boolean flag) throws CpdfError;
+    
+    /** Sets the hide menubar flag. */
     public native void hideMenubar(Pdf pdf, boolean flag) throws CpdfError;
+
+    /** Sets the hide window UI flag. */
     public native void hideWindowUi(Pdf pdf, boolean flag) throws CpdfError;
+    
+    /** Sets the fit window flag. */
     public native void fitWindow(Pdf pdf, boolean flag) throws CpdfError;
+
+    /** Sets the center window flag. */
     public native void centerWindow(Pdf pdf, boolean flag) throws CpdfError;
+    
+    /** Sets the display doc title flag. */
     public native void displayDocTitle(Pdf pdf, boolean flag) throws CpdfError;
+
+    /** Sets the PDF to open, possibly with zoom-to-fit, at the given page number. */
     public native void openAtPage(Pdf pdf, boolean fit, int pagenumber) throws CpdfError;
     native void XsetMetadataFromFile(Pdf pdf, byte[] filename) throws CpdfError;
     public void setMetadataFromFile(Pdf pdf, String filename) throws CpdfError
