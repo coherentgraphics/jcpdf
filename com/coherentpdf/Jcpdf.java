@@ -1243,49 +1243,192 @@ public class Jcpdf {
     native void XattachFileToPage(byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
     native void XattachFileFromMemory(byte[] data, byte[] filename, Pdf pdf) throws CpdfError;
     native void XattachFileToPageFromMemory(byte[] data, byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
+    
+    /** Attaches a file to the pdf. It is attached at document level. */
     public void attachFile(String filename, Pdf pdf) throws CpdfError
     {
         XattachFile(encodeUTF8(filename), pdf);
     }
+
+    /** Attaches a file, given its file name, pdf, and the page number to which it should be attached. */
     public void attachFileToPage(String filename, Pdf pdf, int pagenumber) throws CpdfError
     {
         XattachFileToPage(encodeUTF8(filename), pdf, pagenumber);
     }
+
+    /** Attaches data from memory, just like attachFile. */
     public void attachFileFromMemory(byte[] data, String filename, Pdf pdf) throws CpdfError
     {
         XattachFileFromMemory(data, encodeUTF8(filename), pdf);
     }
+
+    /** Attaches to a page from memory, just like attachFileToPage. */
     public void attachFileToPageFromMemory(byte[] data, String filename, Pdf pdf, int pagenumber) throws CpdfError
     {
         XattachFileToPageFromMemory(data, encodeUTF8(filename), pdf, pagenumber);
     }
+
+    /** Removes all page- and document-level attachments from a document. */
     public native void removeAttachedFiles(Pdf pdf) throws CpdfError;
+
+    /** Lists information about attachments. Call startGetAttachments(pdf)
+    first, then numberGetAttachments to find out how many there are. Then
+    getAttachmentName etc. to return each one 0...(n - 1). Finally, call
+    endGetAttachments to clean up. */
     public native void startGetAttachments(Pdf pdf) throws CpdfError;
+    
+    /** Lists information about attachments. Call startGetAttachments(pdf)
+    first, then numberGetAttachments to find out how many there are. Then
+    getAttachmentName etc. to return each one 0...(n - 1). Finally, call
+    endGetAttachments to clean up. */
     public native int numberGetAttachments() throws CpdfError;
+    
+    /** Gets the name of an attachment. */
     public native String getAttachmentName(int serial) throws CpdfError;
+    
+    /** Gets the page number. 0 = document level. */
     public native int getAttachmentPage(int serial) throws CpdfError;
+    
+    /** Gets the attachment data itself. */
     public native byte[] getAttachmentData(int serial) throws CpdfError;
+    
+    /** Lists information about attachments. Call startGetAttachments(pdf)
+    first, then numberGetAttachments to find out how many there are. Then
+    getAttachmentName etc. to return each one 0...(n - 1). Finally, call
+    endGetAttachments to clean up. */
     public native void endGetAttachments() throws CpdfError; 
 
     /* CHAPTER 13. Images. */
+    
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native int startGetImageResolution(Pdf pdf, double res) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native int getImageResolutionPageNumber(int serial) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native String getImageResolutionImageName(int serial) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native int getImageResolutionXPixels(int serial) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native int getImageResolutionYPixels(int serial) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native double getImageResolutionXRes(int serial) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native double getImageResolutionYRes(int serial) throws CpdfError;
+
+    /** Gets image data, including resolution at all points of use. Call
+    startGetImageResolution(pdf, min_required_resolution) will begin the
+    process of obtaining data on all image uses below min_required_resolution,
+    returning the total number. So, to return all image uses, specify a very
+    high min_required_resolution. Then, call the other functions giving a
+    serial number 0..n - 1, to retrieve the data. Finally, call
+    endGetImageResolution to clean up. */
     public native void endGetImageResolution() throws CpdfError;
 
     /* CHAPTER 14. Fonts. */
+    
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native void startGetFontInfo(Pdf pdf) throws CpdfError;
+
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native int numberFonts() throws CpdfError;
+    
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native String getFontName(int serial) throws CpdfError;
+    
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native int getFontPage(int serial) throws CpdfError;
+    
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native String getFontType(int setial) throws CpdfError;
+    
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native String getFontEncoding(int serial) throws CpdfError;
+    
+    /** Retrieves font information. First, call startGetFontInfo(pdf). Now
+    call numberFonts to return the number of fonts. For each font, call
+    one or more of getFontPage, getFontName, getFontType, and
+    getFontEncoding giving a serial number 0..n - 1 to
+    return information. Finally, call endGetFontInfo to clean up. */
     public native void endGetFontInfo() throws CpdfError;
+    
+    /** Removes all font data from a file. */
     public native void removeFonts(Pdf pdf) throws CpdfError;
+    
+    /** Copies the given font
+    from the given page in the 'from' PDF to every page in the 'to' PDF. The
+    new font is stored under its font name. */
     public native void copyFont(Pdf from_pdf, Pdf to_pdf, Range range, int pagenumber, String fontname) throws CpdfError;
 
     /* CHAPTER 15. PDF and JSON */
