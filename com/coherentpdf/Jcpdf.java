@@ -1,6 +1,7 @@
 package com.coherentpdf;
 import java.nio.charset.Charset;
 
+/** The Coherent PDF Library for Java */
 public class Jcpdf {
     //Initalize by loading external DLLs
     public Jcpdf()
@@ -9,7 +10,7 @@ public class Jcpdf {
       System.loadLibrary("jcpdf");
     }
     
-    //Exceptions
+    /** Any function in this library may raise the CPDFError exception. */
     public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
@@ -18,7 +19,7 @@ public class Jcpdf {
       }
     }
 
-    //PDFs backed by Cpdflib PDFs.
+    /** PDF document. Use the 'try' keyword, or call close() to make sure PDFs are deallocated. */
     public class Pdf implements AutoCloseable
     {
       int pdf = -1;
@@ -32,7 +33,7 @@ public class Jcpdf {
       }
     }
 
-    //Ranges backed by Cpdflib ranges
+    /** Page range. Use the 'try' keyword, or call close() to make sure ranges are deallocated. */
     public class Range implements AutoCloseable
     {
       int range = -1;
@@ -52,134 +53,285 @@ public class Jcpdf {
     String decodeUTF8(byte[] bytes) { return new String(bytes, UTF8_CHARSET); }
     byte[] encodeUTF8(String string) { return string.getBytes(UTF8_CHARSET); }
 
-    //Enumerations
+    // Enumerations
+
+    /** Permission: cannot edit the document */
     public int noEdit = 0;
+    /** Permission: cannot print the document */
     public int noPrint = 1;
+    /** Permission: cannot copy the document */
     public int noCopy = 2;
+    /** Permission: cannot annotate the document */
     public int noAnnot = 3;
+    /** Permission: cannot edit forms in the document */
     public int noForms = 4;
+    /** Permission: cannot extract information */
     public int noExtract = 5;
+    /** Permission: cannot assemble into a bigger document */
     public int noAssemble = 6;
+    /** Permission: cannot print high quality */
     public int noHqPrint = 7;
 
+    /** Encryption method: 40 bit RC4 encryption */
     public int pdf40bit = 0;
+    /** Encryption method: 128 bit RC4 encryption */
     public int pdf128bit = 1;
+    /** Encryption method: 128 bit AES encryption, do not encrypt metadata */
     public int aes128bitfalse = 2;
+    /** Encryption method: 128 bit AES encryption, encrypt metadata */
     public int aes128bittrue = 3;
+    /** Encryption method: Deprecated. Do not use for new files */
     public int aes256bitfalse = 4;
+    /** Encryption method: Deprecated. Do not use for new files */
     public int aes256bittrue = 5;
+    /** Encryption method: 256 bit AES encryption, do not encrypt metadata */
     public int aes256bitisofalse = 6;
+    /** Encryption method: 256 bit AES encryption, encrypt metadata */
     public int aes256bitiso = 7;
 
+    /** Page label style: 1, 2, 3... */
     public int decimalArabic = 0;
+    /** Page label style: I, II, III... */
     public int uppercaseRoman = 1;
+    /** Page label style: i, ii, iii... */
     public int lowercaseRoman = 2;
+    /** Page label style: A, B, C... */
     public int uppercaseLetters = 3;
+    /** Page label style: a, b, c...*/
     public int lowercaseLetters = 4;
 
+    /** Layout: single page */
     public int singlePage = 0;
+    /** Layout: one column */
     public int oneColumn = 1;
+    /** Layout: two column left */
     public int twoColumnLeft = 2;
+    /** Layout: two column right */
     public int twoColumnRight = 3;
+    /** Layout: two page left */
     public int twoPageLeft = 4;
+    /** Layout: two page right */
     public int twoPageRight = 5;
 
+    /** Page mode: use none */
     public int useNone = 0;
+    /** Page mode: use outlines */
     public int useOutlines = 1;
+    /** Page mode: use thumbs */
     public int useThumbs = 2;
+    /** Page mode: use OC */
     public int useOC = 3;
+    /** Page mode: use Attachments */
     public int useAttachments = 4;
 
+    /** Paper size: A0 Portrait */
     public int a0portrait = 0;
+    /** Paper size: A1 Portrait */
     public int a1portrait = 1;
+    /** Paper size: A2 Portrait */
     public int a2portrait = 2;
+    /** Paper size: A3 Portrait */
     public int a3portrait = 3;
+    /** Paper size: A4 Portrait */
     public int a4portrait = 4;
+    /** Paper size: A5 Portrait */
     public int a5portrait = 5;
+    /** Paper size: A0 Landscape */
     public int a0landscape = 6;
+    /** Paper size: A1 Landscape */
     public int a1landscape = 7;
+    /** Paper size: A2 Landscape */
     public int a2landscape = 8;
+    /** Paper size: A3 Landscape */
     public int a3landscape = 9;
+    /** Paper size: A4 Landscape */
     public int a4landscape = 10;
+    /** Paper size: A5 Landscape */
     public int a5landscape = 11;
+    /** Paper size: US Letter Portrait */
     public int usletterportrait = 12;
+    /** Paper size: US Letter Landscape */
     public int usletterlandscape = 13;
+    /** Paper size: US Legal Portrait */
     public int uslegalportrait = 14;
+    /** Paper size: US Legal Landscape */
     public int uslegallandscape = 15;
 
+    /** Standard font: Times Roman */
     public int timesRoman = 0;
+    /** Standard font: Times Bold */
     public int timesBold = 1;
+    /** Standard font: Times Italic */
     public int timesItalic = 2;
+    /** Standard font: Times Bold Italic */
     public int timesBoldItalic = 3;
+    /** Standard font: Helvetica */
     public int helvetica = 4;
+    /** Standard font: Helvetica Bold */
     public int helveticaBold = 5;
+    /** Standard font: Helvetica Oblique */
     public int helveticaOblique = 6;
+    /** Standard font: Helvetica Bold Oblique */
     public int helveticaBoldOblique = 7;
+    /** Standard font: Courier */
     public int courier = 8;
+    /** Standard font: Courier Bold */
     public int courierBold = 9;
+    /** Standard font: Courier Oblique */
     public int courierOblique = 10;
+    /** Standard font: Courier Bold Oblique */
     public int courierBoldOblique = 11;
 
+    /** Position anchor: absolute centre */
     public int posCentre = 0;
+    /** Position anchor: absolute left */
     public int posLeft = 1;
+    /** Position anchor: absolute right */
     public int posRight = 2;
+    /** Position anchor: the top centre of the page */
     public int top = 3;
+    /** Position anchor: the top left of the page */
     public int topLeft = 4;
+    /** Position anchor: the top right of the page */
     public int topRight = 5;
+    /** Position anchor: the left hand side of the page, halfway down */
     public int left = 6;
+    /** Position anchor: the bottom left of the page */
     public int bottomLeft = 7;
+    /** Position anchor: the bottom middle of the page */
     public int bottom = 8;
+    /** Position anchor: the bottomm right of the page */
     public int bottomRight = 9;
+    /** Position anchor: the right hand side of the page, halfway down */
     public int right = 10;
+    /** Position anchor: diagonal, bottom left to top right */
     public int diagonal = 11;
+    /** Position anchor: diagonal, top left to bottom right */
     public int reverseDiagonal = 12;
 
+    /** Justification: left */
     public int leftJustify = 0;
+    /** Justification: centre */
     public int centreJustify = 1;
+    /** Justification: right */
     public int rightJusitfy = 2;
 
     /* CHAPTER 0. Preliminaries */
+    
+    native void deletePdf(int pdf);
+    native void deleteRange(int range);
+
+    /** A debug function which prints some information about
+    resource usage. This can be used to detect if PDFs or ranges are being
+    deallocated properly. Contrary to its name, it may be run at any time. */
     public native void onExit();
-    public native void deletePdf(int pdf);
-    public native void deleteRange(int range);
+
+    /** Initialises the library. Must be called before any other function. */
     public native void startup() throws CpdfError;
+    
+    /** Returns a string giving the version number of the CPDF library. */
     public native String version() throws CpdfError;
+
+    /** Some operations have a fast mode. The default is 'slow' mode, which works
+    even on old-fashioned files. For more details, see section 1.13 of the
+    CPDF manual. This functions sets the mode to slow globally. */
     public native void setFast() throws CpdfError;
+
+    /** Some operations have a fast mode. The default is 'slow' mode, which works
+    even on old-fashioned files. For more details, see section 1.13 of the
+    CPDF manual. This functions sets the mode to slow globally. */
     public native void setSlow() throws CpdfError;
 
     /* CHAPTER 1. Basics */
     native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
+    /** Loads a PDF file from a given file. Supply
+    a user password (possibly blank) in case the file is encrypted. It won't be
+    decrypted, but sometimes the password is needed just to load the file. */
     public Pdf fromFile(String filename, String userpw) throws CpdfError
     { 
       return XfromFile(encodeUTF8(filename), encodeUTF8(userpw));
     }
+
     native Pdf XfromFileLazy(byte[] filename, byte[] userpw) throws CpdfError;
+    
+    /** Loads a PDF from a file, doing only minimal
+    parsing. The objects will be read and parsed when they are actually
+    needed. Use this when the whole file won't be required. Also supply a user
+    password (possibly blank) in case the file is encrypted. It won't be
+    decrypted, but sometimes the password is needed just to load the file. */
     public Pdf fromFileLazy(String filename, String userpw) throws CpdfError
     {
       return XfromFileLazy(encodeUTF8(filename), encodeUTF8(userpw));
     }
+
+
+    /** Writes a PDF file and returns as an array of bytes. */
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
+
     native Pdf XfromMemory(byte[] data, byte[] userpw) throws CpdfError;
+
+    /** Loads a file from memory given any user password. */
     public Pdf fromMemory(byte[] data, String userpw) throws CpdfError
     {
         return XfromMemory(data, encodeUTF8(userpw));
     }
+
+    /** Release memory returned from fromMemory */
     public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
+
     native Pdf XfromMemoryLazy(byte[] data, byte[] userpw) throws CpdfError;
+    
+    /** Loads a file from memory, given a pointer and a length, and the user
+    password, but lazily like fromFileLazy. The caller must use
+    fromMemoryLazyRelease to free the memory. It must not free the memory
+    until the PDF is also gone. */
     public Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError
     {
         return XfromMemoryLazy(data, encodeUTF8(userpw));
     }
+
+    /** To enumerate the list of currently allocated PDFs, call
+    startEnumeratePDFs which gives the number, n, of PDFs allocated, then
+    enumeratePDFsInfo and enumeratePDFsKey with index numbers from
+    0...(n - 1). Call endEnumeratePDFs to clean up. */
     public native int startEnumeratePDFs() throws CpdfError;
+    
+    /** To enumerate the list of currently allocated PDFs, call
+    startEnumeratePDFs which gives the number, n, of PDFs allocated, then
+    enumeratePDFsInfo and enumeratePDFsKey with index numbers from
+    0...(n - 1). Call endEnumeratePDFs to clean up. */
     public native int enumeratePDFsKey(int n) throws CpdfError;
+    
+    /** To enumerate the list of currently allocated PDFs, call
+    startEnumeratePDFs which gives the number, n, of PDFs allocated, then
+    enumeratePDFsInfo and enumeratePDFsKey with index numbers from
+    0...(n - 1). Call endEnumeratePDFs to clean up. */
     public native String enumeratePDFsInfo(int n) throws CpdfError;
+    
+    /** To enumerate the list of currently allocated PDFs, call
+    startEnumeratePDFs which gives the number, n, of PDFs allocated, then
+    enumeratePDFsInfo and enumeratePDFsKey with index numbers from
+    0...(n - 1). Call endEnumeratePDFs to clean up. */
     public native void endEnumeratePDFs() throws CpdfError;
+
+    /** Converts a figure in centimetres to points (72 points to 1 inch) */
     public native double ptOfCm(double f) throws CpdfError;
+    
+    /** Converts a figure in millimetres to points (72 points to 1 inch) */
     public native double ptOfMm(double f) throws CpdfError;
+    
+    /** Converts a figure in inches to points (72 points to 1 inch) */
     public native double ptOfIn(double f) throws CpdfError;
+    
+    /** Converts a figure in points to centimetres (72 points to 1 inch) */
     public native double cmOfPt(double f) throws CpdfError;
+    
+    /** Converts a figure in points to millimetres (72 points to 1 inch) */
     public native double mmOfPt(double f) throws CpdfError;
+
+    /** Converts a figure in points to millimetres (72 points to 1 inch) */
     public native double inOfPt(double f) throws CpdfError;
+
     public native Range range(int from, int to) throws CpdfError;
     public native Range all(Pdf pdf) throws CpdfError;
     public native Range odd(Range r) throws CpdfError;
