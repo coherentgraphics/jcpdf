@@ -2,11 +2,14 @@ package com.coherentpdf;
 import java.nio.charset.Charset;
 
 public class Jcpdf {
+    //Initalize by loading external DLLs
     public Jcpdf()
     {
       System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
+    
+    //Exceptions
     public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
@@ -14,6 +17,8 @@ public class Jcpdf {
         super(errorMessage);
       }
     }
+
+    //PDFs backed by Cpdflib PDFs.
     public class Pdf implements AutoCloseable
     {
       int pdf = -1;
@@ -26,6 +31,8 @@ public class Jcpdf {
         deletePdf(pdf);
       }
     }
+
+    //Ranges backed by Cpdflib ranges
     public class Range implements AutoCloseable
     {
       int range = -1;
@@ -38,15 +45,100 @@ public class Jcpdf {
         deleteRange(range);
       }
     }
+
+    // Work around JNI's horrible "modified UTF-8" by passing and receiving
+    // Strings, where needed, as byte arrays in UTF8.
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
-    String decodeUTF8(byte[] bytes)
-    {
-        return new String(bytes, UTF8_CHARSET);
-    }
-    byte[] encodeUTF8(String string)
-    {
-        return string.getBytes(UTF8_CHARSET);
-    }
+    String decodeUTF8(byte[] bytes) { return new String(bytes, UTF8_CHARSET); }
+    byte[] encodeUTF8(String string) { return string.getBytes(UTF8_CHARSET); }
+
+    //Enumerations
+    public int noEdit = 0;
+    public int noPrint = 1;
+    public int noCopy = 2;
+    public int noAnnot = 3;
+    public int noForms = 4;
+    public int noExtract = 5;
+    public int noAssemble = 6;
+    public int noHqPrint = 7;
+
+    public int pdf40bit = 0;
+    public int pdf128bit = 1;
+    public int aes128bitfalse = 2;
+    public int aes128bittrue = 3;
+    public int aes256bitfalse = 4;
+    public int aes256bittrue = 5;
+    public int aes256bitisofalse = 6;
+    public int aes256bitiso = 7;
+
+    public int decimalArabic = 0;
+    public int uppercaseRoman = 1;
+    public int lowercaseRoman = 2;
+    public int uppercaseLetters = 3;
+    public int lowercaseLetters = 4;
+
+    public int singlePage = 0;
+    public int oneColumn = 1;
+    public int twoColumnLeft = 2;
+    public int twoColumnRight = 3;
+    public int twoPageLeft = 4;
+    public int twoPageRight = 5;
+
+    public int useNone = 0;
+    public int useOutlines = 1;
+    public int useThumbs = 2;
+    public int useOC = 3;
+    public int useAttachments = 4;
+
+    public int a0portrait = 0;
+    public int a1portrait = 1;
+    public int a2portrait = 2;
+    public int a3portrait = 3;
+    public int a4portrait = 4;
+    public int a5portrait = 5;
+    public int a0landscape = 6;
+    public int a1landscape = 7;
+    public int a2landscape = 8;
+    public int a3landscape = 9;
+    public int a4landscape = 10;
+    public int a5landscape = 11;
+    public int usletterportrait = 12;
+    public int usletterlandscape = 13;
+    public int uslegalportrait = 14;
+    public int uslegallandscape = 15;
+
+    public int timesRoman = 0;
+    public int timesBold = 1;
+    public int timesItalic = 2;
+    public int timesBoldItalic = 3;
+    public int helvetica = 4;
+    public int helveticaBold = 5;
+    public int helveticaOblique = 6;
+    public int helveticaBoldOblique = 7;
+    public int courier = 8;
+    public int courierBold = 9;
+    public int courierOblique = 10;
+    public int courierBoldOblique = 11;
+
+    public int posCentre = 0;
+    public int posLeft = 1;
+    public int posRight = 2;
+    public int top = 3;
+    public int topLeft = 4;
+    public int topRight = 5;
+    public int left = 6;
+    public int bottomLeft = 7;
+    public int bottom = 8;
+    public int bottomRight = 9;
+    public int right = 10;
+    public int diagonal = 11;
+    public int reverseDiagonal = 12;
+
+    public int leftJustify = 0;
+    public int centreJustify = 1;
+    public int rightJusitfy = 2;
+
+    /* CHAPTER 0. Preliminaries */
     public native void onExit();
     public native void deletePdf(int pdf);
     public native void deleteRange(int range);
@@ -54,6 +146,8 @@ public class Jcpdf {
     public native String version() throws CpdfError;
     public native void setFast() throws CpdfError;
     public native void setSlow() throws CpdfError;
+
+    /* CHAPTER 1. Basics */
     native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
     public Pdf fromFile(String filename, String userpw) throws CpdfError
     { 
@@ -149,10 +243,14 @@ public class Jcpdf {
     {
         XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
     }
+
+    /* CHAPTER 2. Merging and Splitting */
     public native Pdf mergeSimple(Pdf[] pdfs) throws CpdfError;
     public native Pdf merge(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts) throws CpdfError;
     public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, Range[] ranges) throws CpdfError;
     public native Pdf selectPages(Pdf pdf, Range range) throws CpdfError;
+
+    /* CHAPTER 3. Pages */
     public native void scalePages(Pdf pdf, Range range, double sx, double sy) throws CpdfError;
     public native void scaleToFit(Pdf pdf, Range range, double w, double h, double scale) throws CpdfError;
     public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
@@ -172,6 +270,11 @@ public class Jcpdf {
     public native void trimMarks(Pdf pdf, Range range) throws CpdfError;
     public native void showBoxes(Pdf pdf, Range range) throws CpdfError;
     public native void hardBox(Pdf pdf, Range range, String box) throws CpdfError;
+
+    /* CHAPTER 4. Encryption */
+    /* Encryption covered under Chapter 1 in cpdflib. */
+
+    /* CHAPTER 5. Compression */
     public native void compress(Pdf pdf) throws CpdfError;
     public native void decompress(Pdf pdf) throws CpdfError;
     public native void squeezeInMemory(Pdf pdf) throws CpdfError;
@@ -205,6 +308,9 @@ public class Jcpdf {
     {
         XtableOfContents(pdf, font, fontsize, encodeUTF8(title), bookmark);
     }
+
+    /* CHAPTER 7. Presentations */
+    /* Not included in the library version. */
 
     /* CHAPTER 8. Logos, Watermarks and Stamps */
     native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
@@ -573,89 +679,4 @@ public class Jcpdf {
     public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
     public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
     public native void removeClipping(Pdf pdf, Range range) throws CpdfError;
-
-    public int noEdit = 0;
-    public int noPrint = 1;
-    public int noCopy = 2;
-    public int noAnnot = 3;
-    public int noForms = 4;
-    public int noExtract = 5;
-    public int noAssemble = 6;
-    public int noHqPrint = 7;
-
-    public int pdf40bit = 0;
-    public int pdf128bit = 1;
-    public int aes128bitfalse = 2;
-    public int aes128bittrue = 3;
-    public int aes256bitfalse = 4;
-    public int aes256bittrue = 5;
-    public int aes256bitisofalse = 6;
-    public int aes256bitiso = 7;
-
-    public int decimalArabic = 0;
-    public int uppercaseRoman = 1;
-    public int lowercaseRoman = 2;
-    public int uppercaseLetters = 3;
-    public int lowercaseLetters = 4;
-
-    public int singlePage = 0;
-    public int oneColumn = 1;
-    public int twoColumnLeft = 2;
-    public int twoColumnRight = 3;
-    public int twoPageLeft = 4;
-    public int twoPageRight = 5;
-
-    public int useNone = 0;
-    public int useOutlines = 1;
-    public int useThumbs = 2;
-    public int useOC = 3;
-    public int useAttachments = 4;
-
-    public int a0portrait = 0;
-    public int a1portrait = 1;
-    public int a2portrait = 2;
-    public int a3portrait = 3;
-    public int a4portrait = 4;
-    public int a5portrait = 5;
-    public int a0landscape = 6;
-    public int a1landscape = 7;
-    public int a2landscape = 8;
-    public int a3landscape = 9;
-    public int a4landscape = 10;
-    public int a5landscape = 11;
-    public int usletterportrait = 12;
-    public int usletterlandscape = 13;
-    public int uslegalportrait = 14;
-    public int uslegallandscape = 15;
-
-    public int timesRoman = 0;
-    public int timesBold = 1;
-    public int timesItalic = 2;
-    public int timesBoldItalic = 3;
-    public int helvetica = 4;
-    public int helveticaBold = 5;
-    public int helveticaOblique = 6;
-    public int helveticaBoldOblique = 7;
-    public int courier = 8;
-    public int courierBold = 9;
-    public int courierOblique = 10;
-    public int courierBoldOblique = 11;
-
-    public int posCentre = 0;
-    public int posLeft = 1;
-    public int posRight = 2;
-    public int top = 3;
-    public int topLeft = 4;
-    public int topRight = 5;
-    public int left = 6;
-    public int bottomLeft = 7;
-    public int bottom = 8;
-    public int bottomRight = 9;
-    public int right = 10;
-    public int diagonal = 11;
-    public int reverseDiagonal = 12;
-
-    public int leftJustify = 0;
-    public int centreJustify = 1;
-    public int rightJusitfy = 2;
 }
