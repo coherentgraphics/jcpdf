@@ -475,65 +475,170 @@ public class Jcpdf {
     }
 
     /* CHAPTER 2. Merging and Splitting */
+    
+    /** Given an array of PDFs, merges the documnets into a new one, which is returned. */
     public native Pdf mergeSimple(Pdf[] pdfs) throws CpdfError;
+    
+    /** Merges the PDFs. If retain_numbering is true page labels are not rewritten. If
+    remove_duplicate_fonts is true, duplicate fonts are merged. This is useful
+    when the source documents for merging originate from the same source. */
     public native Pdf merge(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts) throws CpdfError;
+    
+    /** The same as merge, except that it has an additional
+    argument - a list of page ranges. This is used to select the pages to
+    pick from each PDF. This avoids duplication of information when multiple
+    discrete parts of a source PDF are included. */
     public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, Range[] ranges) throws CpdfError;
+    
+    /** Returns a new document which just those pages in the page range. */
     public native Pdf selectPages(Pdf pdf, Range range) throws CpdfError;
 
     /* CHAPTER 3. Pages */
+    
+    /** Scales the page dimensions
+    and content by the given scale, about (0, 0). Other boxes (crop etc. are
+    altered as appropriate). */
     public native void scalePages(Pdf pdf, Range range, double sx, double sy) throws CpdfError;
+
+    /** Scales the content to fit
+    new page dimensions (width x height) multiplied by scale (typically 1.0).
+    Other boxes (crop etc. are altered as appropriate). */
     public native void scaleToFit(Pdf pdf, Range range, double w, double h, double scale) throws CpdfError;
+
+    /** Scales the page content to fit the given page size, possibly multiplied by scale (typically 1.0). */
     public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
+
+    /** Scales the contents of the
+    pages in the range about the point given by the position, by the scale given. */
     public native void scaleContents(Pdf pdf, Range range, int anchor, double p1, double p2, double scale) throws CpdfError;
+
+    /** Shifts the content of the pages in the range. */
     public native void shiftContents(Pdf pdf, Range range, double dx, double dy) throws CpdfError;
+
+    /** Changes the viewing rotation to an absolute value. Appropriate rotations are 0, 90, 180, 270. */
     public native void rotate(Pdf pdf, Range range, int angle) throws CpdfError;
+
+    /** Rotates the content about the centre of the page by the given number of degrees, in a clockwise
+    direction. */
     public native void rotateBy(Pdf pdf, Range range, int angle) throws CpdfError;
+
+    /** Rotates the content about the centre of the page by the given number of degrees, in a clockwise
+    direction. */
     public native void rotateContents(Pdf pdf, Range range, double angle) throws CpdfError;
+
+    /** Changes the viewing rotation of the pages in the
+    range, counter-rotating the dimensions and content such that there is no
+    visual change. */
     public native void upright(Pdf pdf, Range range) throws CpdfError;
+
+    /** Flips horizontally the pages in the range. */
     public native void hFlip(Pdf pdf, Range range) throws CpdfError;
+
+    /** Flips vertically the pages in the range. */
     public native void vFlip(Pdf pdf, Range range) throws CpdfError;
+
+    /** Crops a page, replacing any existing crop box. The dimensions are in points. */
     public native void crop(Pdf pdf, Range range, double x, double y, double w, double h) throws CpdfError;
+
+    /** Removes any crop box from pages in the range. */
     public native void removeCrop(Pdf pdf, Range range) throws CpdfError;
+
+    /** Removes any trim box from pages in the range. */
     public native void removeTrim(Pdf pdf, Range range) throws CpdfError;
+
+    /** Removes any art box from pages in the range. */
     public native void removeArt(Pdf pdf, Range range) throws CpdfError;
+
+    /** Removes any bleed box from pages in the range. */
     public native void removeBleed(Pdf pdf, Range range) throws CpdfError;
+
+    /** Adds trim marks to the given pages, if the trimbox exists. */
     public native void trimMarks(Pdf pdf, Range range) throws CpdfError;
+
+    /** Shows the boxes on the given pages, for debug. */
     public native void showBoxes(Pdf pdf, Range range) throws CpdfError;
+
+    /** Makes a given box a 'hard box' i.e clips it explicitly. */
     public native void hardBox(Pdf pdf, Range range, String box) throws CpdfError;
 
     /* CHAPTER 4. Encryption */
     /* Encryption covered under Chapter 1 in cpdflib. */
 
     /* CHAPTER 5. Compression */
+    
+    /** Compresses any uncompressed streams in the given PDF using the Flate algorithm. */
     public native void compress(Pdf pdf) throws CpdfError;
+    
+    /** Decompresses any streams in the given PDF, so long as the compression method is supported. */
     public native void decompress(Pdf pdf) throws CpdfError;
+
+    /** Squeezes a pdf in memory. */
     public native void squeezeInMemory(Pdf pdf) throws CpdfError;
     
     /* CHAPTER 6. Bookmarks */
+    
+    /** Starts the bookmark retrieval process for a given PDF. */
     public native void startGetBookmarkInfo(Pdf pdf) throws CpdfError;
+
+    /** Gets the number of bookmarks for the PDF given to startGetBookmarkInfo. */
     public native int numberBookmarks() throws CpdfError;
+    
+    /** Gets the bookmark level for the given bookmark (0...(n - 1)). */
     public native int getBookmarkLevel(int serial) throws CpdfError;
+    
+    /** Gets the bookmark target page for the given PDF
+    (which must be the same as the PDF passed to startSetBookmarkInfo)
+    and bookmark (0...(n - 1)). */
     public native int getBookmarkPage(Pdf pdf, int serial) throws CpdfError;
+
     native byte[] XgetBookmarkText(int serial) throws CpdfError;
+    
+    /** Returns the text of bookmark (0...(n - 1)). */
     public String getBookmarkText(int serial) throws CpdfError
     {
         return decodeUTF8(XgetBookmarkText(serial));
     }
+
+    /** True if the bookmark is open. */
     public native boolean getBookmarkOpenStatus(int serial) throws CpdfError;
+    /** Ends the bookmark retrieval process, cleaning up. */
     public native void endGetBookmarkInfo() throws CpdfError;
+    
+    /** Starts the bookmark setting process for n bookmarks. */
     public native void startSetBookmarkInfo(int n) throws CpdfError;
+
+    /** Set bookmark level for the given bookmark (0...(n - 1)). */
     public native void setBookmarkLevel(int serial, int level) throws CpdfError;
+
+    /** Sets the bookmark target
+    page for the given PDF (which must be the same as the PDF to be passed to
+    endSetBookmarkInfo) and bookmark (0...(n - 1)). */
     public native void setBookmarkPage(Pdf pdf, int serial, int pagenum) throws CpdfError;
+    
+    /** Sets the open status of bookmark (0...(n - 1)). */
     public native void setBookmarkOpenStatus(int serial, boolean open) throws CpdfError;
+
     native void XsetBookmarkText(int serial, byte[] text) throws CpdfError;
+    /** Sets the text of bookmark (0...(n - 1)). */
     public void setBookmarkText(int serial, String text) throws CpdfError
     {
         XsetBookmarkText(serial, encodeUTF8(text));
     }
+    
+    /** Ends the bookmark setting process, writing the bookmarks to the given PDF. */
     public native void endSetBookmarkInfo(Pdf pdf) throws CpdfError;
+
+    /** Returns the bookmark data in JSON format. */
     public native byte[] getBookmarksJSON(Pdf pdf) throws CpdfError;
+    
+    /** Sets the bookmarks from JSON bookmark data. */
     public native void setBookmarksJSON(Pdf pdf, byte[] data) throws CpdfError;
+
     native void XtableOfContents(Pdf pdf, int font, double fontsize, byte[] title, boolean bookmark) throws CpdfError;
+    
+    /** Typesets a table
+    of contents from existing bookmarks and prepends it to the document. If
+    bookmark is set, the table of contents gets its own bookmark. */
     public void tableOfContents(Pdf pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError
     {
         XtableOfContents(pdf, font, fontsize, encodeUTF8(title), bookmark);
