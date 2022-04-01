@@ -596,6 +596,7 @@ public class Jcpdf {
 
     /** True if the bookmark is open. */
     public native boolean getBookmarkOpenStatus(int serial) throws CpdfError;
+
     /** Ends the bookmark retrieval process, cleaning up. */
     public native void endGetBookmarkInfo() throws CpdfError;
     
@@ -643,6 +644,27 @@ public class Jcpdf {
     /* Not included in the library version. */
 
     /* CHAPTER 8. Logos, Watermarks and Stamps */
+   
+    /** Stamps stamp_pdf on top of all the
+    pages in the document which are in the range. The stamp is placed with its
+    origin at the origin of the target document. */
+    public native void stampOn(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
+
+    /** Stamps stamp_pdf under all the
+    pages in the document which are in the range. The stamp is placed with its
+    origin at the origin of the target document. */
+    public native void stampUnder(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
+
+    /** A stamping function with extra features. - isover
+    true, pdf goes over pdf2, isover false, pdf goes under pdf2 -
+    scale_stamp_to_fit scales the stamp to fit the page - pos gives the
+    position to put the stamp - relative_to_cropbox: if true, pos is relative
+    to cropbox not mediabox. */
+    public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
+    
+    /** Combines the PDFs page-by-page, putting each page of 'over' over each page of 'under'. */
+    public native Pdf combinePages(Pdf pdf, Pdf pdf2) throws CpdfError;
+    
     native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
 
     /** Adds text to the pages in the given range. */
@@ -670,33 +692,6 @@ public class Jcpdf {
         return XtextWidth(font, encodeUTF8(test));
     }
 
-    /** Stamps stamp_pdf on top of all the
-    pages in the document which are in the range. The stamp is placed with its
-    origin at the origin of the target document. */
-    public native void stampOn(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
-
-    /** Stamps stamp_pdf under all the
-    pages in the document which are in the range. The stamp is placed with its
-    origin at the origin of the target document. */
-    public native void stampUnder(Pdf pdf, Pdf pdf2, Range range) throws CpdfError;
-
-    /** A stamping function with extra features. - isover
-    true, pdf goes over pdf2, isover false, pdf goes under pdf2 -
-    scale_stamp_to_fit scales the stamp to fit the page - pos gives the
-    position to put the stamp - relative_to_cropbox: if true, pos is relative
-    to cropbox not mediabox. */
-    public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
-    
-    /** Combines the PDFs page-by-page, putting each page of 'over' over each page of 'under'. */
-    public native Pdf combinePages(Pdf pdf, Pdf pdf2) throws CpdfError;
-    
-    /** Stamps stamp_pdf onto the pages
-    in the given range in pdf as a shared Form XObject. The name of the
-    newly-created XObject is returned. */
-    public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
-
-    native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range) throws CpdfError;
-    
     /** Adds page content before (if
     true) or after (if false) the existing content to pages in the given range
     in the given PDF. */
@@ -704,6 +699,13 @@ public class Jcpdf {
     {
         XaddContent(encodeUTF8(s), before, pdf, range);
     }
+
+    /** Stamps stamp_pdf onto the pages
+    in the given range in pdf as a shared Form XObject. The name of the
+    newly-created XObject is returned. */
+    public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
+
+    native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range) throws CpdfError;
     
     /* CHAPTER 9. Multipage facilities */
     
@@ -990,6 +992,12 @@ public class Jcpdf {
     /** Builds a PDF date string from individual components. */
     public native String dateStringOfComponents(int year, int month, int day, int hour, int minute, int second, int hour_offset, int minute_offset) throws CpdfError;
 
+    /** Gets the viewing rotation for a given page. */
+    public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
+
+    /** Returns true, if that page has the given box. E.g "/CropBox". */
+    public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
+
     /** These functions get a box given the document, page number, min x, max x,
     min y, max y in points. Only succeeds if such a box exists, as checked by
     hasBox. */
@@ -1030,11 +1038,6 @@ public class Jcpdf {
     /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setBleedBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
 
-    /** Gets the viewing rotation for a given page. */
-    public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
-
-    /** Returns true, if that page has the given box. E.g "/CropBox". */
-    public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
 
     /** Marks a document as trapped. */
     public native void markTrapped(Pdf pdf) throws CpdfError;
@@ -1086,12 +1089,12 @@ public class Jcpdf {
     /** Sets the XMP metadata from an array of bytes. */
     public native void setMetadataFromByteArray(Pdf pdf, byte[] data) throws CpdfError;
     
-    /** Returns the XMP metadata from a document. */
-    public native byte[] getMetadata(Pdf pdf) throws CpdfError;
-    
     /** Removes the XMP metadata from a document. */
     public native void removeMetadata(Pdf pdf) throws CpdfError;
     
+    /** Returns the XMP metadata from a document. */
+    public native byte[] getMetadata(Pdf pdf) throws CpdfError;
+
     /** Builds fresh XMP metadata as best it can from
     existing metadata in the document. */
     public native void createMetadata(Pdf pdf) throws CpdfError;
@@ -1112,6 +1115,14 @@ public class Jcpdf {
 
     /** Removes the page labels from the document. */
     public native void removePageLabels(Pdf pdf) throws CpdfError;
+    
+    native byte[] XgetPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
+    
+    /** Calculates the full label string for a given page, and returns it. */
+    public String getPageLabelStringForPage(Pdf pdf, int n) throws CpdfError
+    {
+        return decodeUTF8(XgetPageLabelStringForPage(pdf, n));
+    }
     
     /** Gets page label data. Call startGetPageLabels to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
@@ -1233,14 +1244,7 @@ public class Jcpdf {
         return decodeUTF8(XgetPageLabelPrefix(n));
     }
 
-    native byte[] XgetPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
-    
-    /** Calculates the full label string for a given page, and returns it. */
-    public String getPageLabelStringForPage(Pdf pdf, int n) throws CpdfError
-    {
-        return decodeUTF8(XgetPageLabelStringForPage(pdf, n));
-    }
-    
+
     /* CHAPTER 12. File Attachments */
     native void XattachFile(byte[] filename, Pdf pdf) throws CpdfError;
     native void XattachFileToPage(byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
@@ -1467,18 +1471,17 @@ public class Jcpdf {
     public native String OCGListEntry(int serial) throws CpdfError;
     public native void endGetOCGList() throws CpdfError;
 
-    /** Coalesces optional content groups. For example, if we merge or stamp two
-    files both with an OCG called "Layer 1", we will have two different optional
-    content groups. This function will merge the two into a single optional
-    content group. */
-    public native void OCGCoalesce(Pdf pdf) throws CpdfError;
-
     /** Renames an optional content group. */
     public native void OCGRename(Pdf pdf, String f, String t) throws CpdfError;
     
     /** Ensures that every optional content group appears in the OCG order list. */
     public native void OCGOrderAll(Pdf pdf) throws CpdfError;
 
+    /** Coalesces optional content groups. For example, if we merge or stamp two
+    files both with an OCG called "Layer 1", we will have two different optional
+    content groups. This function will merge the two into a single optional
+    content group. */
+    public native void OCGCoalesce(Pdf pdf) throws CpdfError;
 
     /* CHAPTER 17. Creating New PDFs */
     
@@ -1551,9 +1554,9 @@ public class Jcpdf {
     /** Replaces the value associated with the given key if the existing value matches the search term. */
     public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
     
-    /** Returns a JSON array containing any and all values associated with the given key, and fills in its length. */
-    public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
-    
     /** Removes all clipping from pages in the given range. */
     public native void removeClipping(Pdf pdf, Range range) throws CpdfError;
+    
+    /** Returns a JSON array containing any and all values associated with the given key, and fills in its length. */
+    public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
 }
