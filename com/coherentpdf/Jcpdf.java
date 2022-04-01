@@ -189,31 +189,31 @@ public class Jcpdf {
     /** Standard font: Courier Bold Oblique */
     public int courierBoldOblique = 11;
 
-    /** Position anchor: absolute centre */
+    /** Position anchor: absolute centre. Takes two numbers, x and y. */
     public int posCentre = 0;
-    /** Position anchor: absolute left */
+    /** Position anchor: absolute left. Takes two numbers, x and y. */
     public int posLeft = 1;
-    /** Position anchor: absolute right */
+    /** Position anchor: absolute right. Takes two numbers, x and y. */
     public int posRight = 2;
-    /** Position anchor: the top centre of the page */
+    /** Position anchor: the top centre of the page. Takes one number - distance from top. Second number ignored. */
     public int top = 3;
-    /** Position anchor: the top left of the page */
+    /** Position anchor: the top left of the page. Takes one numbers - distance from top left. Second number ignored. */
     public int topLeft = 4;
-    /** Position anchor: the top right of the page */
+    /** Position anchor: the top right of the page. Takes one number - distance from top right. Second number ignored. */
     public int topRight = 5;
-    /** Position anchor: the left hand side of the page, halfway down */
+    /** Position anchor: the left hand side of the page, halfway down. Takes one number - distance from left middle. Second number ignored. */
     public int left = 6;
-    /** Position anchor: the bottom left of the page */
+    /** Position anchor: the bottom left of the page. Takes one number - distance from bottom left. Second number ignored. */
     public int bottomLeft = 7;
-    /** Position anchor: the bottom middle of the page */
+    /** Position anchor: the bottom middle of the page. Takes one number - distance from bottom middle. Second number ignored. */
     public int bottom = 8;
-    /** Position anchor: the bottomm right of the page */
+    /** Position anchor: the bottomm right of the page. Takes one number - distance from bottom right. Second number ignored. */
     public int bottomRight = 9;
-    /** Position anchor: the right hand side of the page, halfway down */
+    /** Position anchor: the right hand side of the page, halfway down. Takes one number - distance from right middle. Second number ignored. */
     public int right = 10;
-    /** Position anchor: diagonal, bottom left to top right */
+    /** Position anchor: diagonal, bottom left to top right. Takes no numbers. Both numbers ignored. */
     public int diagonal = 11;
-    /** Position anchor: diagonal, top left to bottom right */
+    /** Position anchor: diagonal, top left to bottom right. Takes no numbers. Both numbers ignored. */
     public int reverseDiagonal = 12;
 
     /** Justification: left */
@@ -519,8 +519,9 @@ public class Jcpdf {
     /** Scales the page content to fit the given page size, possibly multiplied by scale (typically 1.0). */
     public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
 
-    /** Scales the contents of the
-    pages in the range about the point given by the position, by the scale given. */
+    /** Scales the contents of the pages in the range about the point given by the <code>anchor</code>,
+    <code>p1</code> and <code>p2</code> by the scale given. See the documentation for the chosen anchor. */
+
     public native void scaleContents(Pdf pdf, Range range, int anchor, double p1, double p2, double scale) throws CpdfError;
 
     /** Shifts the content of the pages in the range. */
@@ -675,7 +676,7 @@ public class Jcpdf {
     is <code>true</code>, <code>pdf</code> goes over <code>pdf2</code>,
     otherwise under. When <code>scale_stamp_to_fit</code> is <code>true</code>,
     it scales the stamp to fit the page. The parameters <code>anchor</code>,
-    <code>p1</code> and <code>p2</code> give the position to put the stamp. If
+    <code>p1</code> and <code>p2</code> give the position to put the stamp (see the documentation for the chosen anchor). If
     <code>relative_to_cropbox</code> is <code>true</code>, the position is
     relative to the crop box rather than the media box. */
     public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
@@ -685,7 +686,7 @@ public class Jcpdf {
     
     native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
 
-    /** Adds text to the pages in the given range. See the manual <code>cpdfmanual.pdf</code> for details of the parameters. */
+    /** Adds text to the pages in the given range. See the manual <code>cpdfmanual.pdf</code> for details of the parameters. The parameters <code>anchor</code>, <code>p1</code> and <code>p2</code> together determine the position of the text. See the documentation for the chosen anchor. */
     public void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError
     {
         XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2, linespacing, bates, font, fontsize,
@@ -693,7 +694,7 @@ public class Jcpdf {
     }
     native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
     
-    /** Adds text with most parameters default. */
+    /** Adds text with most parameters default. The parameters <code>anchor</code>, <code>p1</code> and <code>p2</code> together determine the position of the text. See the documentation for the chosen anchor. */
     public void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError
     {
         XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font, fontsize);
@@ -1566,13 +1567,13 @@ public class Jcpdf {
     /** Blackens all fills on the given pages. */
     public native void blackFills(Pdf pdf, Range range) throws CpdfError;
     
-    /** Thickens every line less than min_thickness to min_thickness. Thickness given in points. */
+    /** Thickens every line less than <code>min_thickness</code> to <code>min_thickness</code>. Thickness given in points. */
     public native void thinLines(Pdf pdf, Range range, double min_thickness) throws CpdfError;
     
-    /** Copies the /ID from one document to another. */
+    /** Copies the <code>/ID</code> from one document to another. */
     public native void copyId(Pdf pdf, Pdf pdf2) throws CpdfError;
     
-    /** Removes a document's /ID. */
+    /** Removes a document's <code>/ID</code>. */
     public native void removeId(Pdf pdf) throws CpdfError;
     
     /** Sets the minor version number of a document. */
