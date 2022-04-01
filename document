@@ -1,2 +1,2 @@
 #Document
-javadoc com/coherentpdf/Jcpdf.java
+javadoc -Xdoclint:none com/coherentpdf/Jcpdf.java

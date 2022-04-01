@@ -3,7 +3,8 @@ import java.nio.charset.Charset;
 
 /** The Coherent PDF Library for Java */
 public class Jcpdf {
-    //Initalize by loading external DLLs
+    /** Create a new instance of the Jcpdf library. You must use <code>startup()</code> too,
+     before calling any other function.*/
     public Jcpdf()
     {
       System.loadLibrary("cpdf");
