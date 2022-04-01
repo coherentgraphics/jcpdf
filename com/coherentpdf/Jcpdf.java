@@ -287,8 +287,8 @@ public class Jcpdf {
 
     native Pdf XfromMemoryLazy(byte[] data, byte[] userpw) throws CpdfError;
     
-    /** Loads a file from memory, given a pointer and a length, and the user
-    password, but lazily like fromFileLazy. The caller must use
+    /** Loads a file from memory and the user
+    password, but lazily like <code>fromFileLazy</code>. The caller must use
     <code>fromMemoryLazyRelease</code> to free the memory. It must not free the memory
     until the PDF is also gone. */
     public Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError
@@ -1013,32 +1013,32 @@ public class Jcpdf {
     /** Gets the viewing rotation for a given page. */
     public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
 
-    /** Returns <code>true</code>, if the given page has the given box. E.g "/CropBox". */
+    /** Returns <code>true</code> if the given page has the given box. E.g "/CropBox". */
     public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
 
-    /** These functions get a box given the document. page number, min x, max x,
-    min y, max y in points. Only succeeds if such a box exists, as checked by
-    hasBox. */
+    /** These functions get a box given the document. The values are returned
+    in a given array of length 4: min x, max x, min y, max y in points. Only
+    succeeds if such a box exists, as checked by hasBox. */
     public native void getMediaBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
-    /** These functions get a box given the document. page number, min x, max x,
-    min y, max y in points. Only succeeds if such a box exists, as checked by
-    hasBox. */
+    /** These functions get a box given the document. The values are returned
+    in a given array of length 4: min x, max x, min y, max y in points. Only
+    succeeds if such a box exists, as checked by hasBox. */
     public native void getCropBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
-    /** These functions get a box given the document. page number, min x, max x,
-    min y, max y in points. Only succeeds if such a box exists, as checked by
-    hasBox. */
+    /** These functions get a box given the document. The values are returned
+    in a given array of length 4: min x, max x, min y, max y in points. Only
+    succeeds if such a box exists, as checked by hasBox. */
     public native void getBleedBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
-    /** These functions get a box given the document. page number, min x, max x,
-    min y, max y in points. Only succeeds if such a box exists, as checked by
-    hasBox. */
+    /** These functions get a box given the document. The values are returned
+    in a given array of length 4: min x, max x, min y, max y in points. Only
+    succeeds if such a box exists, as checked by hasBox. */
     public native void getArtBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
-    /** These functions get a box given the document. page number, min x, max x,
-    min y, max y in points. Only succeeds if such a box exists, as checked by
-    hasBox. */
+    /** These functions get a box given the document. The values are returned
+    in a given array of length 4: min x, max x, min y, max y in points. Only
+    succeeds if such a box exists, as checked by hasBox. */
     public native void getTrimBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
 
     /** These functions set a box given the document page range, min x, max x, min y, max y in points. */
