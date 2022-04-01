@@ -222,17 +222,12 @@ public class Jcpdf {
     native void deletePdf(int pdf);
     native void deleteRange(int range);
 
-    /** A debug function which prints some information about
-    resource usage. This can be used to detect if PDFs or ranges are being
-    deallocated properly. Contrary to its name, it may be run at any time. */
-    public native void onExit();
-
     /** Initialises the library. Must be called before any other function. */
     public native void startup() throws CpdfError;
     
     /** Returns a string giving the version number of the CPDF library. */
     public native String version() throws CpdfError;
-
+    
     /** Some operations have a fast mode. The default is 'slow' mode, which works
     even on old-fashioned files. For more details, see section 1.13 of the
     CPDF manual. This functions sets the mode to slow globally. */
@@ -242,6 +237,11 @@ public class Jcpdf {
     even on old-fashioned files. For more details, see section 1.13 of the
     CPDF manual. This functions sets the mode to slow globally. */
     public native void setSlow() throws CpdfError;
+    
+    /** A debug function which prints some information about
+    resource usage. This can be used to detect if PDFs or ranges are being
+    deallocated properly. Contrary to its name, it may be run at any time. */
+    public native void onExit();
 
     /* CHAPTER 1. Basics */
     native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
@@ -265,9 +265,6 @@ public class Jcpdf {
       return XfromFileLazy(encodeUTF8(filename), encodeUTF8(userpw));
     }
 
-
-    /** Writes a PDF file and returns as an array of bytes. */
-    public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
 
     native Pdf XfromMemory(byte[] data, byte[] userpw) throws CpdfError;
 
@@ -315,6 +312,7 @@ public class Jcpdf {
     0...(n - 1). Call endEnumeratePDFs to clean up. */
     public native void endEnumeratePDFs() throws CpdfError;
 
+
     /** Converts a figure in centimetres to points (72 points to 1 inch) */
     public native double ptOfCm(double f) throws CpdfError;
     
@@ -332,6 +330,28 @@ public class Jcpdf {
 
     /** Converts a figure in points to millimetres (72 points to 1 inch) */
     public native double inOfPt(double f) throws CpdfError;
+
+    /** Parses a page specification with reference
+    to a given PDF (the PDF is supplied so that page ranges which reference
+    pages which do not exist are rejected). */
+    public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
+    
+    /** Validates a page specification so far as is
+    possible in the absence of the actual document. Result is true if valid. */
+    public native boolean validatePagespec(String pagespec) throws CpdfError;
+
+    native byte[] XstringOfPagespec(Pdf pdf, Range r) throws CpdfError;
+    
+    /** Builds a page specification from a page
+    range. For example, the range containing 1,2,3,6,7,8 in a document of 8
+    pages might yield "1-3,6-end" */
+    public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
+    {
+        return decodeUTF8(XstringOfPagespec(pdf, r));    
+    }
+
+    /** The range containing no pages. */
+    public native Range blankRange() throws CpdfError;
 
     /** The page range containing all page numbers from one page number to another. */
     public native Range range(int from, int to) throws CpdfError;
@@ -365,28 +385,6 @@ public class Jcpdf {
 
     /** Test to see if a given number is in a page range. */
     public native boolean isInRange(Range r, int n) throws CpdfError;
-
-    /** The range containing no pages. */
-    public native Range blankRange() throws CpdfError;
-
-    /** Parses a page specification with reference
-    to a given PDF (the PDF is supplied so that page ranges which reference
-    pages which do not exist are rejected). */
-    public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
-    
-    /** Validates a page specification so far as is
-    possible in the absence of the actual document. Result is true if valid. */
-    public native boolean validatePagespec(String pagespec) throws CpdfError;
-
-    native byte[] XstringOfPagespec(Pdf pdf, Range r) throws CpdfError;
-    
-    /** Builds a page specification from a page
-    range. For example, the range containing 1,2,3,6,7,8 in a document of 8
-    pages might yield "1-3,6-end" */
-    public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
-    {
-        return decodeUTF8(XstringOfPagespec(pdf, r));    
-    }
 
     /** Returns the number of pages in a PDF. */
     public native int pages(Pdf pdf) throws CpdfError;
@@ -425,16 +423,28 @@ public class Jcpdf {
         XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
     }
 
+    /** Writes a PDF file and returns as an array of bytes. */
+    public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
+
     /** Returns true if a documented is encrypted, false otherwise. */
     public native boolean isEncrypted(Pdf pdf) throws CpdfError;
-
-    native boolean XisLinearized(byte[] filename) throws CpdfError;
     
-    /** Finds out if a document is linearized as quickly as possible without loading it. */
-    public boolean isLinearized(String filename) throws CpdfError
+    /** Attempts to decrypt a PDF using the given
+    user password. An exception is raised if the decryption fails. */
+    public void decryptPdf(Pdf pdf, String userpw) throws CpdfError
     {
-        return XisLinearized(encodeUTF8(filename));
+        XdecryptPdf(pdf, encodeUTF8(userpw));
     }
+
+    native void XdecryptPdfOwner(Pdf pdf, byte[] ownerpw) throws CpdfError;
+
+    /** Attempts to decrypt a PDF using the given owner password. Raises an
+    exception if the decryption fails. */
+    public void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError
+    {
+        XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
+    }
+
     native int XtoFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, byte[] filename) throws CpdfError;
 
     /** Writes a file as encrypted. The encryption method and permissions are drawn from Jcpdf's fields, documented above. */
@@ -458,22 +468,6 @@ public class Jcpdf {
     /** Returns the encryption method currently in use on a document. */
     public native int encryptionKind(Pdf pdf) throws CpdfError;
     native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
-    
-    /** Attempts to decrypt a PDF using the given
-    user password. An exception is raised if the decryption fails. */
-    public void decryptPdf(Pdf pdf, String userpw) throws CpdfError
-    {
-        XdecryptPdf(pdf, encodeUTF8(userpw));
-    }
-
-    native void XdecryptPdfOwner(Pdf pdf, byte[] ownerpw) throws CpdfError;
-
-    /** Attempts to decrypt a PDF using the given owner password. Raises an
-    exception if the decryption fails. */
-    public void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError
-    {
-        XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
-    }
 
     /* CHAPTER 2. Merging and Splitting */
     
@@ -748,6 +742,14 @@ public class Jcpdf {
     
     /* CHAPTER 11. Document Information and Metadata */
     
+    native boolean XisLinearized(byte[] filename) throws CpdfError;
+    
+    /** Finds out if a document is linearized as quickly as possible without loading it. */
+    public boolean isLinearized(String filename) throws CpdfError
+    {
+        return XisLinearized(encodeUTF8(filename));
+    }
+
     /** Returns the minor version number of a document. */
     public native int getVersion(Pdf pdf) throws CpdfError;
     
