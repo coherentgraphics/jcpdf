@@ -1118,7 +1118,7 @@ public class Jcpdf {
     public native void createMetadata(Pdf pdf) throws CpdfError;
 
     /** Sets the metadata date for a PDF. The date
-    is given in PDF date format - jcpdf will convert it to XMP format. The
+    is given in PDF date format - Jcpdf will convert it to XMP format. The
     date "now" means now. */
     public native void setMetadataDate(Pdf pdf, String date) throws CpdfError;
 
