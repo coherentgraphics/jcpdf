@@ -313,33 +313,33 @@ public class Jcpdf {
     /** Begins enumerating currently allocated PDFs.
     
     <p>To enumerate the list of currently allocated PDFs, call
-    <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
-    <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
-    <code>0...(n - 1)</code>. Call <code>endEnumeratePDFs</code> to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
+    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
+    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native int startEnumeratePDFs() throws CpdfError;
     
     /** Returns the key for a given PDF number. 
     
     <p>To enumerate the list of currently allocated PDFs, call
-    <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
-    <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
-    <code>0...(n - 1)</code>. Call <code>endEnumeratePDFs</code> to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
+    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
+    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native int enumeratePDFsKey(int n) throws CpdfError;
     
     /** Returns the info for a given PDF number.
     
     <p>To enumerate the list of currently allocated PDFs, call
-    <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
-    <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
-    <code>0...(n - 1)</code>. Call <code>endEnumeratePDFs</code> to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
+    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
+    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native String enumeratePDFsInfo(int n) throws CpdfError;
     
     /** Ends enumeration of currently allocated PDFs.
     
     <p>To enumerate the list of currently allocated PDFs, call
-    <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
-    <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
-    <code>0...(n - 1)</code>. Call <code>endEnumeratePDFs</code> to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
+    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
+    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native void endEnumeratePDFs() throws CpdfError;
 
 
@@ -363,7 +363,11 @@ public class Jcpdf {
 
     /** Parses a page specification with reference
     to a given PDF. (The PDF is supplied so that page ranges which reference
-    pages which do not exist are rejected). */
+    pages which do not exist are rejected).
+
+    @param pdf PDF document
+    @param pagespec page specification
+    @return page range */
     public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
     
     /** Validates a page specification so far as is
@@ -374,10 +378,15 @@ public class Jcpdf {
     
     /** Builds a page specification from a page
     range. For example, the range containing 1,2,3,6,7,8 in a document of 8
-    pages might yield <code>"1-3,6-end"</code> */
+    pages might yield <code>"1-3,6-end"</code>
+
+    @param pdf PDF document
+    @param r page range
+    @return page range in string form
+    */
     public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
     {
-        return decodeUTF8(XstringOfPagespec(pdf, r));    
+        return decodeUTF8(XstringOfPagespec(pdf, range));    
     }
 
     /** The range containing no pages. */
@@ -423,7 +432,9 @@ public class Jcpdf {
 
     /** Returns the number of pages in a given
     PDF, with given user password. It tries to do this as fast as
-    possible, without loading the whole file. */
+    possible, without loading the whole file.
+    @param userpw user password
+    @param filename file name */
     public int pagesFast(String userpw, String filename) throws CpdfError
     {
         return XpagesFast(encodeUTF8(userpw), encodeUTF8(filename));
@@ -432,8 +443,13 @@ public class Jcpdf {
     native void XtoFile(Pdf pdf, byte[] filename, boolean linearize, boolean make_id) throws CpdfError;
     
     /** Writes the PDF document to a given
-    filename. If linearize is true, it will be linearized if a linearizer is
-    available. If make_id is true, it will be given a new ID. */
+    filename. If <code>linearize</code> is <code>true</code>, it will be linearized if a linearizer is
+    available. If <code>make_id</code> is <code>true</code>, it will be given a new ID.
+    @param pdf PDF document
+    @param filename file name
+    @param linearize linearize
+    @param make_id make new ID
+    */
     public void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError
     {
         XtoFile(pdf, encodeUTF8(filename), linearize, make_id);
@@ -447,7 +463,15 @@ public class Jcpdf {
     object streams will be generated even if not originally present. If
     <code>compress_objstm</code> is true, object streams will be compressed (what we
     usually want). WARNING: the pdf argument will be invalid after this call,
-    and should be not be used again. */
+    and should be not be used again.
+    @param pdf PDF document
+    @param filename file name
+    @param linearize linearize
+    @param make_id make new ID
+    @param preserve_objstm preserve object streams
+    @param create_objstm create new object streams
+    @param compress_objstm compress object streams
+    */
     public void toFileExt(Pdf pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError
     {
         XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
