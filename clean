@@ -7,4 +7,9 @@ rm -rf element-list
 rm -rf resources
 rm -rf script-dir
 rm -rf legal
-rm -rf com/coherentpdf/*.html
+rm -rf com/coherentpdf/Jcpdf.html
+rm -rf com/coherentpdf/Jcpdf.CpdfError.html
+rm -rf com/coherentpdf/Jcpdf.Pdf.html
+rm -rf com/coherentpdf/Jcpdf.Range.html
+rm -rf com/coherentpdf/package-summary.html
+rm -rf com/coherentpdf/package-tree.html
