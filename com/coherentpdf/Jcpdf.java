@@ -3,15 +3,16 @@ import java.nio.charset.Charset;
 
 /** The Coherent PDF Library for Java */
 public class Jcpdf {
-    /** Create a new instance of the Jcpdf library. You must use <code>startup()</code> too,
-     before calling any other function.*/
+
+    /** Create a new instance of the Jcpdf library. You must use <code>{@link
+     #startup() startup()}</code> too, before calling any other function.*/
     public Jcpdf()
     {
       System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
     
-    /** Any function in this library may raise the CPDFError exception. */
+    /** Any function in this library may raise the CPDFError exception, which carries a string describing the nature of the problem. */
     public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
@@ -231,12 +232,13 @@ public class Jcpdf {
     /** Initialises the library. Must be called before any other function. */
     public native void startup() throws CpdfError;
     
-    /** Returns a string giving the version number of the CPDF library. */
+    /** Returns a string giving the version number of the Jcpdf library.
+    @return version number of the Jcpdf library */
     public native String version() throws CpdfError;
     
     /** Sets fast mode. Some operations have a fast mode. The default is 'slow' mode, which works
     even on old-fashioned files. For more details, see section 1.13 of the
-    CPDF manual. This functions sets the mode to slow globally. */
+    CPDF manual. This functions sets the mode to fast globally. */
     public native void setFast() throws CpdfError;
 
     /** Sets slow mode. Some operations have a fast mode. The default is 'slow' mode, which works
@@ -253,7 +255,10 @@ public class Jcpdf {
     native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
     /** Loads a PDF document from a file. Supply
     a user password (possibly blank) in case the file is encrypted. It won't be
-    decrypted, but sometimes the password is needed just to load the file. */
+    decrypted, but sometimes the password is needed just to load the file.
+    @param filename file name
+    @param userpw user password
+    @return PDF document*/
     public Pdf fromFile(String filename, String userpw) throws CpdfError
     { 
       return XfromFile(encodeUTF8(filename), encodeUTF8(userpw));
@@ -265,7 +270,11 @@ public class Jcpdf {
     parsing. The objects will be read and parsed when they are actually
     needed. Use this when the whole file won't be required. Also supply a user
     password (possibly blank) in case the file is encrypted. It won't be
-    decrypted, but sometimes the password is needed just to load the file. */
+    decrypted, but sometimes the password is needed just to load the file.
+
+    @param filename file name
+    @param userpw user password
+    @return PDF document */
     public Pdf fromFileLazy(String filename, String userpw) throws CpdfError
     {
       return XfromFileLazy(encodeUTF8(filename), encodeUTF8(userpw));
@@ -276,28 +285,33 @@ public class Jcpdf {
 
     /** Loads a PDF document from memory. Supply
     a user password (possibly blank) in case the file is encrypted. It won't be
-    decrypted, but sometimes the password is needed just to load the file. */
+    decrypted, but sometimes the password is needed just to load the file.
+
+    @param data byte array containing the PDF file
+    @param userpw user password
+    @return PDF document */
     public Pdf fromMemory(byte[] data, String userpw) throws CpdfError
     {
         return XfromMemory(data, encodeUTF8(userpw));
     }
 
-    /** Releases memory returned from <code>fromMemory</code> */
-    public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
-
     native Pdf XfromMemoryLazy(byte[] data, byte[] userpw) throws CpdfError;
     
     /** Loads a file from memory and the user
-    password, but lazily like <code>fromFileLazy</code>. The caller must use
-    <code>fromMemoryLazyRelease</code> to free the memory. It must not free the memory
+    password, but lazily like {@link #fromFileLazy(String, String) fromFileLazy}. The caller must use
+    {@link #fromMemoryLazyRelease(byte[]) fromMemoryLazyRelease} to free the memory. It must not free the memory
     until the PDF is also gone. */
     public Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError
     {
         return XfromMemoryLazy(data, encodeUTF8(userpw));
     }
+    
+    /** Releases memory returned from <code>{@link #fromMemoryLazy(byte[], String) fromMemoryLazy}</code>
+    @param data byte array previously passed to {@link #fromMemoryLazy(byte[], String) fromMemoryLazy} */
+    public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
 
     /** Begins enumerating currently allocated PDFs.
-     *
+    
     <p>To enumerate the list of currently allocated PDFs, call
     <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
     <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
@@ -305,7 +319,7 @@ public class Jcpdf {
     public native int startEnumeratePDFs() throws CpdfError;
     
     /** Returns the key for a given PDF number. 
-     *
+    
     <p>To enumerate the list of currently allocated PDFs, call
     <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
     <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
@@ -313,7 +327,7 @@ public class Jcpdf {
     public native int enumeratePDFsKey(int n) throws CpdfError;
     
     /** Returns the info for a given PDF number.
-     *
+    
     <p>To enumerate the list of currently allocated PDFs, call
     <code>startEnumeratePDFs</code> which gives the number, <code>n</code>, of PDFs allocated, then
     <code>enumeratePDFsInfo</code> and <code>enumeratePDFsKey</code> with index numbers from
