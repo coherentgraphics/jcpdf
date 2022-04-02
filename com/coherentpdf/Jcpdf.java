@@ -27,7 +27,7 @@ public class Jcpdf {
     public class Pdf implements AutoCloseable
     {
       int pdf = -1;
-      public Pdf(int pdf)
+      private Pdf(int pdf)
       {
         this.pdf = pdf;
       }
@@ -44,7 +44,7 @@ public class Jcpdf {
     public class Range implements AutoCloseable
     {
       int range = -1;
-      public Range(int range)
+      private Range(int range)
       {
         this.range = range;
       }
@@ -63,165 +63,165 @@ public class Jcpdf {
     // Enumerations
 
     /** Permission: cannot edit the document */
-    public int noEdit = 0;
+    public static int noEdit = 0;
     /** Permission: cannot print the document */
-    public int noPrint = 1;
+    public static int noPrint = 1;
     /** Permission: cannot copy the document */
-    public int noCopy = 2;
+    public static int noCopy = 2;
     /** Permission: cannot annotate the document */
-    public int noAnnot = 3;
+    public static int noAnnot = 3;
     /** Permission: cannot edit forms in the document */
-    public int noForms = 4;
+    public static int noForms = 4;
     /** Permission: cannot extract information */
-    public int noExtract = 5;
+    public static int noExtract = 5;
     /** Permission: cannot assemble into a bigger document */
-    public int noAssemble = 6;
+    public static int noAssemble = 6;
     /** Permission: cannot print high quality */
-    public int noHqPrint = 7;
+    public static int noHqPrint = 7;
 
     /** Encryption method: 40 bit RC4 encryption */
-    public int pdf40bit = 0;
+    public static int pdf40bit = 0;
     /** Encryption method: 128 bit RC4 encryption */
-    public int pdf128bit = 1;
+    public static int pdf128bit = 1;
     /** Encryption method: 128 bit AES encryption, do not encrypt metadata */
-    public int aes128bitfalse = 2;
+    public static int aes128bitfalse = 2;
     /** Encryption method: 128 bit AES encryption, encrypt metadata */
-    public int aes128bittrue = 3;
+    public static int aes128bittrue = 3;
     /** Encryption method: Deprecated. Do not use for new files */
-    public int aes256bitfalse = 4;
+    public static int aes256bitfalse = 4;
     /** Encryption method: Deprecated. Do not use for new files */
-    public int aes256bittrue = 5;
+    public static int aes256bittrue = 5;
     /** Encryption method: 256 bit AES encryption, do not encrypt metadata */
-    public int aes256bitisofalse = 6;
+    public static int aes256bitisofalse = 6;
     /** Encryption method: 256 bit AES encryption, encrypt metadata */
-    public int aes256bitiso = 7;
+    public static int aes256bitiso = 7;
 
     /** Page label style: 1, 2, 3... */
-    public int decimalArabic = 0;
+    public static int decimalArabic = 0;
     /** Page label style: I, II, III... */
-    public int uppercaseRoman = 1;
+    public static int uppercaseRoman = 1;
     /** Page label style: i, ii, iii... */
-    public int lowercaseRoman = 2;
+    public static int lowercaseRoman = 2;
     /** Page label style: A, B, C... */
-    public int uppercaseLetters = 3;
+    public static int uppercaseLetters = 3;
     /** Page label style: a, b, c...*/
-    public int lowercaseLetters = 4;
+    public static int lowercaseLetters = 4;
 
     /** Layout: single page */
-    public int singlePage = 0;
+    public static int singlePage = 0;
     /** Layout: one column */
-    public int oneColumn = 1;
+    public static int oneColumn = 1;
     /** Layout: two column left */
-    public int twoColumnLeft = 2;
+    public static int twoColumnLeft = 2;
     /** Layout: two column right */
-    public int twoColumnRight = 3;
+    public static int twoColumnRight = 3;
     /** Layout: two page left */
-    public int twoPageLeft = 4;
+    public static int twoPageLeft = 4;
     /** Layout: two page right */
-    public int twoPageRight = 5;
+    public static int twoPageRight = 5;
 
     /** Page mode: use none */
-    public int useNone = 0;
+    public static int useNone = 0;
     /** Page mode: use outlines */
-    public int useOutlines = 1;
+    public static int useOutlines = 1;
     /** Page mode: use thumbs */
-    public int useThumbs = 2;
+    public static int useThumbs = 2;
     /** Page mode: use OC */
-    public int useOC = 3;
+    public static int useOC = 3;
     /** Page mode: use Attachments */
-    public int useAttachments = 4;
+    public static int useAttachments = 4;
 
     /** Paper size: A0 Portrait */
-    public int a0portrait = 0;
+    public static int a0portrait = 0;
     /** Paper size: A1 Portrait */
-    public int a1portrait = 1;
+    public static int a1portrait = 1;
     /** Paper size: A2 Portrait */
-    public int a2portrait = 2;
+    public static int a2portrait = 2;
     /** Paper size: A3 Portrait */
-    public int a3portrait = 3;
+    public static int a3portrait = 3;
     /** Paper size: A4 Portrait */
-    public int a4portrait = 4;
+    public static int a4portrait = 4;
     /** Paper size: A5 Portrait */
-    public int a5portrait = 5;
+    public static int a5portrait = 5;
     /** Paper size: A0 Landscape */
-    public int a0landscape = 6;
+    public static int a0landscape = 6;
     /** Paper size: A1 Landscape */
-    public int a1landscape = 7;
+    public static int a1landscape = 7;
     /** Paper size: A2 Landscape */
-    public int a2landscape = 8;
+    public static int a2landscape = 8;
     /** Paper size: A3 Landscape */
-    public int a3landscape = 9;
+    public static int a3landscape = 9;
     /** Paper size: A4 Landscape */
-    public int a4landscape = 10;
+    public static int a4landscape = 10;
     /** Paper size: A5 Landscape */
-    public int a5landscape = 11;
+    public static int a5landscape = 11;
     /** Paper size: US Letter Portrait */
-    public int usletterportrait = 12;
+    public static int usletterportrait = 12;
     /** Paper size: US Letter Landscape */
-    public int usletterlandscape = 13;
+    public static int usletterlandscape = 13;
     /** Paper size: US Legal Portrait */
-    public int uslegalportrait = 14;
+    public static int uslegalportrait = 14;
     /** Paper size: US Legal Landscape */
-    public int uslegallandscape = 15;
+    public static int uslegallandscape = 15;
 
     /** Standard font: Times Roman */
-    public int timesRoman = 0;
+    public static int timesRoman = 0;
     /** Standard font: Times Bold */
-    public int timesBold = 1;
+    public static int timesBold = 1;
     /** Standard font: Times Italic */
-    public int timesItalic = 2;
+    public static int timesItalic = 2;
     /** Standard font: Times Bold Italic */
-    public int timesBoldItalic = 3;
+    public static int timesBoldItalic = 3;
     /** Standard font: Helvetica */
-    public int helvetica = 4;
+    public static int helvetica = 4;
     /** Standard font: Helvetica Bold */
-    public int helveticaBold = 5;
+    public static int helveticaBold = 5;
     /** Standard font: Helvetica Oblique */
-    public int helveticaOblique = 6;
+    public static int helveticaOblique = 6;
     /** Standard font: Helvetica Bold Oblique */
-    public int helveticaBoldOblique = 7;
+    public static int helveticaBoldOblique = 7;
     /** Standard font: Courier */
-    public int courier = 8;
+    public static int courier = 8;
     /** Standard font: Courier Bold */
-    public int courierBold = 9;
+    public static int courierBold = 9;
     /** Standard font: Courier Oblique */
-    public int courierOblique = 10;
+    public static int courierOblique = 10;
     /** Standard font: Courier Bold Oblique */
-    public int courierBoldOblique = 11;
+    public static int courierBoldOblique = 11;
 
     /** Position anchor: absolute centre. Takes two numbers, x and y. */
-    public int posCentre = 0;
+    public static int posCentre = 0;
     /** Position anchor: absolute left. Takes two numbers, x and y. */
-    public int posLeft = 1;
+    public static int posLeft = 1;
     /** Position anchor: absolute right. Takes two numbers, x and y. */
-    public int posRight = 2;
+    public static int posRight = 2;
     /** Position anchor: the top centre of the page. Takes one number - distance from top. Second number ignored. */
-    public int top = 3;
+    public static int top = 3;
     /** Position anchor: the top left of the page. Takes one numbers - distance from top left. Second number ignored. */
-    public int topLeft = 4;
+    public static int topLeft = 4;
     /** Position anchor: the top right of the page. Takes one number - distance from top right. Second number ignored. */
-    public int topRight = 5;
+    public static int topRight = 5;
     /** Position anchor: the left hand side of the page, halfway down. Takes one number - distance from left middle. Second number ignored. */
-    public int left = 6;
+    public static int left = 6;
     /** Position anchor: the bottom left of the page. Takes one number - distance from bottom left. Second number ignored. */
-    public int bottomLeft = 7;
+    public static int bottomLeft = 7;
     /** Position anchor: the bottom middle of the page. Takes one number - distance from bottom middle. Second number ignored. */
-    public int bottom = 8;
+    public static int bottom = 8;
     /** Position anchor: the bottomm right of the page. Takes one number - distance from bottom right. Second number ignored. */
-    public int bottomRight = 9;
+    public static int bottomRight = 9;
     /** Position anchor: the right hand side of the page, halfway down. Takes one number - distance from right middle. Second number ignored. */
-    public int right = 10;
+    public static int right = 10;
     /** Position anchor: diagonal, bottom left to top right. Takes no numbers. Both numbers ignored. */
-    public int diagonal = 11;
+    public static int diagonal = 11;
     /** Position anchor: diagonal, top left to bottom right. Takes no numbers. Both numbers ignored. */
-    public int reverseDiagonal = 12;
+    public static int reverseDiagonal = 12;
 
     /** Justification: left */
-    public int leftJustify = 0;
+    public static int leftJustify = 0;
     /** Justification: centre */
-    public int centreJustify = 1;
+    public static int centreJustify = 1;
     /** Justification: right */
-    public int rightJusitfy = 2;
+    public static int rightJusitfy = 2;
 
     /* CHAPTER 0. Preliminaries */
     
