@@ -851,12 +851,17 @@ public class Jcpdf {
     
     /* CHAPTER 9. Multipage facilities */
     
-    /** Imposes a PDF. There are two modes: imposing x * y, or imposing
-    to fit a page of size x * y. This is controlled by <code>fit</code>.
-    <code>columns</code> imposes by columns rather than rows. <code>rtl</code>
-    is right-to-left, <code>btt</code> bottom-to-top. <code>center</code> is
-    unused for now. <code>margin</code> is the margin around the output,
-    <code>spacing</code> the spacing between imposed inputs. */
+    /** Imposes a PDF.
+     @param pdf PDF document
+     @param x x parameter
+     @param y y parameter
+     @param fit true: impose to fit a page x * y; false: impose x * y 
+     @param columns imposes by columns rather than rows
+     @param rtl impose right-to-left
+     @param btt impose bottom-to-top
+     @param center unused for now
+     @param margin margin around the output
+     @param spacing spacing between imposed inputs */
     public native void impose(Pdf pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
 
     /** Imposes a document two up. twoUp does so by shrinking the page size, to fit two pages on one. */
