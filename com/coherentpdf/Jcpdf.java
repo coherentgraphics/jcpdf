@@ -1471,83 +1471,83 @@ public class Jcpdf {
     /* CHAPTER 13. Images. */
     
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native int startGetImageResolution(Pdf pdf, double res) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native int getImageResolutionPageNumber(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native String getImageResolutionImageName(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native int getImageResolutionXPixels(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native int getImageResolutionYPixels(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native double getImageResolutionXRes(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native double getImageResolutionYRes(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    <code>startGetImageResolution(pdf, min_required_resolution)</code> to begin
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
     the process of obtaining data on all image uses below
     <code>min_required_resolution</code>, returning the total number. So, to
     return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
-    <code>endGetImageResolution</code> to clean up. */
+    {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native void endGetImageResolution() throws CpdfError;
 
     /* CHAPTER 14. Fonts. */
