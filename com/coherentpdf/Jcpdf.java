@@ -386,13 +386,15 @@ public class Jcpdf {
     */
     public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
     {
-        return decodeUTF8(XstringOfPagespec(pdf, range));    
+        return decodeUTF8(XstringOfPagespec(pdf, r));
     }
 
     /** The range containing no pages. */
     public native Range blankRange() throws CpdfError;
 
-    /** The page range containing all page numbers from one page number to another. */
+    /** The page range containing all page numbers from one page number to another.
+    @param from page number to begin at (inclusive)
+    @param to page number to end at (inclusive) */
     public native Range range(int from, int to) throws CpdfError;
 
     /** The page range contaning all pages in a given document. */
@@ -477,14 +479,22 @@ public class Jcpdf {
         XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
     }
 
-    /** Writes a PDF document and returns it as an array of bytes. */
+    /** Writes a PDF document and returns it as an array of bytes.
+    @param pdf PDF document
+    @param linearize linearize
+    @param make_id make new ID
+    @return array of bytes containing PDF file
+    */
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
 
     /** Returns <code>true</code> if a document is encrypted, <code>false</code> otherwise. */
     public native boolean isEncrypted(Pdf pdf) throws CpdfError;
     
+    native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
     /** Attempts to decrypt a PDF using the given
-    user password. An exception is raised if the decryption fails. */
+    user password. An exception is raised if the decryption fails.
+    @param pdf PDF document
+    @param userpw user password */
     public void decryptPdf(Pdf pdf, String userpw) throws CpdfError
     {
         XdecryptPdf(pdf, encodeUTF8(userpw));
@@ -493,27 +503,49 @@ public class Jcpdf {
     native void XdecryptPdfOwner(Pdf pdf, byte[] ownerpw) throws CpdfError;
 
     /** Attempts to decrypt a PDF using the given owner password. Raises an
-    exception if the decryption fails. */
+    exception if the decryption fails.
+    @param pdf PDF document
+    @param ownerpw owner password */
     public void decryptPdfOwner(Pdf pdf, String ownerpw) throws CpdfError
     {
         XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
     }
 
-    native int XtoFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, byte[] filename) throws CpdfError;
+    native void XtoFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, byte[] filename) throws CpdfError;
 
-    /** Writes a PDF document as encrypted. The encryption method and permissions are drawn from Jcpdf's fields, documented above. */
-    public int toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError
+    /** Writes a PDF document as encrypted. The encryption method and permissions are drawn from Jcpdf's fields, documented above.
+    @param pdf PDF document
+    @param encryption_method encryption method
+    @param permissions array of permissions
+    @param owner_password owner password
+    @param user_password user password
+    @param linearize linearize
+    @param makeid make new ID
+    @param filename file name */
+    public void toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError
     {
-        return XtoFileEncrypted(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, encodeUTF8(filename));
+        XtoFileEncrypted(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, encodeUTF8(filename));
     }
-    native int XtoFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, byte[] filename) throws CpdfError;
+
+    native void XtoFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, byte[] filename) throws CpdfError;
 
     /** Writes a file as encrypted with extra parameters. WARNING: the pdf
      argument will be invalid after this call, and should not be used again.
-     */
-    public int toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError
+
+    @param pdf PDF document
+    @param encryption_method encryption method
+    @param permissions array of permissions
+    @param owner_password owner password
+    @param user_password user password
+    @param linearize linearize
+    @param makeid make new ID
+    @param preserve_objstm preserve existing object streams
+    @param generate_objstm generate new object streams
+    @param compress_objstm compress object streams
+    @param filename file name */
+    public void toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError
     {
-        return XtoFileEncryptedExt(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, encodeUTF8(filename));
+        XtoFileEncryptedExt(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, encodeUTF8(filename));
     }
 
     /** Returns <code>true</code> if the given permission (restriction) is present. */
@@ -521,7 +553,6 @@ public class Jcpdf {
     
     /** Returns the encryption method currently in use on a document. */
     public native int encryptionKind(Pdf pdf) throws CpdfError;
-    native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
 
     /* CHAPTER 2. Merging and Splitting */
     
