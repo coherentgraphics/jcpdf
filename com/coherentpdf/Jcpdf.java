@@ -586,34 +586,71 @@ public class Jcpdf {
     
     /** Scales the page dimensions
     and content by the given scale, about (0, 0). Other boxes (crop etc. are
-    altered as appropriate). */
+    altered as appropriate).
+    @param pdf PDF document
+    @param range page range
+    @param sx X scale
+    @param sy Y scale*/
     public native void scalePages(Pdf pdf, Range range, double sx, double sy) throws CpdfError;
 
     /** Scales the content to fit
     new page dimensions (width x height) multiplied by scale (typically 1.0).
-    Other boxes (crop etc. are altered as appropriate). */
+    Other boxes (crop etc. are altered as appropriate).
+    @param pdf PDF document
+    @param range page range
+    @param w width in points
+    @param h height in points
+    @param scale scale (typically 1.0)
+    */
     public native void scaleToFit(Pdf pdf, Range range, double w, double h, double scale) throws CpdfError;
 
-    /** Scales the page content to fit the given page size, possibly multiplied by scale (typically 1.0). */
+    /** Scales the page content to fit the given page size, possibly multiplied by scale (typically 1.0).
+    @param pdf PDF document
+    @param range page range
+    @param papersize paper size
+    @param scale scale (typically 1.0)
+    */
     public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
 
     /** Scales the contents of the pages in the range about the point given by the <code>anchor</code>,
-    <code>p1</code> and <code>p2</code> by the scale given. See the documentation for the chosen anchor. */
-
+    <code>p1</code> and <code>p2</code> by the scale given. See the documentation for the chosen anchor.
+    @param pdf PDF document
+    @param range page range
+    @param anchor position anchor
+    @param p1 position parameter 1
+    @param p2 position parameter 2
+    @param scale scale
+    */
     public native void scaleContents(Pdf pdf, Range range, int anchor, double p1, double p2, double scale) throws CpdfError;
 
-    /** Shifts the content of the pages in the range. */
+    /** Shifts the content of the pages in the range.
+    @param pdf PDF document
+    @param range page range
+    @param dx X shift
+    @param dy Y shift
+    */
     public native void shiftContents(Pdf pdf, Range range, double dx, double dy) throws CpdfError;
 
-    /** Changes the viewing rotation to an absolute value. Appropriate rotations are 0, 90, 180, 270. */
+    /** Changes the viewing rotation to an absolute value. Appropriate rotations are 0, 90, 180, 270.
+    @param pdf PDF document
+    @param range page range
+    @param angle viewing rotation
+    */
     public native void rotate(Pdf pdf, Range range, int angle) throws CpdfError;
 
-    /** Rotates the content about the centre of the page by the given number of degrees, in a clockwise
-    direction. */
+    /** Changes the viewing rotation by a relative value. Appropriate rotations are 0, 90, 180, 270.
+    @param pdf PDF document
+    @param range page range
+    @param angle viewing rotation
+    */
     public native void rotateBy(Pdf pdf, Range range, int angle) throws CpdfError;
 
     /** Rotates the content about the centre of the page by the given number of degrees, in a clockwise
-    direction. */
+    direction.
+    @param pdf PDF document
+    @param range page range
+    @param angle angle in degrees
+    */
     public native void rotateContents(Pdf pdf, Range range, double angle) throws CpdfError;
 
     /** Changes the viewing rotation of the pages in the
@@ -627,7 +664,13 @@ public class Jcpdf {
     /** Flips vertically the pages in the range. */
     public native void vFlip(Pdf pdf, Range range) throws CpdfError;
 
-    /** Crops a page, replacing any existing crop box. The dimensions are in points. */
+    /** Crops a page, replacing any existing crop box. The dimensions are in points.
+    @param pdf PDF document
+    @param range page range
+    @param x minimum X
+    @param y minimum Y
+    @param w width
+    @param h height */
     public native void crop(Pdf pdf, Range range, double x, double y, double w, double h) throws CpdfError;
 
     /** Removes any crop box from pages in the range. */
@@ -648,7 +691,10 @@ public class Jcpdf {
     /** Shows the boxes on the given pages, for debug. */
     public native void showBoxes(Pdf pdf, Range range) throws CpdfError;
 
-    /** Makes a given box a 'hard box' i.e clips it explicitly. */
+    /** Makes a given box a 'hard box' i.e clips it explicitly.
+    @param pdf PDF document
+    @param range page range
+    @param box box name e.g "/CropBox" */
     public native void hardBox(Pdf pdf, Range range, String box) throws CpdfError;
 
     /* CHAPTER 4. Encryption */
@@ -1489,60 +1535,67 @@ public class Jcpdf {
 
     /* CHAPTER 14. Fonts. */
     
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native void startGetFontInfo(Pdf pdf) throws CpdfError;
 
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native int numberFonts() throws CpdfError;
     
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native String getFontName(int serial) throws CpdfError;
     
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native int getFontPage(int serial) throws CpdfError;
     
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native String getFontType(int setial) throws CpdfError;
     
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native String getFontEncoding(int serial) throws CpdfError;
     
-    /** Retrieves font information. First, call <code>startGetFontInfo</code>.
-    Now call <code>numberFonts</code> to return the number of fonts. For each font,
-    call one or more of <code>getFontPage</code>, <code>getFontName</code>,
-    <code>getFontType</code>, and <code>getFontEncoding</code> giving a serial
-    number <code>0...n - 1</code> to return information. Finally, call
-    <code>endGetFontInfo</code> to clean up. */
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
+    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
+    For each font, call one or more of {@link #getFontPage(int) getFontPage},
+    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
+    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
+    serial number <code>0...n - 1</code> to return information. Finally, call
+    {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native void endGetFontInfo() throws CpdfError;
     
     /** Removes all font data from a file. */
@@ -1550,7 +1603,12 @@ public class Jcpdf {
     
     /** Copies the given font
     from the given page in the 'from' PDF to every page in the 'to' PDF. The
-    new font is stored under its font name. */
+    new font is stored under its font name.
+    @param from_pdf PDF document to copy from
+    @param to_pdf PDF document to copy to
+    @param range page range
+    @param pagenumber page number of the page to copy from
+    @param fontname font name */
     public native void copyFont(Pdf from_pdf, Pdf to_pdf, Range range, int pagenumber, String fontname) throws CpdfError;
 
     /* CHAPTER 15. PDF and JSON */
@@ -1630,7 +1688,10 @@ public class Jcpdf {
 
     /* CHAPTER 18. Miscellaneous */
     
-    /** Removes images on the given pages, replacing them with crossed boxes if <code>boxes</code> is <code>true</code>. */
+    /** Removes images on the given pages, replacing them with crossed boxes if <code>boxes</code> is <code>true</code>.
+     * @param pdf PDF document
+     * @param range page range
+     * @param boxes add crossed boxes */
     public native void draft(Pdf pdf, Range range, boolean boxes) throws CpdfError;
     
     /** Removes all text from the given pages in a given document. */
@@ -1645,36 +1706,61 @@ public class Jcpdf {
     /** Blackens all fills on the given pages. */
     public native void blackFills(Pdf pdf, Range range) throws CpdfError;
     
-    /** Thickens every line less than <code>min_thickness</code> to <code>min_thickness</code>. Thickness given in points. */
+    /** Thickens every line less than <code>min_thickness</code> to <code>min_thickness</code>. Thickness given in points.
+    @param pdf PDF document
+    @param range page range
+    @param min_thickness minimum thickness
+    */
     public native void thinLines(Pdf pdf, Range range, double min_thickness) throws CpdfError;
     
-    /** Copies the <code>/ID</code> from one document to another. */
+    /** Copies the <code>/ID</code> from one document to another.
+     * @param pdf PDF document to copy from
+     * @param pdf2 PDF document to copy to */
     public native void copyId(Pdf pdf, Pdf pdf2) throws CpdfError;
     
     /** Removes a document's <code>/ID</code>. */
     public native void removeId(Pdf pdf) throws CpdfError;
     
-    /** Sets the minor version number of a document. */
+    /** Sets the minor version number of a document.
+     * @param pdf PDF document
+     * @param version minor version number. */
     public native void setVersion(Pdf pdf, int version) throws CpdfError;
     
-    /** Sets the full version number of a document. */
+    /** Sets the full version number of a document.
+     * @param pdf PDF document
+     * @param major major version number
+     * @param minor minor version nuber */
     public native void setFullVersion(Pdf pdf, int major, int minor) throws CpdfError;
     
-    /** Removes any dictionary entry with the given key anywhere in the document. */
-    public native void removeDictEntry(Pdf pdf, String str) throws CpdfError;
+    /** Removes any dictionary entry with the given key anywhere in the document.
+     * @param pdf PDF document
+     * @param key key to remove */
+    public native void removeDictEntry(Pdf pdf, String key) throws CpdfError;
     
-    /** Removes any dictionary entry with the given key whose value matches the given search term. */
-    public native void removeDictEntrySearch(Pdf pdf, String str, String searchterm) throws CpdfError;
+    /** Removes any dictionary entry with the given key whose value matches the given search term.
+     * @param pdf PDF document
+     * @param key key to remove
+     * @param searchterm search term */
+    public native void removeDictEntrySearch(Pdf pdf, String key, String searchterm) throws CpdfError;
     
-    /** Replaces the value associated with the given key. */
+    /** Replaces the value associated with the given key.
+     * @param pdf PDF document
+     * @param key key whose value to replace
+     * @param newvalue value to replac with */
     public native void replaceDictEntry(Pdf pdf, String key, String newvalue) throws CpdfError;
     
-    /** Replaces the value associated with the given key if the existing value matches the search term. */
+    /** Replaces the value associated with the given key if the existing value matches the search term.
+     * @param pdf PDF document
+     * @param key key whose value to replace
+     * @param newvalue value to replac with
+     * @param searchterm search term */
     public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
     
     /** Removes all clipping from pages in the given range. */
     public native void removeClipping(Pdf pdf, Range range) throws CpdfError;
     
-    /** Returns a JSON array containing any and all values associated with the given key, and fills in its length. */
+    /** Returns a JSON array containing any and all values associated with the given key, and fills in its length.
+     * @param pdf PDF document
+     * @param key key to search for */
     public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
 }
