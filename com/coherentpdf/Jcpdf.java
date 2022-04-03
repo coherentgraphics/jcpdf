@@ -1190,7 +1190,9 @@ public class Jcpdf {
         XsetModificationDateXMP(pdf, encodeUTF8(str));
     }
     
-    /** Returns the components from a PDF date string in an array of length 8. */
+    /** Returns the components from a PDF date string in an array of length 8.
+     * @param datestring date string
+     * @param r return array */
     public native void getDateComponents(String datestring, int[] r) throws CpdfError;
 
     /** Builds a PDF date string from individual components. */
@@ -1199,32 +1201,35 @@ public class Jcpdf {
     /** Gets the viewing rotation for a given page. */
     public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
 
-    /** Returns <code>true</code> if the given page has the given box. E.g "/CropBox". */
+    /** Returns <code>true</code> if the given page has the given box. E.g "/CropBox".
+     * @param pdf PDF document
+     * @param pagenumber page number
+     * @param boxname box name, e.g "/CropBox" */
     public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
 
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by hasBox. */
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
     public native void getMediaBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by hasBox. */
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
     public native void getCropBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by hasBox. */
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
     public native void getBleedBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by hasBox. */
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
     public native void getArtBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by hasBox. */
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
     public native void getTrimBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
 
     /** These functions set a box given the document page range, min x, max x, min y, max y in points. */
@@ -1241,7 +1246,6 @@ public class Jcpdf {
     
     /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
     public native void setBleedBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
-
 
     /** Marks a document as trapped. */
     public native void markTrapped(Pdf pdf) throws CpdfError;
@@ -1279,7 +1283,10 @@ public class Jcpdf {
     /** Sets the display doc title flag. */
     public native void displayDocTitle(Pdf pdf, boolean flag) throws CpdfError;
 
-    /** Sets the PDF to open, possibly with zoom-to-fit, at the given page number. */
+    /** Sets the PDF to open, possibly with zoom-to-fit, at the given page number.
+     * @param pdf PDF document
+     * @param fit if <code>true</code> zoom to fit
+     * @param pagenumber page number */
     public native void openAtPage(Pdf pdf, boolean fit, int pagenumber) throws CpdfError;
 
     native void XsetMetadataFromFile(Pdf pdf, byte[] filename) throws CpdfError;
@@ -1310,8 +1317,13 @@ public class Jcpdf {
 
     native void XaddPageLabels(Pdf pdf, int style, byte[] prefix, int offset, Range range, boolean progress) throws CpdfError;
     
-    /** Adds page labels. The prefix is prefix text for each label. The range is the page range the
-    labels apply to. Offset can be used to shift the numbering up or down. */
+    /** Adds page labels to a document.
+     * @param pdf PDF document
+     * @param style label style
+     * @param prefix text for each label
+     * @param offset can be used to shift the numbering up or down
+     * @param range page range
+     * @param progress if <code>true</code>, labels progress */
     public void addPageLabels(Pdf pdf, int style, String prefix, int offset, Range range, boolean progress) throws CpdfError
     {
         XaddPageLabels(pdf, style, encodeUTF8(prefix), offset, range, progress);
@@ -1323,14 +1335,14 @@ public class Jcpdf {
     native byte[] XgetPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
     
     /** Calculates the full label string for a given page, and returns it. */
-    public String getPageLabelStringForPage(Pdf pdf, int n) throws CpdfError
+    public String getPageLabelStringForPage(Pdf pdf, int pagenumber) throws CpdfError
     {
-        return decodeUTF8(XgetPageLabelStringForPage(pdf, n));
+        return decodeUTF8(XgetPageLabelStringForPage(pdf, pagenumber));
     }
     
-    /** Gets page label data. Call startGetPageLabels to find out how many
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call endGetPageLabels to clean up.
+    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
     numerals, followed by the rest of the pages in decimal arabic, numbered from
@@ -1347,9 +1359,9 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native int startGetPageLabels(Pdf pdf) throws CpdfError;
     
-    /** Gets page label data. Call startGetPageLabels to find out how many
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call endGetPageLabels to clean up.
+    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
     numerals, followed by the rest of the pages in decimal arabic, numbered from
@@ -1366,9 +1378,9 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native void endGetPageLabels() throws CpdfError;
     
-    /** Gets page label data. Call startGetPageLabels to find out how many
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call endGetPageLabels to clean up.
+    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
     numerals, followed by the rest of the pages in decimal arabic, numbered from
@@ -1385,9 +1397,9 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native int getPageLabelOffset(int n) throws CpdfError;
     
-    /** Gets page label data. Call startGetPageLabels to find out how many
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call endGetPageLabels to clean up.
+    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
     numerals, followed by the rest of the pages in decimal arabic, numbered from
@@ -1404,9 +1416,9 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native int getPageLabelStyle(int n) throws CpdfError;
     
-    /** Gets page label data. Call startGetPageLabels to find out how many
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call endGetPageLabels to clean up.
+    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
     numerals, followed by the rest of the pages in decimal arabic, numbered from
@@ -1421,14 +1433,13 @@ public class Jcpdf {
     labelprefix = ""<br/>
     startpage = 6<br/>
     startvalue = 1<br> */
-    
     public native int getPageLabelRange(int n) throws CpdfError;
     
     native byte[] XgetPageLabelPrefix(int n) throws CpdfError;
     
-    /** Gets page label data. Call startGetPageLabels to find out how many
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
     there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call endGetPageLabels to clean up.
+    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
     numerals, followed by the rest of the pages in decimal arabic, numbered from
