@@ -716,14 +716,14 @@ public class Jcpdf {
     /** Starts the bookmark retrieval process for a given PDF. */
     public native void startGetBookmarkInfo(Pdf pdf) throws CpdfError;
 
-    /** Gets the number of bookmarks for the PDF given to <code>startGetBookmarkInfo</code>. */
+    /** Gets the number of bookmarks for the PDF given to {@link #startGetBookmarkInfo(Pdf) startGetBookmarkInfo}. */
     public native int numberBookmarks() throws CpdfError;
     
     /** Gets the bookmark level for the given bookmark <code>0...(n - 1)</code>. */
     public native int getBookmarkLevel(int serial) throws CpdfError;
     
     /** Gets the bookmark target page for the given PDF
-    (which must be the same as the PDF passed to <code>startSetBookmarkInfo</code>)
+    (which must be the same as the PDF passed to  {@link #startGetBookmarkInfo(Pdf) startGetBookmarkInfo})
     and bookmark <code>0...(n - 1)</code>. */
     public native int getBookmarkPage(Pdf pdf, int serial) throws CpdfError;
 
@@ -749,7 +749,7 @@ public class Jcpdf {
 
     /** Sets the bookmark target
     page for the given PDF (which must be the same as the PDF to be passed to
-    <code>endSetBookmarkInfo</code>) and bookmark <code>0...(n - 1)</code>. */
+    {@link #endSetBookmarkInfo(Pdf) endSetBookmarkInfo}) and bookmark <code>0...(n - 1)</code>. */
     public native void setBookmarkPage(Pdf pdf, int serial, int pagenum) throws CpdfError;
     
     /** Sets the open status of bookmark <code>0...(n - 1)</code>. */
@@ -774,8 +774,12 @@ public class Jcpdf {
     native void XtableOfContents(Pdf pdf, int font, double fontsize, byte[] title, boolean bookmark) throws CpdfError;
     
     /** Typesets a table
-    of contents from existing bookmarks and prepends it to the document. If
-    <code>bookmark</code> is <code>true</code>, the table of contents gets its own bookmark. */
+    of contents from existing bookmarks and prepends it to the document.
+    @param pdf PDF document
+    @param font font
+    @param fontsize font size
+    @param title table of contents title
+    @param bookmark if <code>true</code>, the table of contents gets its own bookmark. */
     public void tableOfContents(Pdf pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError
     {
         XtableOfContents(pdf, font, fontsize, encodeUTF8(title), bookmark);
@@ -788,21 +792,30 @@ public class Jcpdf {
    
     /** Stamps another PDF on top of all the
     pages in the document which are in the range. The stamp is placed with its
-    origin at the origin of the target document. */
+    origin at the origin of the target document.
+    @param stamp_pdf stamp PDF document
+    @param pdf PDF document
+    @param range page range */
     public native void stampOn(Pdf stamp_pdf, Pdf pdf, Range range) throws CpdfError;
 
     /** Stamps another PDF under all the
     pages in the document which are in the range. The stamp is placed with its
-    origin at the origin of the target document. */
+    origin at the origin of the target document.
+    @param stamp_pdf stamp PDF document
+    @param pdf PDF document
+    @param range page range */
     public native void stampUnder(Pdf stamp_pdf, Pdf pdf, Range range) throws CpdfError;
 
-    /** A stamping function with extra features. If <code>isover</code>
-    is <code>true</code>, <code>pdf</code> goes over <code>pdf2</code>,
-    otherwise under. When <code>scale_stamp_to_fit</code> is <code>true</code>,
-    it scales the stamp to fit the page. The parameters <code>anchor</code>,
-    <code>p1</code> and <code>p2</code> give the position to put the stamp (see the documentation for the chosen anchor). If
-    <code>relative_to_cropbox</code> is <code>true</code>, the position is
-    relative to the crop box rather than the media box. */
+    /** A stamping function with extra features.
+     * @param pdf first PDF document
+     * @param pdf2 second PDF document
+     * @param range page range
+     * @param isover if <code>true</code>, <code>pdf</code> goes over <code>pdf2</code> otherwise under
+     * @param scale_stamp_to_fit if <code>true</code> scales the stamp to fit the page.
+     * @param anchor position anchor
+     * @param p1 position parameter one
+     * @param p2 position parameter two
+     * @param relative_to_cropbox if <code>true</code>, the position is relative to the crop box rather than the media box. */
     public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
     
     /** Combines the two PDFs page-by-page, putting each page of 'over' over each page of 'under'. */
@@ -810,7 +823,32 @@ public class Jcpdf {
     
     native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
 
-    /** Adds text to the pages in the given range. See the manual <code>cpdfmanual.pdf</code> for details of the parameters. The parameters <code>anchor</code>, <code>p1</code> and <code>p2</code> together determine the position of the text. See the documentation for the chosen anchor. */
+    /** Adds text to the pages in the given range. See <a href="https://www.coherentpdf.com/jcpdfmanual.pdf">the PDF manual</a> for details.
+     * @param metrics if <code>true</code>, only collect metrics
+     * @param pdf PDF document
+     * @param range page range
+     * @param text the text to stamp, including any special codes
+     * @param anchor position anchor
+     * @param p1 position parameter one
+     * @param p2 position parameter two
+     * @param linespacing line spacing
+     * @param bates starting bates number
+     * @param font font 
+     * @param fontsize font size
+     * @param r red component of colour
+     * @param g green component of colour
+     * @param b blue component of colour
+     * @param underneath if <code>true</code>, text goes under page
+     * @param cropbox if <code>true</code>, relative to cropbox rather than media box
+     * @param outline text is outline
+     * @param opacity opacity
+     * @param justification justification
+     * @param midline position is relative to midline not baseline
+     * @param topline position is relative to topline not baseline
+     * @param filename file name, if requied by special code in text
+     * @param linewidth line width
+     * @param embed_fonts if true, embed fonts. Requires external program.
+    */
     public void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError
     {
         XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2, linespacing, bates, font, fontsize,
@@ -818,7 +856,16 @@ public class Jcpdf {
     }
     native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
     
-    /** Adds text with most parameters default. The parameters <code>anchor</code>, <code>p1</code> and <code>p2</code> together determine the position of the text. See the documentation for the chosen anchor. */
+    /** Adds text with most parameters default.
+     * @param pdf PDF document
+     * @param range page range
+     * @param text the text to stamp, including any special codes
+     * @param anchor position anchor
+     * @param p1 position parameter one
+     * @param p2 position parameter two
+     * @param font font 
+     * @param fontsize font size
+     * */
     public void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError
     {
         XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font, fontsize);
@@ -829,16 +876,22 @@ public class Jcpdf {
 
     native int XtextWidth(int font, byte[] text) throws CpdfError;
     
-    /** Returns the width of a given string in the given font in thousandths of a point. */
-    public int textWidth(int font, String test) throws CpdfError
+    /** Returns the width of a given string in the given font in thousandths of a point.
+     * @param font font
+     * @param text text*/
+    public int textWidth(int font, String text) throws CpdfError
     {
-        return XtextWidth(font, encodeUTF8(test));
+        return XtextWidth(font, encodeUTF8(text));
     }
 
     native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range) throws CpdfError;
     
     /** Adds page content before or after the existing content to pages in the given range
-    in the given PDF. */
+    in the given PDF.
+    @param s page content to add
+    @param before if <code>true</code> new content goes before, else after
+    @param pdf PDF document
+    @param range page range */
     public void addContent(String s, boolean before, Pdf pdf, Range range) throws CpdfError
     {
         XaddContent(encodeUTF8(s), before, pdf, range);
@@ -846,7 +899,10 @@ public class Jcpdf {
 
     /** Stamps a PDF onto the pages
     in the given range in pdf as a shared Form XObject. The name of the
-    newly-created XObject is returned. */
+    newly-created XObject is returned.
+    @param pdf PDF document
+    @param range page range
+    @param stamp_pdf PDF document to stamp */
     public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
     
     /* CHAPTER 9. Multipage facilities */
