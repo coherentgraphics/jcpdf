@@ -1394,25 +1394,36 @@ public class Jcpdf {
     native void XattachFileFromMemory(byte[] data, byte[] filename, Pdf pdf) throws CpdfError;
     native void XattachFileToPageFromMemory(byte[] data, byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
     
-    /** Attaches a file to the PDF. It is attached at document level. */
+    /** Attaches a file to the PDF. It is attached at document level.
+     * @param filename file name
+     * @param pdf PDF document */
     public void attachFile(String filename, Pdf pdf) throws CpdfError
     {
         XattachFile(encodeUTF8(filename), pdf);
     }
 
-    /** Attaches a file to a page of the PDF. Given its file name, pdf, and the page number to which it should be attached. */
+    /** Attaches a file to a page of the PDF. Given its file name, pdf, and the page number to which it should be attached.
+     * @param filename file name
+     * @param pdf PDF document
+     * @param pagenumber page number to attach to */
     public void attachFileToPage(String filename, Pdf pdf, int pagenumber) throws CpdfError
     {
         XattachFileToPage(encodeUTF8(filename), pdf, pagenumber);
     }
 
-    /** Attaches data from memory, just like <code>attachFile</code>. */
+    /** Attaches data from memory to a document.
+     * @param data attachment itself
+     * @param filename file name to use to describe attachment
+     * @param pdf PDF document */
     public void attachFileFromMemory(byte[] data, String filename, Pdf pdf) throws CpdfError
     {
         XattachFileFromMemory(data, encodeUTF8(filename), pdf);
     }
 
-    /** Attaches to a page from memory, just like <code>attachFileToPage</code>. */
+    /** Attaches data to a page from memory.
+     * @param data attachment itself
+     * @param filename file name to use to describe attachment
+     * @param pdf PDF document */
     public void attachFileToPageFromMemory(byte[] data, String filename, Pdf pdf, int pagenumber) throws CpdfError
     {
         XattachFileToPageFromMemory(data, encodeUTF8(filename), pdf, pagenumber);
@@ -1422,33 +1433,39 @@ public class Jcpdf {
     public native void removeAttachedFiles(Pdf pdf) throws CpdfError;
 
     /** Lists information about attachments. Call
-    <code>startGetAttachments</code> first, then
-    <code>numberGetAttachments</code> to find out how many there are. Then
-    <code>getAttachmentName</code> etc. to return each one <code>0...(n -
-    1)</code>. Finally, call <code>endGetAttachments</code> to clean up. */
+    {@link #startGetAttachments(pdf) startGetAttachments} first, then {@link
+    #numberGetAttachments() numberGetAttachments} to find out how many there are.
+    Then {@link #getAttachmentName(int) getAttachmentName}, {@link
+    #getAttachmentPage(int) getAttachmentPage}, or {@link #getAttachmentData(int)
+    getAttachmentData}. to return each one <code>0...(n - 1)</code>. Finally, call
+    {@link #endGetAttachments() #endGetAttachments} to clean up. */
     public native void startGetAttachments(Pdf pdf) throws CpdfError;
     
     /** Lists information about attachments. Call
-    <code>startGetAttachments</code> first, then
-    <code>numberGetAttachments</code> to find out how many there are. Then
-    <code>getAttachmentName</code> etc. to return each one <code>0...(n -
-    1)</code>. Finally, call <code>endGetAttachments</code> to clean up. */
+    {@link #startGetAttachments(pdf) startGetAttachments} first, then {@link
+    #numberGetAttachments() numberGetAttachments} to find out how many there are.
+    Then {@link #getAttachmentName(int) getAttachmentName}, {@link
+    #getAttachmentPage(int) getAttachmentPage}, or {@link #getAttachmentData(int)
+    getAttachmentData}. to return each one <code>0...(n - 1)</code>. Finally, call
+    {@link #endGetAttachments() #endGetAttachments} to clean up. */
     public native int numberGetAttachments() throws CpdfError;
     
-    /** Gets the name of an attachment. */
+    /** Gets the name of an attachment, given a serial number. */
     public native String getAttachmentName(int serial) throws CpdfError;
     
-    /** Gets the page number. 0 = document level. */
+    /** Gets the page number, given a serial number. 0 = document level. */
     public native int getAttachmentPage(int serial) throws CpdfError;
     
-    /** Gets the attachment data itself. */
+    /** Gets the attachment data itself, given a serial number. */
     public native byte[] getAttachmentData(int serial) throws CpdfError;
     
     /** Lists information about attachments. Call
-    <code>startGetAttachments</code> first, then
-    <code>numberGetAttachments</code> to find out how many there are. Then
-    <code>getAttachmentName</code> etc. to return each one <code>0...(n -
-    1)</code>. Finally, call <code>endGetAttachments</code> to clean up. */
+    {@link #startGetAttachments(pdf) startGetAttachments} first, then {@link
+    #numberGetAttachments() numberGetAttachments} to find out how many there are.
+    Then {@link #getAttachmentName(int) getAttachmentName}, {@link
+    #getAttachmentPage(int) getAttachmentPage}, or {@link #getAttachmentData(int)
+    getAttachmentData}. to return each one <code>0...(n - 1)</code>. Finally, call
+    {@link #endGetAttachments() #endGetAttachments} to clean up. */
     public native void endGetAttachments() throws CpdfError; 
 
     /* CHAPTER 13. Images. */
@@ -1614,20 +1631,23 @@ public class Jcpdf {
     /* CHAPTER 15. PDF and JSON */
     native void XoutputJSON(byte[] filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
     
-    /** Outputs a PDF in JSON format to the given filename. If
-    <code>parse_content</code> is
-    <code>true</code>, page content is parsed. If <code>no_stream_data</code>
-    is <code>true</code>, all stream data is suppressed entirely.  If
-    <code>decompress_streams</code> is <code>true</code>, streams are
-    decompressed. */
+    /** Outputs a PDF in JSON format to the given filename.
+     * @param filename file name
+     * @param parse_content parse page content
+     * @param no_stream_data all stream data is suppressed entirely
+     * @param decompress_streams streams are decompressed
+     * @param pdf PDF document */
     public void outputJSON(String filename, boolean parse_content, boolean
         no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError {
       XoutputJSON(encodeUTF8(filename), parse_content, no_stream_data,
           decompress_streams, pdf); }
 
-    /** Like outputJSON, but it writes to a byte array in memory. */
+    /** Like outputJSON, but it writes to a byte array in memory.
+     * @param pdf PDF document
+     * @param parse_content parse page content
+     * @param no_stream_data all stream data is suppressed entirely
+     * @param decompress_streams streams are decompressed */
     public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
-
 
     native Pdf XfromJSON(byte[] filename) throws CpdfError;
     
@@ -1644,10 +1664,17 @@ public class Jcpdf {
     
     /** Begins retrieving optional content group names. The serial number 0..n - 1 is returned. */
     public native int startGetOCGList(Pdf pdf) throws CpdfError;
+    
+    /** Retrieves an entry in the optional content group list, given the serial number 0..n - 1. */
     public native String OCGListEntry(int serial) throws CpdfError;
+    
+    /** Ends retrieval of optional content group names. */
     public native void endGetOCGList() throws CpdfError;
 
-    /** Renames an optional content group. */
+    /** Renames an optional content group.
+     * @param pdf PDF document
+     * @param f name to rename from
+     * @param t name to rename to */
     public native void OCGRename(Pdf pdf, String f, String t) throws CpdfError;
     
     /** Ensures that every optional content group appears in the OCG order list. */
@@ -1663,10 +1690,15 @@ public class Jcpdf {
     
     /** Creates a blank document with
     pages of the given width (in points), height (in points), and number of
-    pages. */
+    pages.
+    @param w width of page
+    @param h height of page
+    @param pages number of pages */
     public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
 
-    /** Makes a blank document given a page size and number of pages. */
+    /** Makes a blank document given a page size and number of pages.
+    @param papersize paper size
+    @param pages number of pages */
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
     
     native Pdf XtextToPDF(double w, double h, int font, double fontsize, byte[] filename) throws CpdfError;
@@ -1674,13 +1706,22 @@ public class Jcpdf {
     
     /** Typesets a UTF8 text file
     ragged right on a page of size w * h in points in the given font and font
-    size. */
+    size.
+    @param w width of page
+    @param h height of page
+    @param font font
+    @param fontsize font size
+    @param filename file name */
     public Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError
     {
         return XtextToPDF(w, h, font, fontsize, encodeUTF8(filename));
     }
     
-    /** Typesets a UTF8 text file ragged right on a page of the given size in the given font and font size. */
+    /** Typesets a UTF8 text file ragged right on a page of the given size in the given font and font size.
+    @param papersize paper size
+    @param font font
+    @param fontsize font size
+    @param filename file name */
     public Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError
     {
         return XtextToPDFPaper(papersize, font, fontsize, encodeUTF8(filename));
