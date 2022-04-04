@@ -906,7 +906,7 @@ public class Jcpdf {
      @param pdf PDF document
      @param x x parameter
      @param y y parameter
-     @param fit true: impose to fit a page x * y; false: impose x * y 
+     @param fit <code>true</code>: impose to fit a page of size x by y; <code>false</code>: impose x by y 
      @param columns imposes by columns rather than rows
      @param rtl impose right-to-left
      @param btt impose bottom-to-top
@@ -1275,7 +1275,7 @@ public class Jcpdf {
     /** Sets the center window flag. */
     public native void centerWindow(Pdf pdf, boolean flag) throws CpdfError;
     
-    /** Sets the display doc title flag. */
+    /** Sets the display document title flag. */
     public native void displayDocTitle(Pdf pdf, boolean flag) throws CpdfError;
 
     /** Sets the PDF to open, possibly with zoom-to-fit, at the given page number.
