@@ -12,7 +12,7 @@ public class Jcpdf {
       System.loadLibrary("jcpdf");
     }
     
-    /** Any function in this library may raise the CPDFError exception, which carries a string describing the nature of the problem. */
+    /** Any function in this library may raise the <code>CpdfError</code> exception, which carries a string describing the nature of the problem. */
     public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
@@ -21,7 +21,7 @@ public class Jcpdf {
       }
     }
 
-    /** PDF document
+    /** A PDF document
      *
      * <p>Use the <code>try</code> keyword, or call <code>close()</code>
      * to make sure PDFs are deallocated. */
@@ -38,7 +38,7 @@ public class Jcpdf {
       }
     }
 
-    /** Page range
+    /** A page range, which represents an ordered list of page numbers. For example <code>1,2,3</code> or <code>2,4,6,4,2</code>.
      *
      * <p>Use the <code>try</code> keyword, or call <code>close()</code> to
      * make sure ranges are deallocated. */
@@ -232,8 +232,7 @@ public class Jcpdf {
     /** Initialises the library. Must be called before any other function. */
     public native void startup() throws CpdfError;
     
-    /** Returns a string giving the version number of the Jcpdf library.
-    @return version number of the Jcpdf library */
+    /** Returns a string giving the version number of the Jcpdf library. */
     public native String version() throws CpdfError;
     
     /** Sets fast mode. Some operations have a fast mode. The default is 'slow' mode, which works
@@ -252,13 +251,13 @@ public class Jcpdf {
     public native void onExit();
 
     /* CHAPTER 1. Basics */
+
     native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
     /** Loads a PDF document from a file. Supply
     a user password (possibly blank) in case the file is encrypted. It won't be
     decrypted, but sometimes the password is needed just to load the file.
     @param filename file name
-    @param userpw user password
-    @return PDF document*/
+    @param userpw user password */
     public Pdf fromFile(String filename, String userpw) throws CpdfError
     { 
       return XfromFile(encodeUTF8(filename), encodeUTF8(userpw));
@@ -273,8 +272,7 @@ public class Jcpdf {
     decrypted, but sometimes the password is needed just to load the file.
 
     @param filename file name
-    @param userpw user password
-    @return PDF document */
+    @param userpw user password */
     public Pdf fromFileLazy(String filename, String userpw) throws CpdfError
     {
       return XfromFileLazy(encodeUTF8(filename), encodeUTF8(userpw));
@@ -288,8 +286,7 @@ public class Jcpdf {
     decrypted, but sometimes the password is needed just to load the file.
 
     @param data byte array containing the PDF file
-    @param userpw user password
-    @return PDF document */
+    @param userpw user password */
     public Pdf fromMemory(byte[] data, String userpw) throws CpdfError
     {
         return XfromMemory(data, encodeUTF8(userpw));
@@ -361,13 +358,12 @@ public class Jcpdf {
     /** Converts a figure in points to millimetres. (72 points to 1 inch) */
     public native double inOfPt(double f) throws CpdfError;
 
-    /** Parses a page specification with reference
+    /** Parses a page specification such as <code>1,2,6-end</code> with reference
     to a given PDF. (The PDF is supplied so that page ranges which reference
     pages which do not exist are rejected).
 
     @param pdf PDF document
-    @param pagespec page specification
-    @return page range */
+    @param pagespec page specification */
     public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
     
     /** Validates a page specification so far as is
@@ -382,7 +378,6 @@ public class Jcpdf {
 
     @param pdf PDF document
     @param r page range
-    @return page range in string form
     */
     public String stringOfPagespec(Pdf pdf, Range r) throws CpdfError
     {
@@ -483,7 +478,6 @@ public class Jcpdf {
     @param pdf PDF document
     @param linearize linearize
     @param make_id make new ID
-    @return array of bytes containing PDF file
     */
     public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
 
@@ -756,6 +750,7 @@ public class Jcpdf {
     public native void setBookmarkOpenStatus(int serial, boolean open) throws CpdfError;
 
     native void XsetBookmarkText(int serial, byte[] text) throws CpdfError;
+    
     /** Sets the text of bookmark <code>0...(n - 1)</code>. */
     public void setBookmarkText(int serial, String text) throws CpdfError
     {
@@ -847,7 +842,7 @@ public class Jcpdf {
      * @param topline position is relative to topline not baseline
      * @param filename file name, if requied by special code in text
      * @param linewidth line width
-     * @param embed_fonts if true, embed fonts. Requires external program.
+     * @param embed_fonts if true, embed fonts
     */
     public void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError
     {
@@ -1836,7 +1831,7 @@ public class Jcpdf {
     
     /** Sets the minor version number of a document.
      * @param pdf PDF document
-     * @param version minor version number. */
+     * @param version minor version number */
     public native void setVersion(Pdf pdf, int version) throws CpdfError;
     
     /** Sets the full version number of a document.
