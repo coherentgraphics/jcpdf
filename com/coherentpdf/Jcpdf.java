@@ -12,7 +12,8 @@ public class Jcpdf {
       System.loadLibrary("jcpdf");
     }
     
-    /** Any function in this library may raise the <code>CpdfError</code> exception, which carries a string describing the nature of the problem. */
+    /** Any function in this library may raise the <code>CpdfError</code>
+     exception, which carries a string describing the nature of the problem. */
     public static class CpdfError extends Exception
     {
       public CpdfError(String errorMessage)
@@ -22,9 +23,9 @@ public class Jcpdf {
     }
 
     /** A PDF document
-     *
-     * <p>Use the <code>try</code> keyword, or call <code>close()</code>
-     * to make sure PDFs are deallocated. */
+     
+    <p>Use the <code>try</code> keyword, or call <code>close()</code> to make
+    sure PDFs are deallocated. */
     public class Pdf implements AutoCloseable
     {
       int pdf = -1;
@@ -38,10 +39,11 @@ public class Jcpdf {
       }
     }
 
-    /** A page range, which represents an ordered list of page numbers. For example <code>1,2,3</code> or <code>2,4,6,4,2</code>.
-     *
-     * <p>Use the <code>try</code> keyword, or call <code>close()</code> to
-     * make sure ranges are deallocated. */
+    /** A page range, which represents an ordered list of page numbers. For
+     example <code>1,2,3</code> or <code>2,4,6,4,2</code>.
+     
+     <p>Use the <code>try</code> keyword, or call <code>close()</code> to
+     make sure ranges are deallocated. */
     public class Range implements AutoCloseable
     {
       int range = -1;
@@ -196,27 +198,36 @@ public class Jcpdf {
     public static int posLeft = 1;
     /** Position anchor: absolute right. Takes two numbers, x and y. */
     public static int posRight = 2;
-    /** Position anchor: the top centre of the page. Takes one number - distance from top. Second number ignored. */
+    /** Position anchor: the top centre of the page.
+    Takes one number - distance from top. Second number ignored. */
     public static int top = 3;
-    /** Position anchor: the top left of the page. Takes one numbers - distance from top left. Second number ignored. */
+    /** Position anchor: the top left of the page.
+    Takes one numbers - distance from top left. Second number ignored. */
     public static int topLeft = 4;
-    /** Position anchor: the top right of the page. Takes one number - distance from top right. Second number ignored. */
+    /** Position anchor: the top right of the page.
+    Takes one number - distance from top right. Second number ignored. */
     public static int topRight = 5;
-    /** Position anchor: the left hand side of the page, halfway down. Takes one number - distance from left middle. Second number ignored. */
+    /** Position anchor: the left hand side of the page, halfway down.
+    Takes one number - distance from left middle. Second number ignored. */
     public static int left = 6;
-    /** Position anchor: the bottom left of the page. Takes one number - distance from bottom left. Second number ignored. */
+    /** Position anchor: the bottom left of the page.
+    Takes one number - distance from bottom left. Second number ignored. */
     public static int bottomLeft = 7;
-    /** Position anchor: the bottom middle of the page. Takes one number - distance from bottom middle. Second number ignored. */
+    /** Position anchor: the bottom middle of the page.
+    Takes one number - distance from bottom middle. Second number ignored. */
     public static int bottom = 8;
-    /** Position anchor: the bottomm right of the page. Takes one number - distance from bottom right. Second number ignored. */
+    /** Position anchor: the bottomm right of the page.
+    Takes one number - distance from bottom right. Second number ignored. */
     public static int bottomRight = 9;
-    /** Position anchor: the right hand side of the page, halfway down. Takes one number - distance from right middle. Second number ignored. */
+    /** Position anchor: the right hand side of the page, halfway down.
+    Takes one number - distance from right middle. Second number ignored. */
     public static int right = 10;
-    /** Position anchor: diagonal, bottom left to top right. Takes no numbers. Both numbers ignored. */
+    /** Position anchor: diagonal, bottom left to top right.
+    Takes no numbers. Both numbers ignored. */
     public static int diagonal = 11;
-    /** Position anchor: diagonal, top left to bottom right. Takes no numbers. Both numbers ignored. */
+    /** Position anchor: diagonal, top left to bottom right.
+    Takes no numbers. Both numbers ignored. */
     public static int reverseDiagonal = 12;
-
     /** Justification: left */
     public static int leftJustify = 0;
     /** Justification: centre */
@@ -235,14 +246,16 @@ public class Jcpdf {
     /** Returns a string giving the version number of the Jcpdf library. */
     public native String version() throws CpdfError;
     
-    /** Sets fast mode. Some operations have a fast mode. The default is 'slow' mode, which works
-    even on old-fashioned files. For more details, see section 1.13 of the
-    CPDF manual. This functions sets the mode to fast globally. */
+    /** Sets fast mode. Some operations have a fast mode. The default is 'slow'
+    mode, which works even on old-fashioned files. For more details, see
+    section 1.13 of the CPDF manual. This functions sets the mode to fast
+    globally. */
     public native void setFast() throws CpdfError;
 
-    /** Sets slow mode. Some operations have a fast mode. The default is 'slow' mode, which works
-    even on old-fashioned files. For more details, see section 1.13 of the
-    CPDF manual. This functions sets the mode to slow globally. */
+    /** Sets slow mode. Some operations have a fast mode. The default is 'slow'
+    mode, which works even on old-fashioned files. For more details, see
+    section 1.13 of the CPDF manual. This functions sets the mode to slow
+    globally. */
     public native void setSlow() throws CpdfError;
     
     /** Prints some information about
@@ -253,6 +266,7 @@ public class Jcpdf {
     /* CHAPTER 1. Basics */
 
     native Pdf XfromFile(byte[] filename, byte[] userpw) throws CpdfError;
+    
     /** Loads a PDF document from a file. Supply
     a user password (possibly blank) in case the file is encrypted. It won't be
     decrypted, but sometimes the password is needed just to load the file.
@@ -295,48 +309,59 @@ public class Jcpdf {
     native Pdf XfromMemoryLazy(byte[] data, byte[] userpw) throws CpdfError;
     
     /** Loads a file from memory and the user
-    password, but lazily like {@link #fromFileLazy(String, String) fromFileLazy}. The caller must use
-    {@link #fromMemoryLazyRelease(byte[]) fromMemoryLazyRelease} to free the memory. It must not free the memory
+    password, but lazily like {@link #fromFileLazy(String, String)
+    fromFileLazy}. The caller must use {@link #fromMemoryLazyRelease(byte[])
+    fromMemoryLazyRelease} to free the memory. It must not free the memory
     until the PDF is also gone. */
     public Pdf fromMemoryLazy(byte[] data, String userpw) throws CpdfError
     {
         return XfromMemoryLazy(data, encodeUTF8(userpw));
     }
     
-    /** Releases memory returned from <code>{@link #fromMemoryLazy(byte[], String) fromMemoryLazy}</code>
-    @param data byte array previously passed to {@link #fromMemoryLazy(byte[], String) fromMemoryLazy} */
+    /** Releases memory returned from
+    <code>{@link #fromMemoryLazy(byte[], String) fromMemoryLazy}</code>
+    @param data byte array previously passed to {@link #fromMemoryLazy(byte[],
+    String) fromMemoryLazy} */
     public native void fromMemoryLazyRelease(byte[] data) throws CpdfError;
 
     /** Begins enumerating currently allocated PDFs.
     
     <p>To enumerate the list of currently allocated PDFs, call
-    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
-    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
-    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, 
+    <code>n</code>, of PDFs allocated, then {@link #enumeratePDFsInfo(int)
+    enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with
+    index numbers from <code>0...(n - 1)</code>. Call
+    {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native int startEnumeratePDFs() throws CpdfError;
     
     /** Returns the key for a given PDF number. 
     
     <p>To enumerate the list of currently allocated PDFs, call
-    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
-    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
-    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number,
+    <code>n</code>, of PDFs allocated, then {@link #enumeratePDFsInfo(int)
+    enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with
+    index numbers from <code>0...(n - 1)</code>. Call
+    {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native int enumeratePDFsKey(int n) throws CpdfError;
     
     /** Returns the info for a given PDF number.
     
     <p>To enumerate the list of currently allocated PDFs, call
-    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
-    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
-    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number,
+    <code>n</code>, of PDFs allocated, then {@link #enumeratePDFsInfo(int)
+    enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with
+    index numbers from <code>0...(n - 1)</code>. Call
+    {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native String enumeratePDFsInfo(int n) throws CpdfError;
     
     /** Ends enumeration of currently allocated PDFs.
     
     <p>To enumerate the list of currently allocated PDFs, call
-    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number, <code>n</code>, of PDFs allocated, then
-    {@link #enumeratePDFsInfo(int) enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey} with index numbers from
-    <code>0...(n - 1)</code>. Call {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
+    {@link #startEnumeratePDFs() startEnumeratePDFs} which gives the number,
+    <code>n</code>, of PDFs allocated, then {@link #enumeratePDFsInfo(int)
+    enumeratePDFsInfo} and {@link #enumeratePDFsKey(int) enumeratePDFsKey}
+    with index numbers from <code>0...(n - 1)</code>. Call
+    {@link #endEnumeratePDFs() endEnumeratePDFs} to clean up. */
     public native void endEnumeratePDFs() throws CpdfError;
 
 
@@ -358,23 +383,24 @@ public class Jcpdf {
     /** Converts a figure in points to millimetres. (72 points to 1 inch) */
     public native double inOfPt(double f) throws CpdfError;
 
-    /** Parses a page specification such as <code>1,2,6-end</code> with reference
-    to a given PDF. (The PDF is supplied so that page ranges which reference
-    pages which do not exist are rejected).
+    /** Parses a page specification such as <code>1,2,6-end</code> with
+    reference to a given PDF. (The PDF is supplied so that page ranges which
+    reference pages which do not exist are rejected).
 
     @param pdf PDF document
     @param pagespec page specification */
-    public native Range parsePagespec(Pdf pdf, String pagespec) throws CpdfError;
+    public native Range parsePagespec(Pdf pdf, String pagespec)
+        throws CpdfError;
     
-    /** Validates a page specification so far as is
-    possible in the absence of the actual document. Result is <code>true</code> if valid. */
+    /** Validates a page specification so far as is possible in the absence of
+    the actual document. Result is <code>true</code> if valid. */
     public native boolean validatePagespec(String pagespec) throws CpdfError;
 
     native byte[] XstringOfPagespec(Pdf pdf, Range r) throws CpdfError;
     
-    /** Builds a page specification from a page
-    range. For example, the range containing 1,2,3,6,7,8 in a document of 8
-    pages might yield <code>"1-3,6-end"</code>
+    /** Builds a page specification from a page range. For example, the range
+    containing 1,2,3,6,7,8 in a document of 8 pages might yield
+    <code>"1-3,6-end"</code>
 
     @param pdf PDF document
     @param r page range
@@ -387,7 +413,8 @@ public class Jcpdf {
     /** The range containing no pages. */
     public native Range blankRange() throws CpdfError;
 
-    /** The page range containing all page numbers from one page number to another.
+    /** The page range containing all page numbers from one page number to
+    another.
     @param from page number to begin at (inclusive)
     @param to page number to end at (inclusive) */
     public native Range range(int from, int to) throws CpdfError;
@@ -395,16 +422,19 @@ public class Jcpdf {
     /** The page range contaning all pages in a given document. */
     public native Range all(Pdf pdf) throws CpdfError;
 
-    /** The page range containing all odd-numbered pages from an existing range. */
+    /** The page range containing all odd-numbered pages from an existing
+    range. */
     public native Range odd(Range r) throws CpdfError;
 
-    /** The page range containing all even-numbered pages from an existing range. */
+    /** The page range containing all even-numbered pages from an existing
+    range. */
     public native Range even(Range r) throws CpdfError;
 
     /** The union of two ranges - all those pages in either. */
     public native Range rangeUnion(Range r, Range s) throws CpdfError;
 
-    /** The range containing all pages in the first given range which are not in the second. */
+    /** The range containing all pages in the first given range which are not
+    in the second. */
     public native Range difference(Range r, Range s) throws CpdfError;
     
     /** Remove duplicates from a range, returning a new one. */
@@ -437,30 +467,38 @@ public class Jcpdf {
         return XpagesFast(encodeUTF8(userpw), encodeUTF8(filename));
     }
 
-    native void XtoFile(Pdf pdf, byte[] filename, boolean linearize, boolean make_id) throws CpdfError;
+    native void XtoFile(Pdf pdf, byte[] filename, boolean linearize,
+                        boolean make_id)
+        throws CpdfError;
     
-    /** Writes the PDF document to a given
-    filename. If <code>linearize</code> is <code>true</code>, it will be linearized if a linearizer is
-    available. If <code>make_id</code> is <code>true</code>, it will be given a new ID.
+    /** Writes the PDF document to a given filename. If <code>linearize</code>
+    is <code>true</code>, it will be linearized if a linearizer is available.
+    If <code>make_id</code> is <code>true</code>, it will be given a new ID.
     @param pdf PDF document
     @param filename file name
     @param linearize linearize
     @param make_id make new ID
     */
-    public void toFile(Pdf pdf, String filename, boolean linearize, boolean make_id) throws CpdfError
+    public void toFile(Pdf pdf, String filename, boolean linearize,
+                       boolean make_id)
+        throws CpdfError
     {
         XtoFile(pdf, encodeUTF8(filename), linearize, make_id);
     }
     
-    native void XtoFileExt(Pdf pdf, byte[] filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError;
+    native void XtoFileExt(Pdf pdf, byte[] filename, boolean linearize,
+                           boolean make_id, boolean preserve_objstm,
+                           boolean create_objstm, boolean compress_objstm)
+        throws CpdfError;
 
     /** Writes the PDF document to a given filename, with extra parameters. If
-    <code>make_id</code> is true, it will be given a new ID.  If <code>preserve_objstm</code> is true,
-    existing object streams will be preserved. If <code>generate_objstm</code> is true,
-    object streams will be generated even if not originally present. If
-    <code>compress_objstm</code> is true, object streams will be compressed (what we
-    usually want). WARNING: the pdf argument will be invalid after this call,
-    and should be not be used again.
+    <code>make_id</code> is true, it will be given a new ID. If
+    <code>preserve_objstm</code> is true, existing object streams will be
+    preserved. If <code>generate_objstm</code> is true, object streams will be
+    generated even if not originally present. If <code>compress_objstm</code>
+    is true, object streams will be compressed (what we usually want).
+    WARNING: the pdf argument will be invalid after this call, and should not
+    be used again.
     @param pdf PDF document
     @param filename file name
     @param linearize linearize
@@ -469,9 +507,13 @@ public class Jcpdf {
     @param create_objstm create new object streams
     @param compress_objstm compress object streams
     */
-    public void toFileExt(Pdf pdf, String filename, boolean linearize, boolean make_id, boolean preserve_objstm, boolean create_objstm, boolean compress_objstm) throws CpdfError
+    public void toFileExt(Pdf pdf, String filename, boolean linearize,
+                          boolean make_id, boolean preserve_objstm,
+                          boolean create_objstm, boolean compress_objstm)
+        throws CpdfError
     {
-        XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id, preserve_objstm, create_objstm, compress_objstm);
+        XtoFileExt(pdf, encodeUTF8(filename), linearize, make_id,
+                   preserve_objstm, create_objstm, compress_objstm);
     }
 
     /** Writes a PDF document and returns it as an array of bytes.
@@ -479,9 +521,11 @@ public class Jcpdf {
     @param linearize linearize
     @param make_id make new ID
     */
-    public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id) throws CpdfError;
+    public native byte[] toMemory(Pdf pdf, boolean linearize, boolean make_id)
+        throws CpdfError;
 
-    /** Returns <code>true</code> if a document is encrypted, <code>false</code> otherwise. */
+    /** Returns <code>true</code> if a document is encrypted,
+    <code>false</code> otherwise. */
     public native boolean isEncrypted(Pdf pdf) throws CpdfError;
     
     native void XdecryptPdf(Pdf pdf, byte[] userpw) throws CpdfError;
@@ -505,29 +549,48 @@ public class Jcpdf {
         XdecryptPdfOwner(pdf, encodeUTF8(ownerpw));
     }
 
-    native void XtoFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, byte[] filename) throws CpdfError;
+    native void XtoFileEncrypted(Pdf pdf, int encryption_method,
+                                 int[] permissions, byte[] owner_password,
+                                 byte[] user_password, boolean linearize,
+                                 boolean makeid, byte[] filename)
+        throws CpdfError;
 
-    /** Writes a PDF document as encrypted. The encryption method and permissions are drawn from Jcpdf's fields, documented above.
+    /** Writes a PDF document as encrypted. The encryption method and
+    permissions are drawn from Jcpdf's fields, documented above.
     @param pdf PDF document
-    @param encryption_method encryption method, e.g {@link #aes256bitisofalse aes256bitisofalse} 
+    @param encryption_method encryption method, e.g
+      {@link #aes256bitisofalse aes256bitisofalse} 
     @param permissions array of permissions e.g {@link #noEdit noEdit}
     @param owner_password owner password
     @param user_password user password
     @param linearize linearize
     @param makeid make new ID
     @param filename file name */
-    public void toFileEncrypted(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, String filename) throws CpdfError
+    public void toFileEncrypted(Pdf pdf, int encryption_method,
+                                int[] permissions, String owner_password,
+                                String user_password, boolean linearize,
+                                boolean makeid, String filename)
+        throws CpdfError
     {
-        XtoFileEncrypted(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, encodeUTF8(filename));
+        XtoFileEncrypted(pdf, encryption_method, permissions,
+                         encodeUTF8(owner_password), encodeUTF8(user_password),
+                         linearize, makeid, encodeUTF8(filename));
     }
 
-    native void XtoFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, byte[] owner_password, byte[] user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, byte[] filename) throws CpdfError;
+    native void XtoFileEncryptedExt(Pdf pdf, int encryption_method,
+                                    int[] permissions, byte[] owner_password,
+                                    byte[] user_password, boolean linearize,
+                                    boolean makeid, boolean preserve_objstm,
+                                    boolean generate_objstm,
+                                    boolean compress_objstm, byte[] filename)
+        throws CpdfError;
 
     /** Writes a file as encrypted with extra parameters. WARNING: the pdf
-     argument will be invalid after this call, and should not be used again.
+    argument will be invalid after this call, and should not be used again.
 
     @param pdf PDF document
-    @param encryption_method encryption method, e.g {@link #aes256bitisofalse aes256bitisofalse} 
+    @param encryption_method encryption method, e.g
+      {@link #aes256bitisofalse aes256bitisofalse} 
     @param permissions array of permissions e.g {@link #noEdit noEdit}
     @param owner_password owner password
     @param user_password user password
@@ -537,39 +600,59 @@ public class Jcpdf {
     @param generate_objstm generate new object streams
     @param compress_objstm compress object streams
     @param filename file name */
-    public void toFileEncryptedExt(Pdf pdf, int encryption_method, int[] permissions, String owner_password, String user_password, boolean linearize, boolean makeid, boolean preserve_objstm, boolean generate_objstm, boolean compress_objstm, String filename) throws CpdfError
+    public void toFileEncryptedExt(Pdf pdf, int encryption_method,
+                                   int[] permissions, String owner_password,
+                                   String user_password, boolean linearize,
+                                   boolean makeid, boolean preserve_objstm,
+                                   boolean generate_objstm,
+                                   boolean compress_objstm, String filename)
+        throws CpdfError
     {
-        XtoFileEncryptedExt(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, encodeUTF8(filename));
+        XtoFileEncryptedExt(pdf, encryption_method, permissions,
+                            encodeUTF8(owner_password),
+                            encodeUTF8(user_password),
+                            linearize, makeid, preserve_objstm,
+                            generate_objstm, compress_objstm,
+                            encodeUTF8(filename));
     }
 
-    /** Returns <code>true</code> if the given permission (restriction) such as {@link #noEdit noEdit} is present. */
-    public native boolean hasPermission(Pdf pdf, int permission) throws CpdfError;
+    /** Returns <code>true</code> if the given permission (restriction) such as
+    {@link #noEdit noEdit} is present. */
+    public native boolean hasPermission(Pdf pdf, int permission)
+        throws CpdfError;
     
-    /** Returns the encryption method currently in use on a document, such as {@link #aes256bitisofalse aes256bitisofalse}. */
+    /** Returns the encryption method currently in use on a document, such as
+    {@link #aes256bitisofalse aes256bitisofalse}. */
     public native int encryptionKind(Pdf pdf) throws CpdfError;
 
     /* CHAPTER 2. Merging and Splitting */
     
-    /** Given an array of PDFs, merges the documents into a new one, which is returned. */
+    /** Given an array of PDFs, merges the documents into a new one, which is
+    returned. */
     public native Pdf mergeSimple(Pdf[] pdfs) throws CpdfError;
     
-    /** Merges the PDFs. If <code>retain_numbering</code> is true page labels are not rewritten. If
-    <code>remove_duplicate_fonts</code> is true, duplicate fonts are merged. This is useful
-    when the source documents for merging originate from the same source.
+    /** Merges the PDFs. If <code>retain_numbering</code> is true page labels
+    are not rewritten. If <code>remove_duplicate_fonts</code> is true,
+    duplicate fonts are merged. This is useful when the source documents for
+    merging originate from the same source.
     @param pdfs array of PDF documents
     @param retain_numbering retain page numbering in output
     @param remove_duplicate_fonts remove duplicate font data by merging */
-    public native Pdf merge(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts) throws CpdfError;
+    public native Pdf merge(Pdf[] pdfs, boolean retain_numbering,
+                            boolean remove_duplicate_fonts)
+        throws CpdfError;
     
-    /** Merges PDFs when one or more are drawn from the same document. It has an additional
-    argument - a list of page ranges. This is used to select the pages to
-    pick from each PDF. This avoids duplication of information when multiple
-    discrete parts of a source PDF are included.
+    /** Merges PDFs when one or more are drawn from the same document. It has
+    an additional argument - a list of page ranges. This is used to select the
+    pages to pick from each PDF. This avoids duplication of information when
+    multiple discrete parts of a source PDF are included.
     @param pdfs array of PDF documents
     @param retain_numbering retain page numbering in output
     @param remove_duplicate_fonts remove duplicate font data by merging
     @param ranges array of ranges, one for each PDF*/
-    public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering, boolean remove_duplicate_fonts, Range[] ranges) throws CpdfError;
+    public native Pdf mergeSame(Pdf[] pdfs, boolean retain_numbering,
+                                boolean remove_duplicate_fonts, Range[] ranges)
+        throws CpdfError;
     
     /** Returns a new document with just those pages in the page range.
      *  @param pdf PDF document
@@ -585,29 +668,36 @@ public class Jcpdf {
     @param range page range
     @param sx X scale
     @param sy Y scale*/
-    public native void scalePages(Pdf pdf, Range range, double sx, double sy) throws CpdfError;
+    public native void scalePages(Pdf pdf, Range range, double sx, double sy)
+        throws CpdfError;
 
-    /** Scales the content to fit
-    new page dimensions (width x height) multiplied by scale (typically 1.0).
-    Other boxes (crop etc. are altered as appropriate).
+    /** Scales the content to fit new page dimensions (width x height)
+    multiplied by scale (typically 1.0). Other boxes (crop etc. are altered as
+    appropriate).
     @param pdf PDF document
     @param range page range
     @param w width in points
     @param h height in points
     @param scale scale (typically 1.0)
     */
-    public native void scaleToFit(Pdf pdf, Range range, double w, double h, double scale) throws CpdfError;
+    public native void scaleToFit(Pdf pdf, Range range, double w, double h,
+                                  double scale)
+        throws CpdfError;
 
-    /** Scales the page content to fit the given page size, possibly multiplied by scale (typically 1.0).
+    /** Scales the page content to fit the given page size, possibly multiplied
+    by scale (typically 1.0).
     @param pdf PDF document
     @param range page range
     @param papersize paper size, such as {@link #a4portrait a0portrait}
     @param scale scale (typically 1.0)
     */
-    public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
+    public native void scaleToFitPaper(Pdf pdf, Range range, int papersize,
+                                       double scale)
+        throws CpdfError;
 
-    /** Scales the contents of the pages in the range about the point given by the <code>anchor</code>,
-    <code>p1</code> and <code>p2</code> by the scale given. See the documentation for the chosen anchor.
+    /** Scales the contents of the pages in the range about the point given by
+    the <code>anchor</code>, <code>p1</code> and <code>p2</code> by the scale
+    given. See the documentation for the chosen anchor.
     @param pdf PDF document
     @param range page range
     @param anchor position anchor, such as {@link #posCentre posCentre}
@@ -615,7 +705,9 @@ public class Jcpdf {
     @param p2 position parameter 2
     @param scale scale
     */
-    public native void scaleContents(Pdf pdf, Range range, int anchor, double p1, double p2, double scale) throws CpdfError;
+    public native void scaleContents(Pdf pdf, Range range, int anchor,
+                                     double p1, double p2, double scale)
+        throws CpdfError;
 
     /** Shifts the content of the pages in the range.
     @param pdf PDF document
@@ -623,33 +715,40 @@ public class Jcpdf {
     @param dx X shift
     @param dy Y shift
     */
-    public native void shiftContents(Pdf pdf, Range range, double dx, double dy) throws CpdfError;
+    public native void shiftContents(Pdf pdf, Range range, double dx,
+                                     double dy)
+        throws CpdfError;
 
-    /** Changes the viewing rotation to an absolute value. Appropriate rotations are 0, 90, 180, 270.
+    /** Changes the viewing rotation to an absolute value. Appropriate
+    rotations are 0, 90, 180, 270.
     @param pdf PDF document
     @param range page range
     @param angle viewing rotation
     */
-    public native void rotate(Pdf pdf, Range range, int angle) throws CpdfError;
+    public native void rotate(Pdf pdf, Range range, int angle)
+        throws CpdfError;
 
-    /** Changes the viewing rotation by a relative value. Appropriate rotations are 0, 90, 180, 270.
+    /** Changes the viewing rotation by a relative value. Appropriate
+    rotations are 0, 90, 180, 270.
     @param pdf PDF document
     @param range page range
     @param angle viewing rotation
     */
-    public native void rotateBy(Pdf pdf, Range range, int angle) throws CpdfError;
+    public native void rotateBy(Pdf pdf, Range range, int angle)
+        throws CpdfError;
 
-    /** Rotates the content about the centre of the page by the given number of degrees, in a clockwise
-    direction.
+    /** Rotates the content about the centre of the page by the given number of
+    degrees, in a clockwise direction.
     @param pdf PDF document
     @param range page range
     @param angle angle in degrees
     */
-    public native void rotateContents(Pdf pdf, Range range, double angle) throws CpdfError;
+    public native void rotateContents(Pdf pdf, Range range, double angle)
+        throws CpdfError;
 
-    /** Changes the viewing rotation of the pages in the
-    range, counter-rotating the dimensions and content such that there is no
-    visual change. */
+    /** Changes the viewing rotation of the pages in the range,
+    counter-rotating the dimensions and content such that there is no visual
+    change. */
     public native void upright(Pdf pdf, Range range) throws CpdfError;
 
     /** Flips horizontally the pages in the range. */
@@ -658,14 +757,17 @@ public class Jcpdf {
     /** Flips vertically the pages in the range. */
     public native void vFlip(Pdf pdf, Range range) throws CpdfError;
 
-    /** Crops a page, replacing any existing crop box. The dimensions are in points.
+    /** Crops a page, replacing any existing crop box. The dimensions are in
+    points.
     @param pdf PDF document
     @param range page range
     @param x minimum X
     @param y minimum Y
     @param w width
     @param h height */
-    public native void crop(Pdf pdf, Range range, double x, double y, double w, double h) throws CpdfError;
+    public native void crop(Pdf pdf, Range range, double x, double y, double w,
+                            double h)
+        throws CpdfError;
 
     /** Removes any crop box from pages in the range. */
     public native void removeCrop(Pdf pdf, Range range) throws CpdfError;
@@ -689,17 +791,20 @@ public class Jcpdf {
     @param pdf PDF document
     @param range page range
     @param box box name e.g "/CropBox" */
-    public native void hardBox(Pdf pdf, Range range, String box) throws CpdfError;
+    public native void hardBox(Pdf pdf, Range range, String box)
+        throws CpdfError;
 
     /* CHAPTER 4. Encryption */
     /* Encryption covered under Chapter 1 in cpdflib. */
 
     /* CHAPTER 5. Compression */
     
-    /** Compresses any uncompressed streams in the given PDF using the Flate algorithm. */
+    /** Compresses any uncompressed streams in the given PDF using the Flate
+    algorithm. */
     public native void compress(Pdf pdf) throws CpdfError;
     
-    /** Decompresses any streams in the given PDF, so long as the compression method is supported. */
+    /** Decompresses any streams in the given PDF, so long as the compression
+    method is supported. */
     public native void decompress(Pdf pdf) throws CpdfError;
 
     /** Squeezes a pdf in memory. */
@@ -710,15 +815,17 @@ public class Jcpdf {
     /** Starts the bookmark retrieval process for a given PDF. */
     public native void startGetBookmarkInfo(Pdf pdf) throws CpdfError;
 
-    /** Gets the number of bookmarks for the PDF given to {@link #startGetBookmarkInfo(Pdf) startGetBookmarkInfo}. */
+    /** Gets the number of bookmarks for the PDF given to {@link
+    #startGetBookmarkInfo(Pdf) startGetBookmarkInfo}. */
     public native int numberBookmarks() throws CpdfError;
     
-    /** Gets the bookmark level for the given bookmark <code>0...(n - 1)</code>. */
+    /** Gets the bookmark level for the given bookmark
+    <code>0...(n - 1)</code>. */
     public native int getBookmarkLevel(int serial) throws CpdfError;
     
-    /** Gets the bookmark target page for the given PDF
-    (which must be the same as the PDF passed to  {@link #startGetBookmarkInfo(Pdf) startGetBookmarkInfo})
-    and bookmark <code>0...(n - 1)</code>. */
+    /** Gets the bookmark target page for the given PDF (which must be the
+    same as the PDF passed to  {@link #startGetBookmarkInfo(Pdf)
+    startGetBookmarkInfo}) and bookmark <code>0...(n - 1)</code>. */
     public native int getBookmarkPage(Pdf pdf, int serial) throws CpdfError;
 
     native byte[] XgetBookmarkText(int serial) throws CpdfError;
@@ -739,15 +846,18 @@ public class Jcpdf {
     public native void startSetBookmarkInfo(int n) throws CpdfError;
 
     /** Set bookmark level for the given bookmark <code>0...(n - 1)</code>. */
-    public native void setBookmarkLevel(int serial, int level) throws CpdfError;
+    public native void setBookmarkLevel(int serial, int level)
+        throws CpdfError;
 
-    /** Sets the bookmark target
-    page for the given PDF (which must be the same as the PDF to be passed to
-    {@link #endSetBookmarkInfo(Pdf) endSetBookmarkInfo}) and bookmark <code>0...(n - 1)</code>. */
-    public native void setBookmarkPage(Pdf pdf, int serial, int pagenum) throws CpdfError;
+    /** Sets the bookmark target page for the given PDF (which must be the same
+    as the PDF to be passed to {@link #endSetBookmarkInfo(Pdf)
+    endSetBookmarkInfo}) and bookmark <code>0...(n - 1)</code>. */
+    public native void setBookmarkPage(Pdf pdf, int serial, int pagenum)
+        throws CpdfError;
     
     /** Sets the open status of bookmark <code>0...(n - 1)</code>. */
-    public native void setBookmarkOpenStatus(int serial, boolean open) throws CpdfError;
+    public native void setBookmarkOpenStatus(int serial, boolean open)
+        throws CpdfError;
 
     native void XsetBookmarkText(int serial, byte[] text) throws CpdfError;
     
@@ -757,7 +867,8 @@ public class Jcpdf {
         XsetBookmarkText(serial, encodeUTF8(text));
     }
     
-    /** Ends the bookmark setting process, writing the bookmarks to the given PDF. */
+    /** Ends the bookmark setting process, writing the bookmarks to the given
+    PDF. */
     public native void endSetBookmarkInfo(Pdf pdf) throws CpdfError;
 
     /** Returns the bookmark data in JSON format. */
@@ -766,16 +877,21 @@ public class Jcpdf {
     /** Sets the bookmarks from JSON bookmark data. */
     public native void setBookmarksJSON(Pdf pdf, byte[] data) throws CpdfError;
 
-    native void XtableOfContents(Pdf pdf, int font, double fontsize, byte[] title, boolean bookmark) throws CpdfError;
+    native void XtableOfContents(Pdf pdf, int font, double fontsize,
+                                 byte[] title, boolean bookmark)
+        throws CpdfError;
     
-    /** Typesets a table
-    of contents from existing bookmarks and prepends it to the document.
+    /** Typesets a table of contents from existing bookmarks and prepends it to
+    the document.
     @param pdf PDF document
     @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param title table of contents title
-    @param bookmark if <code>true</code>, the table of contents gets its own bookmark. */
-    public void tableOfContents(Pdf pdf, int font, double fontsize, String title, boolean bookmark) throws CpdfError
+    @param bookmark if <code>true</code>, the table of contents gets its own
+    bookmark. */
+    public void tableOfContents(Pdf pdf, int font, double fontsize,
+                                String title, boolean bookmark)
+        throws CpdfError
     {
         XtableOfContents(pdf, font, fontsize, encodeUTF8(title), bookmark);
     }
@@ -785,85 +901,119 @@ public class Jcpdf {
 
     /* CHAPTER 8. Logos, Watermarks and Stamps */
    
-    /** Stamps another PDF on top of all the
-    pages in the document which are in the range. The stamp is placed with its
-    origin at the origin of the target document.
+    /** Stamps another PDF on top of all the pages in the document which are in
+    the range. The stamp is placed with its origin at the origin of the target
+    document.
     @param stamp_pdf stamp PDF document
     @param pdf PDF document
     @param range page range */
-    public native void stampOn(Pdf stamp_pdf, Pdf pdf, Range range) throws CpdfError;
+    public native void stampOn(Pdf stamp_pdf, Pdf pdf, Range range)
+        throws CpdfError;
 
-    /** Stamps another PDF under all the
-    pages in the document which are in the range. The stamp is placed with its
-    origin at the origin of the target document.
+    /** Stamps another PDF under all the pages in the document which are in the
+    range. The stamp is placed with its origin at the origin of the target
+    document.
     @param stamp_pdf stamp PDF document
     @param pdf PDF document
     @param range page range */
-    public native void stampUnder(Pdf stamp_pdf, Pdf pdf, Range range) throws CpdfError;
+    public native void stampUnder(Pdf stamp_pdf, Pdf pdf, Range range)
+        throws CpdfError;
 
     /** A stamping function with extra features.
-     * @param pdf first PDF document
-     * @param pdf2 second PDF document
-     * @param range page range
-     * @param isover if <code>true</code>, <code>pdf</code> goes over <code>pdf2</code> otherwise under
-     * @param scale_stamp_to_fit if <code>true</code> scales the stamp to fit the page.
-     * @param anchor position anchor, such as {@link #posCentre posCentre}
-     * @param p1 position parameter one
-     * @param p2 position parameter two
-     * @param relative_to_cropbox if <code>true</code>, the position is relative to the crop box rather than the media box. */
-    public native void stampExtended(Pdf pdf, Pdf pdf2, Range range, boolean isover, boolean scale_stamp_to_fit, int anchor, double p1, double p2, boolean relative_to_cropbox) throws CpdfError;
+    @param pdf first PDF document
+    @param pdf2 second PDF document
+    @param range page range
+    @param isover if <code>true</code>, <code>pdf</code> goes over
+    <code>pdf2</code> otherwise under
+    @param scale_stamp_to_fit if <code>true</code> scales the stamp to fit
+    the page.
+    @param anchor position anchor, such as {@link #posCentre posCentre}
+    @param p1 position parameter one
+    @param p2 position parameter two
+    @param relative_to_cropbox if <code>true</code>, the position is relative
+    to the crop box rather than the media box. */
+    public native void stampExtended(Pdf pdf, Pdf pdf2, Range range,
+                                     boolean isover,
+                                     boolean scale_stamp_to_fit, int anchor,
+                                     double p1, double p2,
+                                     boolean relative_to_cropbox)
+        throws CpdfError;
     
-    /** Combines the two PDFs page-by-page, putting each page of 'over' over each page of 'under'. */
+    /** Combines the two PDFs page-by-page, putting each page of 'over' over
+    each page of 'under'. */
     public native Pdf combinePages(Pdf under, Pdf over) throws CpdfError;
     
-    native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, byte[] filename, double linewidth, boolean embed_fonts) throws CpdfError;
+    native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text,
+                         int anchor, double p1, double p2, double linespacing,
+                         int bates, int font, double fontsize, double r,
+                         double g, double b, boolean underneath,
+                         boolean cropbox, boolean outline, double opacity,
+                         int justification, boolean midline, boolean topline,
+                         byte[] filename, double linewidth,
+                         boolean embed_fonts) throws CpdfError;
 
-    /** Adds text to the pages in the given range. See <a href="https://www.coherentpdf.com/jcpdfmanual.pdf">the PDF manual</a> for details.
-     * @param metrics if <code>true</code>, only collect metrics
-     * @param pdf PDF document
-     * @param range page range
-     * @param text the text to stamp, including any special codes
-     * @param anchor position anchor, such as {@link #posCentre posCentre}
-     * @param p1 position parameter one
-     * @param p2 position parameter two
-     * @param linespacing line spacing
-     * @param bates starting bates number
-     * @param font font, such as {@link #timesRoman timesRoman}
-     * @param fontsize font size
-     * @param r red component of colour
-     * @param g green component of colour
-     * @param b blue component of colour
-     * @param underneath if <code>true</code>, text goes under page
-     * @param cropbox if <code>true</code>, relative to cropbox rather than media box
-     * @param outline text is outline
-     * @param opacity opacity
-     * @param justification justification, such as {@link #leftJustify leftJustify}
-     * @param midline position is relative to midline not baseline
-     * @param topline position is relative to topline not baseline
-     * @param filename file name, if requied by special code in text
-     * @param linewidth line width
-     * @param embed_fonts if true, embed fonts
+    /** Adds text to the pages in the given range.
+    @param metrics if <code>true</code>, only collect metrics
+    @param pdf PDF document
+    @param range page range
+    @param text the text to stamp, including any special codes
+    @param anchor position anchor, such as {@link #posCentre posCentre}
+    @param p1 position parameter one
+    @param p2 position parameter two
+    @param linespacing line spacing
+    @param bates starting bates number
+    @param font font, such as {@link #timesRoman timesRoman}
+    @param fontsize font size
+    @param r red component of colour
+    @param g green component of colour
+    @param b blue component of colour
+    @param underneath if <code>true</code>, text goes under page
+    @param cropbox if <code>true</code>,
+    relative to cropbox rather than media box
+    @param outline text is outline
+    @param opacity opacity
+    @param justification justification,
+    such as {@link #leftJustify leftJustify}
+    @param midline position is relative to midline not baseline
+    @param topline position is relative to topline not baseline
+    @param filename file name, if requied by special code in text
+    @param linewidth line width
+    @param embed_fonts if true, embed fonts
     */
-    public void addText(boolean metrics, Pdf pdf, Range range, String text, int anchor, double p1, double p2, double linespacing, int bates, int font, double fontsize, double r, double g, double b, boolean underneath, boolean cropbox, boolean outline, double opacity, int justification, boolean midline, boolean topline, String filename, double linewidth, boolean embed_fonts) throws CpdfError
+    public void addText(boolean metrics, Pdf pdf, Range range, String text,
+                        int anchor, double p1, double p2, double linespacing,
+                        int bates, int font, double fontsize, double r,
+                        double g, double b, boolean underneath,
+                        boolean cropbox, boolean outline, double opacity,
+                        int justification, boolean midline, boolean topline,
+                        String filename, double linewidth, boolean embed_fonts)
+        throws CpdfError
     {
-        XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2, linespacing, bates, font, fontsize,
-                r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, encodeUTF8(filename), linewidth, embed_fonts);
+        XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2,
+                 linespacing, bates, font, fontsize, r, g, b, underneath,
+                 cropbox, outline, opacity, justification, midline, topline,
+                 encodeUTF8(filename), linewidth, embed_fonts);
     }
-    native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError;
+    native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor,
+                               double p1, double p2, int font, double fontsize)
+        throws CpdfError;
     
     /** Adds text with most parameters default.
-     * @param pdf PDF document
-     * @param range page range
-     * @param text the text to stamp, including any special codes
-     * @param anchor position anchor, such as {@link #posCentre posCentre}
-     * @param p1 position parameter one
-     * @param p2 position parameter two
-     * @param font font, such as {@link #timesRoman timesRoman}
-     * @param fontsize font size
-     * */
-    public void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError
+    @param pdf PDF document
+    @param range page range
+    @param text the text to stamp, including any special codes
+    @param anchor position anchor, such as {@link #posCentre posCentre}
+    @param p1 position parameter one
+    @param p2 position parameter two
+    @param font font, such as {@link #timesRoman timesRoman}
+    @param fontsize font size
+    */
+    public void addTextSimple(Pdf pdf, Range range, String text, int anchor,
+                              double p1, double p2, int font, double fontsize)
+        throws CpdfError
     {
-        XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font, fontsize);
+        XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font,
+                       fontsize);
     }
     
     /** Removes any text added by Jcpdf from the given pages. */
@@ -871,54 +1021,64 @@ public class Jcpdf {
 
     native int XtextWidth(int font, byte[] text) throws CpdfError;
     
-    /** Returns the width of a given string in the given font in thousandths of a point.
-     * @param font font, such as {@link #timesRoman timesRoman}
-     * @param text text*/
+    /** Returns the width of a given string in the given font in thousandths of
+    a point.
+    @param font font, such as {@link #timesRoman timesRoman}
+    @param text text*/
     public int textWidth(int font, String text) throws CpdfError
     {
         return XtextWidth(font, encodeUTF8(text));
     }
 
-    native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range) throws CpdfError;
+    native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range)
+        throws CpdfError;
     
-    /** Adds page content before or after the existing content to pages in the given range
-    in the given PDF.
+    /** Adds page content before or after the existing content to pages in the
+    given range in the given PDF.
     @param s page content to add
     @param before if <code>true</code> new content goes before, else after
     @param pdf PDF document
     @param range page range */
-    public void addContent(String s, boolean before, Pdf pdf, Range range) throws CpdfError
+    public void addContent(String s, boolean before, Pdf pdf, Range range)
+        throws CpdfError
     {
         XaddContent(encodeUTF8(s), before, pdf, range);
     }
 
-    /** Stamps a PDF onto the pages
-    in the given range in pdf as a shared Form XObject. The name of the
-    newly-created XObject is returned.
+    /** Stamps a PDF onto the pages in the given range in pdf as a shared Form
+    XObject. The name of the newly-created XObject is returned.
     @param pdf PDF document
     @param range page range
     @param stamp_pdf PDF document to stamp */
-    public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf) throws CpdfError;
+    public native String stampAsXObject(Pdf pdf, Range range, Pdf stamp_pdf)
+        throws CpdfError;
     
     /* CHAPTER 9. Multipage facilities */
     
     /** Imposes a PDF.
-     @param pdf PDF document
-     @param x x parameter
-     @param y y parameter
-     @param fit <code>true</code>: impose to fit a page of size x by y; <code>false</code>: impose x by y 
-     @param columns imposes by columns rather than rows
-     @param rtl impose right-to-left
-     @param btt impose bottom-to-top
-     @param center unused for now
-     @param margin margin around the output
-     @param spacing spacing between imposed inputs */
-    public native void impose(Pdf pdf, double x, double y, boolean fit, boolean columns, boolean rtl, boolean btt, boolean center, double margin, double spacing, double linewidth) throws CpdfError;
+    @param pdf PDF document
+    @param x x parameter
+    @param y y parameter
+    @param fit <code>true</code>: impose to fit a page of size x by y;
+    <code>false</code>: impose x by y 
+    @param columns imposes by columns rather than rows
+    @param rtl impose right-to-left
+    @param btt impose bottom-to-top
+    @param center unused for now
+    @param margin margin around the output
+    @param spacing spacing between imposed inputs */
+    public native void impose(Pdf pdf, double x, double y, boolean fit,
+                              boolean columns, boolean rtl, boolean btt,
+                              boolean center, double margin, double spacing,
+                              double linewidth)
+        throws CpdfError;
 
-    /** Imposes a document two up. twoUp does so by shrinking the page size, to fit two pages on one. */
+    /** Imposes a document two up. twoUp does so by shrinking the page size, to
+    fit two pages on one. */
     public native void twoUp(Pdf pdf) throws CpdfError;
     
-    /** Imposes a document two up. twoUpStack does so by doubling the page size, to fit two pages on one. */
+    /** Imposes a document two up. twoUpStack does so by doubling the page
+    size, to fit two pages on one. */
     public native void twoUpStack(Pdf pdf) throws CpdfError;
 
     /** Adds a blank page before each page in the given range. */
@@ -930,10 +1090,12 @@ public class Jcpdf {
     /** Adds a blank page after every n pages. */
     public native void padEvery(Pdf pdf, int n) throws CpdfError;
 
-    /** Adds pages at the end to pad the file to a multiple of n pages in length. */
+    /** Adds pages at the end to pad the file to a multiple of n pages in
+    length. */
     public native void padMultiple(Pdf pdf, int n) throws CpdfError;
 
-    /** Adds pages at the beginning to pad the file to a multiple of n pages in length. */
+    /** Adds pages at the beginning to pad the file to a multiple of n pages in
+    length. */
     public native void padMultipleBefore(Pdf pdf, int n) throws CpdfError;
 
     /* CHAPTER 10. Annotations */
@@ -945,7 +1107,8 @@ public class Jcpdf {
     
     native boolean XisLinearized(byte[] filename) throws CpdfError;
     
-    /** Finds out if a document is linearized as quickly as possible without loading it. */
+    /** Finds out if a document is linearized as quickly as possible without
+    loading it. */
     public boolean isLinearized(String filename) throws CpdfError
     {
         return XisLinearized(encodeUTF8(filename));
@@ -1186,61 +1349,94 @@ public class Jcpdf {
     }
     
     /** Returns the components from a PDF date string in an array of length 8.
-     * @param datestring date string
-     * @param r return array */
-    public native void getDateComponents(String datestring, int[] r) throws CpdfError;
+    @param datestring date string
+    @param r return array */
+    public native void getDateComponents(String datestring, int[] r)
+        throws CpdfError;
 
     /** Builds a PDF date string from individual components. */
-    public native String dateStringOfComponents(int year, int month, int day, int hour, int minute, int second, int hour_offset, int minute_offset) throws CpdfError;
+    public native String dateStringOfComponents(int year, int month, int day,
+                                                int hour, int minute,
+                                                int second, int hour_offset,
+                                                int minute_offset)
+        throws CpdfError;
 
     /** Gets the viewing rotation for a given page. */
-    public native int getPageRotation(Pdf pdf, int pagenumber) throws CpdfError;
+    public native int getPageRotation(Pdf pdf, int pagenumber)
+        throws CpdfError;
 
-    /** Returns <code>true</code> if the given page has the given box. E.g "/CropBox".
-     * @param pdf PDF document
-     * @param pagenumber page number
-     * @param boxname box name, e.g "/CropBox" */
-    public native boolean hasBox(Pdf pdf, int pagenumber, String boxname) throws CpdfError;
+    /** Returns <code>true</code> if the given page has the given box. E.g
+    "/CropBox".
+    @param pdf PDF document
+    @param pagenumber page number
+    @param boxname box name, e.g "/CropBox" */
+    public native boolean hasBox(Pdf pdf, int pagenumber, String boxname)
+        throws CpdfError;
 
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
-    public native void getMediaBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int,
+    String) hasBox}. */
+    public native void getMediaBox(Pdf pdf, int pagenumber, double[] r)
+        throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
-    public native void getCropBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int,
+    String) hasBox}. */
+    public native void getCropBox(Pdf pdf, int pagenumber, double[] r)
+        throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
-    public native void getBleedBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int,
+    String) hasBox}. */
+    public native void getBleedBox(Pdf pdf, int pagenumber, double[] r)
+        throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
-    public native void getArtBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int,
+    String) hasBox}. */
+    public native void getArtBox(Pdf pdf, int pagenumber, double[] r)
+        throws CpdfError;
     
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only
-    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int, String) hasBox}. */
-    public native void getTrimBox(Pdf pdf, int pagenumber, double[] r) throws CpdfError;
+    succeeds if such a box exists, as checked by {@link #hasBox(Pdf, int,
+    String) hasBox}. */
+    public native void getTrimBox(Pdf pdf, int pagenumber, double[] r)
+        throws CpdfError;
 
-    /** These functions set a box given the document page range, min x, max x, min y, max y in points. */
-    public native void setMediabox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    /** These functions set a box given the document page range, min x, max x,
+    min y, max y in points. */
+    public native void setMediabox(Pdf pdf, Range range, double minx,
+                                   double maxx, double miny, double maxy)
+        throws CpdfError;
     
-    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
-    public native void setCropBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    /** These functions set a box given the document, page range, min x, max x,
+    min y, max y in points. */
+    public native void setCropBox(Pdf pdf, Range range, double minx,
+                                  double maxx, double miny, double maxy)
+        throws CpdfError;
     
-    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
-    public native void setTrimBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    /** These functions set a box given the document, page range, min x, max x,
+    min y, max y in points. */
+    public native void setTrimBox(Pdf pdf, Range range, double minx,
+                                  double maxx, double miny, double maxy)
+        throws CpdfError;
     
-    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
-    public native void setArtBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    /** These functions set a box given the document, page range, min x, max x,
+    min y, max y in points. */
+    public native void setArtBox(Pdf pdf, Range range, double minx,
+                                 double maxx, double miny, double maxy)
+        throws CpdfError;
     
-    /** These functions set a box given the document, page range, min x, max x, min y, max y in points. */
-    public native void setBleedBox(Pdf pdf, Range range, double minx, double maxx, double miny, double maxy) throws CpdfError;
+    /** These functions set a box given the document, page range, min x, max x,
+    min y, max y in points. */
+    public native void setBleedBox(Pdf pdf, Range range, double minx,
+                                   double maxx, double miny, double maxy)
+        throws CpdfError;
 
     /** Marks a document as trapped. */
     public native void markTrapped(Pdf pdf) throws CpdfError;
@@ -1254,7 +1450,8 @@ public class Jcpdf {
     /** Marks a document as untrapped in XMP metadata. */
     public native void markUntrappedXMP(Pdf pdf) throws CpdfError;
 
-    /** Sets the page layout for a document, such as {@link #singlePage singlePage} */
+    /** Sets the page layout for a document, such as {@link #singlePage
+    singlePage} */
     public native void setPageLayout(Pdf pdf, int layout) throws CpdfError;
     
     /** Sets the page mode for a document, such as {@link #useNone useNone} */
@@ -1278,13 +1475,16 @@ public class Jcpdf {
     /** Sets the display document title flag. */
     public native void displayDocTitle(Pdf pdf, boolean flag) throws CpdfError;
 
-    /** Sets the PDF to open, possibly with zoom-to-fit, at the given page number.
-     * @param pdf PDF document
-     * @param fit if <code>true</code> zoom to fit
-     * @param pagenumber page number */
-    public native void openAtPage(Pdf pdf, boolean fit, int pagenumber) throws CpdfError;
+    /** Sets the PDF to open, possibly with zoom-to-fit, at the given page
+    number.
+    @param pdf PDF document
+    @param fit if <code>true</code> zoom to fit
+    @param pagenumber page number */
+    public native void openAtPage(Pdf pdf, boolean fit, int pagenumber)
+        throws CpdfError;
 
-    native void XsetMetadataFromFile(Pdf pdf, byte[] filename) throws CpdfError;
+    native void XsetMetadataFromFile(Pdf pdf, byte[] filename)
+        throws CpdfError;
 
     /** Sets the XMP metadata of a document, given a file name. */
     public void setMetadataFromFile(Pdf pdf, String filename) throws CpdfError
@@ -1293,7 +1493,8 @@ public class Jcpdf {
     }
 
     /** Sets the XMP metadata from an array of bytes. */
-    public native void setMetadataFromByteArray(Pdf pdf, byte[] data) throws CpdfError;
+    public native void setMetadataFromByteArray(Pdf pdf, byte[] data)
+        throws CpdfError;
     
     /** Removes the XMP metadata from a document. */
     public native void removeMetadata(Pdf pdf) throws CpdfError;
@@ -1305,23 +1506,27 @@ public class Jcpdf {
     existing metadata in the document. */
     public native void createMetadata(Pdf pdf) throws CpdfError;
 
-    /** Sets the metadata date for a PDF. The date
-    is given in PDF date format - Jcpdf will convert it to XMP format. The
-    date "now" means now. */
+    /** Sets the metadata date for a PDF. The date is given in PDF date format.
+    Jcpdf will convert it to XMP format. The date "now" means now. */
     public native void setMetadataDate(Pdf pdf, String date) throws CpdfError;
 
-    native void XaddPageLabels(Pdf pdf, int style, byte[] prefix, int offset, Range range, boolean progress) throws CpdfError;
+    native void XaddPageLabels(Pdf pdf, int style, byte[] prefix, int offset,
+                               Range range, boolean progress)
+        throws CpdfError;
     
     /** Adds page labels to a document.
-     * @param pdf PDF document
-     * @param style label style, such as {@link #decimalArabic decimalArabic}
-     * @param prefix text for each label
-     * @param offset can be used to shift the numbering up or down
-     * @param range page range
-     * @param progress if <code>true</code>, labels progress */
-    public void addPageLabels(Pdf pdf, int style, String prefix, int offset, Range range, boolean progress) throws CpdfError
+    @param pdf PDF document
+    @param style label style, such as {@link #decimalArabic decimalArabic}
+    @param prefix text for each label
+    @param offset can be used to shift the numbering up or down
+    @param range page range
+    @param progress if <code>true</code>, labels progress */
+    public void addPageLabels(Pdf pdf, int style, String prefix, int offset,
+                              Range range, boolean progress)
+        throws CpdfError
     {
-        XaddPageLabels(pdf, style, encodeUTF8(prefix), offset, range, progress);
+        XaddPageLabels(pdf, style, encodeUTF8(prefix), offset, range,
+                       progress);
     }
 
     /** Removes the page labels from the document. */
@@ -1330,18 +1535,20 @@ public class Jcpdf {
     native byte[] XgetPageLabelStringForPage(Pdf pdf, int n) throws CpdfError;
     
     /** Calculates the full label string for a given page, and returns it. */
-    public String getPageLabelStringForPage(Pdf pdf, int pagenumber) throws CpdfError
+    public String getPageLabelStringForPage(Pdf pdf, int pagenumber)
+        throws CpdfError
     {
         return decodeUTF8(XgetPageLabelStringForPage(pdf, pagenumber));
     }
     
-    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
-    there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
+    startGetPageLabels} to find out how many there are, then use these serial
+    numbers to get the style, prefix, offset and start value (note not a
+    range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
-    numerals, followed by the rest of the pages in decimal arabic, numbered from
-    one:
+    numerals, followed by the rest of the pages in decimal arabic, numbered
+    from one:
     
     <p>labelstyle = LowercaseRoman<br/>
     labelprefix = ""<br/>
@@ -1354,13 +1561,14 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native int startGetPageLabels(Pdf pdf) throws CpdfError;
     
-    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
-    there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
+    startGetPageLabels} to find out how many there are, then use these serial
+    numbers to get the style, prefix, offset and start value (note not a
+    range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
-    numerals, followed by the rest of the pages in decimal arabic, numbered from
-    one:
+    numerals, followed by the rest of the pages in decimal arabic, numbered
+    from one:
     
     <p>labelstyle = LowercaseRoman<br/>
     labelprefix = ""<br/>
@@ -1373,13 +1581,14 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native void endGetPageLabels() throws CpdfError;
     
-    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
-    there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
+    startGetPageLabels} to find out how many there are, then use these serial
+    numbers to get the style, prefix, offset and start value (note not a
+    range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
-    numerals, followed by the rest of the pages in decimal arabic, numbered from
-    one:
+    numerals, followed by the rest of the pages in decimal arabic, numbered
+    from one:
     
     <p>labelstyle = LowercaseRoman<br/>
     labelprefix = ""<br/>
@@ -1392,13 +1601,14 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native int getPageLabelOffset(int n) throws CpdfError;
     
-    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
-    there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
+    startGetPageLabels} to find out how many there are, then use these serial
+    numbers to get the style, prefix, offset and start value (note not a
+    range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
-    numerals, followed by the rest of the pages in decimal arabic, numbered from
-    one:
+    numerals, followed by the rest of the pages in decimal arabic, numbered
+    from one:
     
     <p>labelstyle = LowercaseRoman<br/>
     labelprefix = ""<br/>
@@ -1411,13 +1621,14 @@ public class Jcpdf {
     startvalue = 1<br> */
     public native int getPageLabelStyle(int n) throws CpdfError;
     
-    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
-    there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
+    startGetPageLabels} to find out how many there are, then use these serial
+    numbers to get the style, prefix, offset and start value (note not a
+    range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
-    numerals, followed by the rest of the pages in decimal arabic, numbered from
-    one:
+    numerals, followed by the rest of the pages in decimal arabic, numbered
+    from one:
     
     <p>labelstyle = LowercaseRoman<br/>
     labelprefix = ""<br/>
@@ -1432,13 +1643,14 @@ public class Jcpdf {
     
     native byte[] XgetPageLabelPrefix(int n) throws CpdfError;
     
-    /** Gets page label data. Call {@link #startGetPageLabels(Pdf) startGetPageLabels} to find out how many
-    there are, then use these serial numbers to get the style, prefix, offset
-    and start value (note not a range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
+    /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
+    startGetPageLabels} to find out how many there are, then use these serial
+    numbers to get the style, prefix, offset and start value (note not a
+    range). Call {@link #endGetPageLabels() endGetPageLabels} to clean up.
     
     <p>For example, a document might have five pages of introduction with roman
-    numerals, followed by the rest of the pages in decimal arabic, numbered from
-    one:
+    numerals, followed by the rest of the pages in decimal arabic, numbered
+    from one:
     
     <p>labelstyle = LowercaseRoman<br/>
     labelprefix = ""<br/>
@@ -1457,43 +1669,53 @@ public class Jcpdf {
 
     /* CHAPTER 12. File Attachments */
     native void XattachFile(byte[] filename, Pdf pdf) throws CpdfError;
-    native void XattachFileToPage(byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
-    native void XattachFileFromMemory(byte[] data, byte[] filename, Pdf pdf) throws CpdfError;
-    native void XattachFileToPageFromMemory(byte[] data, byte[] filename, Pdf pdf, int pagenumber) throws CpdfError;
+    native void XattachFileToPage(byte[] filename, Pdf pdf, int pagenumber)
+        throws CpdfError;
+    native void XattachFileFromMemory(byte[] data, byte[] filename, Pdf pdf)
+        throws CpdfError;
+    native void XattachFileToPageFromMemory(byte[] data, byte[] filename,
+                                            Pdf pdf, int pagenumber)
+        throws CpdfError;
     
     /** Attaches a file to the PDF. It is attached at document level.
-     * @param filename file name
-     * @param pdf PDF document */
+    @param filename file name
+    @param pdf PDF document */
     public void attachFile(String filename, Pdf pdf) throws CpdfError
     {
         XattachFile(encodeUTF8(filename), pdf);
     }
 
-    /** Attaches a file to a page of the PDF. Given its file name, pdf, and the page number to which it should be attached.
-     * @param filename file name
-     * @param pdf PDF document
-     * @param pagenumber page number to attach to */
-    public void attachFileToPage(String filename, Pdf pdf, int pagenumber) throws CpdfError
+    /** Attaches a file to a page of the PDF. Given its file name, pdf, and the
+    page number to which it should be attached.
+    @param filename file name
+    @param pdf PDF document
+    @param pagenumber page number to attach to */
+    public void attachFileToPage(String filename, Pdf pdf, int pagenumber)
+        throws CpdfError
     {
         XattachFileToPage(encodeUTF8(filename), pdf, pagenumber);
     }
 
     /** Attaches data from memory to a document.
-     * @param data attachment itself
-     * @param filename file name to use to describe attachment
-     * @param pdf PDF document */
-    public void attachFileFromMemory(byte[] data, String filename, Pdf pdf) throws CpdfError
+    @param data attachment itself
+    @param filename file name to use to describe attachment
+    @param pdf PDF document */
+    public void attachFileFromMemory(byte[] data, String filename, Pdf pdf)
+        throws CpdfError
     {
         XattachFileFromMemory(data, encodeUTF8(filename), pdf);
     }
 
     /** Attaches data to a page from memory.
-     * @param data attachment itself
-     * @param filename file name to use to describe attachment
-     * @param pdf PDF document */
-    public void attachFileToPageFromMemory(byte[] data, String filename, Pdf pdf, int pagenumber) throws CpdfError
+    @param data attachment itself
+    @param filename file name to use to describe attachment
+    @param pdf PDF document */
+    public void attachFileToPageFromMemory(byte[] data, String filename,
+                                           Pdf pdf, int pagenumber)
+        throws CpdfError
     {
-        XattachFileToPageFromMemory(data, encodeUTF8(filename), pdf, pagenumber);
+        XattachFileToPageFromMemory(data, encodeUTF8(filename), pdf,
+                                    pagenumber);
     }
 
     /** Removes all page- and document-level attachments from a document. */
@@ -1538,80 +1760,83 @@ public class Jcpdf {
     /* CHAPTER 13. Images. */
     
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
-    public native int startGetImageResolution(Pdf pdf, double res) throws CpdfError;
+    public native int startGetImageResolution(Pdf pdf, double res)
+        throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
-    public native int getImageResolutionPageNumber(int serial) throws CpdfError;
+    public native int getImageResolutionPageNumber(int serial)
+        throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
-    public native String getImageResolutionImageName(int serial) throws CpdfError;
+    public native String getImageResolutionImageName(int serial)
+        throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native int getImageResolutionXPixels(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native int getImageResolutionYPixels(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native double getImageResolutionXRes(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native double getImageResolutionYRes(int serial) throws CpdfError;
 
     /** Gets image data, including resolution at all points of use. Call
-    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf, min_required_resolution)} to begin
-    the process of obtaining data on all image uses below
-    <code>min_required_resolution</code>, returning the total number. So, to
-    return all image uses, specify a very high
+    {@link #startGetImageResolution(pdf, double) startGetImageResolution(pdf,
+    min_required_resolution)} to begin the process of obtaining data on all
+    image uses below <code>min_required_resolution</code>, returning the total
+    number. So, to return all image uses, specify a very high
     <code>min_required_resolution</code>. Then, call the other functions giving
     a serial number <code>0...n - 1</code>, to retrieve the data. Finally, call
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
@@ -1619,66 +1844,73 @@ public class Jcpdf {
 
     /* CHAPTER 14. Fonts. */
     
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native void startGetFontInfo(Pdf pdf) throws CpdfError;
 
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native int numberFonts() throws CpdfError;
     
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native String getFontName(int serial) throws CpdfError;
     
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native int getFontPage(int serial) throws CpdfError;
     
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native String getFontType(int setial) throws CpdfError;
     
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native String getFontEncoding(int serial) throws CpdfError;
     
-    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf) startGetFontInfo}.
-    Now call {@link #numberFonts() numberFonts} to return the number of fonts.
-    For each font, call one or more of {@link #getFontPage(int) getFontPage},
-    {@link #getFontName(int) getFontName}, {@link #getFontType(int)
-    getFontType}, and {@link #getFontEncoding(int) getFontEncoding} giving a
-    serial number <code>0...n - 1</code> to return information. Finally, call
+    /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)
+    startGetFontInfo}. Now call {@link #numberFonts() numberFonts} to return
+    the number of fonts. For each font, call one or more of
+    {@link #getFontPage(int) getFontPage}, {@link #getFontName(int)
+    getFontName}, {@link #getFontType(int) getFontType}, and
+    {@link #getFontEncoding(int) getFontEncoding} giving a serial number
+    <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native void endGetFontInfo() throws CpdfError;
     
@@ -1693,28 +1925,40 @@ public class Jcpdf {
     @param range page range
     @param pagenumber page number of the page to copy from
     @param fontname font name */
-    public native void copyFont(Pdf from_pdf, Pdf to_pdf, Range range, int pagenumber, String fontname) throws CpdfError;
+    public native void copyFont(Pdf from_pdf, Pdf to_pdf, Range range,
+                                int pagenumber, String fontname)
+        throws CpdfError;
 
     /* CHAPTER 15. PDF and JSON */
-    native void XoutputJSON(byte[] filename, boolean parse_content, boolean no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError;
+    native void XoutputJSON(byte[] filename, boolean parse_content,
+                            boolean no_stream_data,
+                            boolean decompress_streams, Pdf pdf)
+        throws CpdfError;
     
     /** Outputs a PDF in JSON format to the given filename.
-     * @param filename file name
-     * @param parse_content parse page content
-     * @param no_stream_data all stream data is suppressed entirely
-     * @param decompress_streams streams are decompressed
-     * @param pdf PDF document */
-    public void outputJSON(String filename, boolean parse_content, boolean
-        no_stream_data, boolean decompress_streams, Pdf pdf) throws CpdfError {
-      XoutputJSON(encodeUTF8(filename), parse_content, no_stream_data,
-          decompress_streams, pdf); }
+    @param filename file name
+    @param parse_content parse page content
+    @param no_stream_data all stream data is suppressed entirely
+    @param decompress_streams streams are decompressed
+    @param pdf PDF document */
+    public void outputJSON(String filename, boolean parse_content,
+                           boolean no_stream_data, boolean decompress_streams,
+                           Pdf pdf)
+        throws CpdfError 
+    {
+        XoutputJSON(encodeUTF8(filename), parse_content, no_stream_data,
+                    decompress_streams, pdf);
+    }
 
     /** Like outputJSON, but it writes to a byte array in memory.
-     * @param pdf PDF document
-     * @param parse_content parse page content
-     * @param no_stream_data all stream data is suppressed entirely
-     * @param decompress_streams streams are decompressed */
-    public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content, boolean no_stream_data, boolean decompress_streams) throws CpdfError;
+    @param pdf PDF document
+    @param parse_content parse page content
+    @param no_stream_data all stream data is suppressed entirely
+    @param decompress_streams streams are decompressed */
+    public native byte[] outputJSONMemory(Pdf pdf, boolean parse_content,
+                                          boolean no_stream_data,
+                                          boolean decompress_streams)
+        throws CpdfError;
 
     native Pdf XfromJSON(byte[] filename) throws CpdfError;
     
@@ -1729,78 +1973,93 @@ public class Jcpdf {
     
     /* CHAPTER 16. Optional Content Groups */
     
-    /** Begins retrieving optional content group names. The serial number 0..n - 1 is returned. */
+    /** Begins retrieving optional content group names. The serial number
+    <code>0..n - 1</code> is returned. */
     public native int startGetOCGList(Pdf pdf) throws CpdfError;
     
-    /** Retrieves an entry in the optional content group list, given the serial number 0..n - 1. */
+    /** Retrieves an entry in the optional content group list, given the serial
+    number <code>0..n - 1</code>. */
     public native String OCGListEntry(int serial) throws CpdfError;
     
     /** Ends retrieval of optional content group names. */
     public native void endGetOCGList() throws CpdfError;
 
     /** Renames an optional content group.
-     * @param pdf PDF document
-     * @param f name to rename from
-     * @param t name to rename to */
+    @param pdf PDF document
+    @param f name to rename from
+    @param t name to rename to */
     public native void OCGRename(Pdf pdf, String f, String t) throws CpdfError;
     
-    /** Ensures that every optional content group appears in the OCG order list. */
+    /** Ensures that every optional content group appears in the OCG order
+    list. */
     public native void OCGOrderAll(Pdf pdf) throws CpdfError;
 
-    /** Coalesces optional content groups. For example, if we merge or stamp two
-    files both with an OCG called "Layer 1", we will have two different optional
-    content groups. This function will merge the two into a single optional
-    content group. */
+    /** Coalesces optional content groups. For example, if we merge or stamp
+    two files both with an OCG called "Layer 1", we will have two different
+    optional content groups. This function will merge the two into a single
+    optional content group. */
     public native void OCGCoalesce(Pdf pdf) throws CpdfError;
 
     /* CHAPTER 17. Creating New PDFs */
     
-    /** Creates a blank document with
-    pages of the given width (in points), height (in points), and number of
-    pages.
+    /** Creates a blank document with pages of the given width (in points),
+    height (in points), and number of pages.
     @param w width of page
     @param h height of page
     @param pages number of pages */
-    public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
+    public native Pdf blankDocument(double w, double h, int pages)
+        throws CpdfError;
 
     /** Makes a blank document given a page size and number of pages.
     @param papersize paper size, such as {@link #a0portrait a0portrait}
     @param pages number of pages */
-    public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
+    public native Pdf blankDocumentPaper(int papersize, int pages)
+        throws CpdfError;
     
-    native Pdf XtextToPDF(double w, double h, int font, double fontsize, byte[] filename) throws CpdfError;
-    native Pdf XtextToPDFPaper(int papersize, int font, double fontsize, byte[] filename) throws CpdfError;
+    native Pdf XtextToPDF(double w, double h, int font, double fontsize,
+                          byte[] filename)
+        throws CpdfError;
+    native Pdf XtextToPDFPaper(int papersize, int font, double fontsize,
+                               byte[] filename)
+        throws CpdfError;
     
-    /** Typesets a UTF8 text file
-    ragged right on a page of size w * h in points in the given font and font
-    size.
+    /** Typesets a UTF8 text file ragged right on a page of size w * h in
+    points in the given font and font size.
     @param w width of page
     @param h height of page
     @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param filename file name */
-    public Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError
+    public Pdf textToPDF(double w, double h, int font, double fontsize,
+                         String filename)
+        throws CpdfError
     {
         return XtextToPDF(w, h, font, fontsize, encodeUTF8(filename));
     }
     
-    /** Typesets a UTF8 text file ragged right on a page of the given size in the given font and font size.
+    /** Typesets a UTF8 text file ragged right on a page of the given size in
+    the given font and font size.
     @param papersize paper size, such as {@link #a0portrait a0portrait}
     @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param filename file name */
-    public Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError
+    public Pdf textToPDFPaper(int papersize, int font, double fontsize,
+                              String filename)
+        throws CpdfError
     {
-        return XtextToPDFPaper(papersize, font, fontsize, encodeUTF8(filename));
+        return XtextToPDFPaper(papersize, font, fontsize,
+                               encodeUTF8(filename));
     }
 
     /* CHAPTER 18. Miscellaneous */
     
-    /** Removes images on the given pages, replacing them with crossed boxes if <code>boxes</code> is <code>true</code>.
-     * @param pdf PDF document
-     * @param range page range
-     * @param boxes add crossed boxes */
-    public native void draft(Pdf pdf, Range range, boolean boxes) throws CpdfError;
+    /** Removes images on the given pages, replacing them with crossed boxes if
+    <code>boxes</code> is <code>true</code>.
+    @param pdf PDF document
+    @param range page range
+    @param boxes add crossed boxes */
+    public native void draft(Pdf pdf, Range range, boolean boxes)
+        throws CpdfError;
     
     /** Removes all text from the given pages in a given document. */
     public native void removeAllText(Pdf pdf, Range range) throws CpdfError;
@@ -1814,61 +2073,73 @@ public class Jcpdf {
     /** Blackens all fills on the given pages. */
     public native void blackFills(Pdf pdf, Range range) throws CpdfError;
     
-    /** Thickens every line less than <code>min_thickness</code> to <code>min_thickness</code>. Thickness given in points.
+    /** Thickens every line less than <code>min_thickness</code> to
+    <code>min_thickness</code>. Thickness given in points.
     @param pdf PDF document
     @param range page range
-    @param min_thickness minimum thickness
-    */
-    public native void thinLines(Pdf pdf, Range range, double min_thickness) throws CpdfError;
+    @param min_thickness minimum thickness */
+    public native void thinLines(Pdf pdf, Range range, double min_thickness)
+        throws CpdfError;
     
     /** Copies the <code>/ID</code> from one document to another.
-     * @param pdf PDF document to copy from
-     * @param pdf2 PDF document to copy to */
+    @param pdf PDF document to copy from
+    @param pdf2 PDF document to copy to */
     public native void copyId(Pdf pdf, Pdf pdf2) throws CpdfError;
     
     /** Removes a document's <code>/ID</code>. */
     public native void removeId(Pdf pdf) throws CpdfError;
     
     /** Sets the minor version number of a document.
-     * @param pdf PDF document
-     * @param version minor version number */
+    @param pdf PDF document
+    @param version minor version number */
     public native void setVersion(Pdf pdf, int version) throws CpdfError;
     
     /** Sets the full version number of a document.
-     * @param pdf PDF document
-     * @param major major version number
-     * @param minor minor version nuber */
-    public native void setFullVersion(Pdf pdf, int major, int minor) throws CpdfError;
+    @param pdf PDF document
+    @param major major version number
+    @param minor minor version nuber */
+    public native void setFullVersion(Pdf pdf, int major, int minor)
+        throws CpdfError;
     
-    /** Removes any dictionary entry with the given key anywhere in the document.
-     * @param pdf PDF document
-     * @param key key to remove */
+    /** Removes any dictionary entry with the given key anywhere in the
+    document.
+    @param pdf PDF document
+    @param key key to remove */
     public native void removeDictEntry(Pdf pdf, String key) throws CpdfError;
     
-    /** Removes any dictionary entry with the given key whose value matches the given search term.
-     * @param pdf PDF document
-     * @param key key to remove
-     * @param searchterm search term */
-    public native void removeDictEntrySearch(Pdf pdf, String key, String searchterm) throws CpdfError;
+    /** Removes any dictionary entry with the given key whose value matches the
+    given search term.
+    @param pdf PDF document
+    @param key key to remove
+    @param searchterm search term */
+    public native void removeDictEntrySearch(Pdf pdf, String key,
+                                             String searchterm)
+        throws CpdfError;
     
     /** Replaces the value associated with the given key.
-     * @param pdf PDF document
-     * @param key key whose value to replace
-     * @param newvalue value to replac with */
-    public native void replaceDictEntry(Pdf pdf, String key, String newvalue) throws CpdfError;
+    @param pdf PDF document
+    @param key key whose value to replace
+    @param newvalue value to replace with */
+    public native void replaceDictEntry(Pdf pdf, String key, String newvalue)
+        throws CpdfError;
     
-    /** Replaces the value associated with the given key if the existing value matches the search term.
-     * @param pdf PDF document
-     * @param key key whose value to replace
-     * @param newvalue value to replac with
-     * @param searchterm search term */
-    public native void replaceDictEntrySearch(Pdf pdf, String key, String newvalue, String searchterm) throws CpdfError;
+    /** Replaces the value associated with the given key if the existing value
+    matches the search term.
+    @param pdf PDF document
+    @param key key whose value to replace
+    @param newvalue value to replace with
+    @param searchterm search term */
+    public native void replaceDictEntrySearch(Pdf pdf, String key,
+                                              String newvalue,
+                                              String searchterm)
+        throws CpdfError;
     
     /** Removes all clipping from pages in the given range. */
     public native void removeClipping(Pdf pdf, Range range) throws CpdfError;
     
-    /** Returns a JSON array containing any and all values associated with the given key, and fills in its length.
-     * @param pdf PDF document
-     * @param key key to search for */
+    /** Returns a JSON array containing any and all values associated with
+    the given key, and fills in its length.
+    @param pdf PDF document
+    @param key key to search for */
     public native byte[] getDictEntries(Pdf pdf, String key) throws CpdfError;
 }
