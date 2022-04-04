@@ -917,6 +917,41 @@ public class Testjcpdf
         }
     }
 
+    //Merge example
+    static void example()
+    {
+       // Initialise cpdf
+       Jcpdf jcpdf = new Jcpdf();
+       try
+       {
+         jcpdf.startup();
+       }
+       catch (Jcpdf.CpdfError e)
+       {
+         System.out.println("Error during cpdf startup");
+       }
+
+       // We will take the input hello.pdf and repeat it three times
+       try (Jcpdf.Pdf mergepdf = jcpdf.fromFile("hello.pdf", ""))
+       {
+         // The array of PDFs to merge
+         Jcpdf.Pdf[] pdfs = {mergepdf, mergepdf, mergepdf};
+
+         // Merge them
+         Jcpdf.Pdf merged = jcpdf.mergeSimple(pdfs);
+
+         // Write output
+         jcpdf.toFile(merged, "merged.pdf", false, false);
+
+         // Dispose of merged PDF
+         merged.close();
+       }
+       catch (Jcpdf.CpdfError e)
+       {
+         System.out.println("Error during cpdf operation");
+       }
+    }
+
     static public void main(String argv[]) {
         Jcpdf jcpdf = new Jcpdf();
         try
@@ -940,6 +975,7 @@ public class Testjcpdf
             chapter16(jcpdf);
             chapter17(jcpdf);
             chapter18(jcpdf);
+            //example();
         }
         catch (Jcpdf.CpdfError e)
         {
