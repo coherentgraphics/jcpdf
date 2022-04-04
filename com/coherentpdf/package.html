@@ -19,8 +19,8 @@ has access to the cpdf DLL, which is not part of the Java .jar. You can add as
 am external requirement in your Java IDE. Or, you can install it in a standard
 location, such as the Windows system folder.</p>
 
-<p><b>On Windows, The DLL libcpdf.dll must be renamed to
-cpdf.dll, for Jcpdf to be able to find it.</b></p>
+<p><i>On Windows, The DLL libcpdf.dll must be renamed to
+cpdf.dll, for Jcpdf to be able to find it.</i></p>
 
 <h3>Documentation</h3>
 
@@ -31,6 +31,14 @@ cpdf.dll, for Jcpdf to be able to find it.</b></p>
 
 <p>In addition, the Jcpdf package provides documentation with each function, which
 you can view in your IDE.</p>
+
+<h3>Usage</h3>
+
+<p>Create an instance of the library with, for example <code>Jcpdf.jcpdf = new Jcpdf()</code>. You must call <code>startup()</code> to initialise the library prior to calling any other function.</p>
+
+<p>PDFs are of type <code>Jcpdf.Pdf</code>. Page ranges are of type <code>Jcpdf.Range</code>. Both PDFs and ranges are not automatically garbage-collected. Use <code>try</code> or the <code>close()</code> method to dispose of them.</p>
+
+<p>Exceptions are of type <code>Jcpdf.CpdfError</code> and may be raised by any function.</p>
 
 <h3>Contact</h3>
 

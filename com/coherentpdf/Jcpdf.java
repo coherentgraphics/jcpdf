@@ -95,7 +95,7 @@ public class Jcpdf {
     /** Encryption method: 256 bit AES encryption, do not encrypt metadata */
     public static int aes256bitisofalse = 6;
     /** Encryption method: 256 bit AES encryption, encrypt metadata */
-    public static int aes256bitiso = 7;
+    public static int aes256bitisotrue = 7;
 
     /** Page label style: 1, 2, 3... */
     public static int decimalArabic = 0;
@@ -515,8 +515,8 @@ public class Jcpdf {
 
     /** Writes a PDF document as encrypted. The encryption method and permissions are drawn from Jcpdf's fields, documented above.
     @param pdf PDF document
-    @param encryption_method encryption method
-    @param permissions array of permissions
+    @param encryption_method encryption method, e.g {@link #aes256bitisofalse aes256bitisofalse} 
+    @param permissions array of permissions e.g {@link #noEdit noEdit}
     @param owner_password owner password
     @param user_password user password
     @param linearize linearize
@@ -533,8 +533,8 @@ public class Jcpdf {
      argument will be invalid after this call, and should not be used again.
 
     @param pdf PDF document
-    @param encryption_method encryption method
-    @param permissions array of permissions
+    @param encryption_method encryption method, e.g {@link #aes256bitisofalse aes256bitisofalse} 
+    @param permissions array of permissions e.g {@link #noEdit noEdit}
     @param owner_password owner password
     @param user_password user password
     @param linearize linearize
@@ -548,10 +548,10 @@ public class Jcpdf {
         XtoFileEncryptedExt(pdf, encryption_method, permissions, encodeUTF8(owner_password), encodeUTF8(user_password), linearize, makeid, preserve_objstm, generate_objstm, compress_objstm, encodeUTF8(filename));
     }
 
-    /** Returns <code>true</code> if the given permission (restriction) is present. */
+    /** Returns <code>true</code> if the given permission (restriction) such as {@link #noEdit noEdit} is present. */
     public native boolean hasPermission(Pdf pdf, int permission) throws CpdfError;
     
-    /** Returns the encryption method currently in use on a document. */
+    /** Returns the encryption method currently in use on a document, such as {@link #aes256bitisofalse aes256bitisofalse}. */
     public native int encryptionKind(Pdf pdf) throws CpdfError;
 
     /* CHAPTER 2. Merging and Splitting */
@@ -607,7 +607,7 @@ public class Jcpdf {
     /** Scales the page content to fit the given page size, possibly multiplied by scale (typically 1.0).
     @param pdf PDF document
     @param range page range
-    @param papersize paper size
+    @param papersize paper size, such as {@link #a4portrait a0portrait}
     @param scale scale (typically 1.0)
     */
     public native void scaleToFitPaper(Pdf pdf, Range range, int papersize, double scale) throws CpdfError;
@@ -616,7 +616,7 @@ public class Jcpdf {
     <code>p1</code> and <code>p2</code> by the scale given. See the documentation for the chosen anchor.
     @param pdf PDF document
     @param range page range
-    @param anchor position anchor
+    @param anchor position anchor, such as {@link #posCentre posCentre}
     @param p1 position parameter 1
     @param p2 position parameter 2
     @param scale scale
@@ -776,7 +776,7 @@ public class Jcpdf {
     /** Typesets a table
     of contents from existing bookmarks and prepends it to the document.
     @param pdf PDF document
-    @param font font
+    @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param title table of contents title
     @param bookmark if <code>true</code>, the table of contents gets its own bookmark. */
@@ -812,7 +812,7 @@ public class Jcpdf {
      * @param range page range
      * @param isover if <code>true</code>, <code>pdf</code> goes over <code>pdf2</code> otherwise under
      * @param scale_stamp_to_fit if <code>true</code> scales the stamp to fit the page.
-     * @param anchor position anchor
+     * @param anchor position anchor, such as {@link #posCentre posCentre}
      * @param p1 position parameter one
      * @param p2 position parameter two
      * @param relative_to_cropbox if <code>true</code>, the position is relative to the crop box rather than the media box. */
@@ -828,12 +828,12 @@ public class Jcpdf {
      * @param pdf PDF document
      * @param range page range
      * @param text the text to stamp, including any special codes
-     * @param anchor position anchor
+     * @param anchor position anchor, such as {@link #posCentre posCentre}
      * @param p1 position parameter one
      * @param p2 position parameter two
      * @param linespacing line spacing
      * @param bates starting bates number
-     * @param font font 
+     * @param font font, such as {@link #timesRoman timesRoman}
      * @param fontsize font size
      * @param r red component of colour
      * @param g green component of colour
@@ -842,7 +842,7 @@ public class Jcpdf {
      * @param cropbox if <code>true</code>, relative to cropbox rather than media box
      * @param outline text is outline
      * @param opacity opacity
-     * @param justification justification
+     * @param justification justification, such as {@link #leftJustify leftJustify}
      * @param midline position is relative to midline not baseline
      * @param topline position is relative to topline not baseline
      * @param filename file name, if requied by special code in text
@@ -860,10 +860,10 @@ public class Jcpdf {
      * @param pdf PDF document
      * @param range page range
      * @param text the text to stamp, including any special codes
-     * @param anchor position anchor
+     * @param anchor position anchor, such as {@link #posCentre posCentre}
      * @param p1 position parameter one
      * @param p2 position parameter two
-     * @param font font 
+     * @param font font, such as {@link #timesRoman timesRoman}
      * @param fontsize font size
      * */
     public void addTextSimple(Pdf pdf, Range range, String text, int anchor, double p1, double p2, int font, double fontsize) throws CpdfError
@@ -877,7 +877,7 @@ public class Jcpdf {
     native int XtextWidth(int font, byte[] text) throws CpdfError;
     
     /** Returns the width of a given string in the given font in thousandths of a point.
-     * @param font font
+     * @param font font, such as {@link #timesRoman timesRoman}
      * @param text text*/
     public int textWidth(int font, String text) throws CpdfError
     {
@@ -1259,10 +1259,10 @@ public class Jcpdf {
     /** Marks a document as untrapped in XMP metadata. */
     public native void markUntrappedXMP(Pdf pdf) throws CpdfError;
 
-    /** Sets the page layout for a document. */
+    /** Sets the page layout for a document, such as {@link #singlePage singlePage} */
     public native void setPageLayout(Pdf pdf, int layout) throws CpdfError;
     
-    /** Sets the page mode for a document. */
+    /** Sets the page mode for a document, such as {@link #useNone useNone} */
     public native void setPageMode(Pdf pdf, int mode) throws CpdfError;
     
     /** Sets the hide toolbar flag. */
@@ -1319,7 +1319,7 @@ public class Jcpdf {
     
     /** Adds page labels to a document.
      * @param pdf PDF document
-     * @param style label style
+     * @param style label style, such as {@link #decimalArabic decimalArabic}
      * @param prefix text for each label
      * @param offset can be used to shift the numbering up or down
      * @param range page range
@@ -1769,7 +1769,7 @@ public class Jcpdf {
     public native Pdf blankDocument(double w, double h, int pages) throws CpdfError;
 
     /** Makes a blank document given a page size and number of pages.
-    @param papersize paper size
+    @param papersize paper size, such as {@link #a0portrait a0portrait}
     @param pages number of pages */
     public native Pdf blankDocumentPaper(int papersize, int pages) throws CpdfError;
     
@@ -1781,7 +1781,7 @@ public class Jcpdf {
     size.
     @param w width of page
     @param h height of page
-    @param font font
+    @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param filename file name */
     public Pdf textToPDF(double w, double h, int font, double fontsize, String filename) throws CpdfError
@@ -1790,8 +1790,8 @@ public class Jcpdf {
     }
     
     /** Typesets a UTF8 text file ragged right on a page of the given size in the given font and font size.
-    @param papersize paper size
-    @param font font
+    @param papersize paper size, such as {@link #a0portrait a0portrait}
+    @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param filename file name */
     public Pdf textToPDFPaper(int papersize, int font, double fontsize, String filename) throws CpdfError
