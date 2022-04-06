@@ -7,3 +7,4 @@ cp libjcpdf.dylib test/
 cp ../cpdflib-source/libcpdf.so libcpdf.dylib
 javac ./com/coherentpdf/Jcpdf.java
 javac ./com/coherentpdf/Testjcpdf.java
+jar cf coherentpdf.jar com
