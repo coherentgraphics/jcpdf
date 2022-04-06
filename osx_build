@@ -8,3 +8,5 @@ javac ./com/coherentpdf/Jcpdf.java
 cp ../cpdflib-source/libcpdf.so libcpdf.dylib
 #Publish the .jar
 jar cf coherentpdf.jar com
+#Build the tests, which use the .jar
+javac Testjcpdf.java

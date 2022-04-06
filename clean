@@ -3,6 +3,7 @@ rm -rf testoutputs/*.pdf testoutputs/*.json testoutputs/*.txt
 rm -f merged.pdf
 rm -f coherentpdf.jar
 rm -f *.html *.css *.js *.svg
+rm -f *.class
 rm -rf element-list
 rm -rf resources
 rm -rf script-dir
