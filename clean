@@ -1,4 +1,4 @@
-rm -f Jcpdf.h com/coherentpdf/*.class com_coherentpdf_Jcpdf.h libjcpdf.dylib jcpdf.dll test/libjcpdf.dylib test/jcpdf.dll libcpdf.dylib foo foo2 foo.diff *.log
+rm -f Jcpdf.h com/coherentpdf/*.class com_coherentpdf_Jcpdf.h libjcpdf.dylib jcpdf.dll test/libjcpdf.dylib test/jcpdf.dll libcpdf.dylib foo foo2 foo.diff *.log *.dylib *.so *.dll
 rm -rf testoutputs/*.pdf testoutputs/*.json testoutputs/*.txt
 rm -f merged.pdf
 rm -f coherentpdf.jar
