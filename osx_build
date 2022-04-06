@@ -5,3 +5,5 @@ cc -shared -fpic -I../cpdflib-source -lcpdf -I$JAVA_HOME/include -I$JAVA_HOME/in
 #Copy shipping component to test/
 cp libjcpdf.dylib test/
 cp ../cpdflib-source/libcpdf.so libcpdf.dylib
+javac ./com/coherentpdf/Jcpdf.java
+javac ./com/coherentpdf/Testjcpdf.java
