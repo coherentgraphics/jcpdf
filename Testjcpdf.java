@@ -1,4 +1,4 @@
-package com.coherentpdf;
+import com.coherentpdf.Jcpdf;
 
 public class Testjcpdf
 {
