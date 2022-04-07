@@ -5,7 +5,7 @@ cc -shared -fpic -I../cpdflib-source -lcpdf -I$JAVA_HOME/include -I$JAVA_HOME/in
 #Build the library
 javac ./com/coherentpdf/Jcpdf.java
 #Copy cpdflib dynamic libaray
-cp ../cpdflib-source/libcpdf.so libcpdf.dylib
+cp ../cpdflib-source/libcpdf.so .
 #Publish the .jar
 jar cf coherentpdf.jar com
 #Build the tests, which use the .jar

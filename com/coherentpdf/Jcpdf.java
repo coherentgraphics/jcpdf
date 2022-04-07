@@ -8,7 +8,7 @@ public class Jcpdf {
      #startup() startup()}</code> too, before calling any other function.*/
     public Jcpdf()
     {
-      System.loadLibrary("cpdf");
+      //System.loadLibrary("cpdf");
       System.loadLibrary("jcpdf");
     }
     
