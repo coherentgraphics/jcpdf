@@ -46,11 +46,11 @@ int getRange(JNIEnv * env, jobject jobj, jobject orange)
 
 void checkerror(JNIEnv *env)
 {
-  if (cpdf_lastError != 0)
+  if (cpdf_fLastError() != 0)
   {
       cpdf_clearError();
       jclass cls = (*env)->FindClass(env, "com/coherentpdf/Jcpdf$CpdfError");
-      if (cls != NULL) (*env)->ThrowNew(env, cls, cpdf_lastErrorString);
+      if (cls != NULL) (*env)->ThrowNew(env, cls, cpdf_fLastErrorString());
       (*env)->DeleteLocalRef(env, cls);
   }
 }
