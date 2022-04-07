@@ -1,7 +1,7 @@
 #Make headers
 javac ./com/coherentpdf/Jcpdf.java -h .
-#Copy cpdflib dynamic libaray
-cp ../cpdflib-source/libcpdf.dll cpdf.dll
+#Copy cpdflib dynamic library
+cp ../cpdflib-source/libcpdf.dll .
 #Build shared library
 cc -shared -fpic -I../cpdflib-source -L. -lcpdf -I$JAVA_HOME/include -I$JAVA_HOME/include/win32 jcpdfwrapper.c -o jcpdf.dll
 #Build the library
