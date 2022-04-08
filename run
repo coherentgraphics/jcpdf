@@ -1,2 +1,2 @@
 #Try it out, using libcpdf.dylib, and the published .jar
-CAMLPDF_REPRODUCIBLE_IDS=true CPDF_REPRODUCIBLE_DATES=true java -cp . -Djava.library.path=. Testjcpdf
+LD_LIBRARY_PATH=. CAMLPDF_REPRODUCIBLE_IDS=true CPDF_REPRODUCIBLE_DATES=true java -cp . -Djava.library.path=. Testjcpdf
