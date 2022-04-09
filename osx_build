@@ -3,7 +3,7 @@ javac ./com/coherentpdf/Jcpdf.java -h .
 #Copy cpdflib dynamic library
 cp ../cpdflib-source/libcpdf.so .
 #Build shared library
-cc -shared -fpic -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin jcpdfwrapper.c -lcpdf -o libjcpdf.dylib
+cc -shared -fpic -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin jcpdfwrapper.c -L. -lcpdf -o libjcpdf.dylib
 #Build the library
 javac ./com/coherentpdf/Jcpdf.java
 #Publish the .jar
