@@ -21,16 +21,16 @@ has access to the jcpdf and cpdf DLLs, which are not part of the Java .jar.</p>
 in your java.library.path. The cpdf DLL itself will be searched for not by
 Java, but by your system, as a dependency of jcpdf.</p>
 
-<p>Windows: Files should be named jcpdf.dll and libcpdf.dll. Put jcpdf.dll in your
+<p><b>Windows</b> Files should be named jcpdf.dll and libcpdf.dll. Put jcpdf.dll in your
 java.library.path and then libcpdf.dll in the same folder, or in a standard
 location such as System32.</p>
 
-<p>Linux: Files should be named libjcpdf.so and libcpdf.so. Put libjcpdf.so in
+<p><b>Linux</b> Files should be named libjcpdf.so and libcpdf.so. Put libjcpdf.so in
 your java.library.path. You must put libcpdf.so in a standard location such as
 /usr/local/lib, or set LD_LIBRARY_PATH. Simply putting it in the same folder as
 libjcpdf.so will not work.</p>
 
-<p>MacOS: Files should be named libjcpdf.dylib and libcpdf.so. Put libjcpdf.dylib
+<p><b>MacOS</b> Files should be named libjcpdf.dylib and libcpdf.so. Put libjcpdf.dylib
 in java.library.path. You can put libcpdf.so in the same folder - it will be
 picked up automatically.</p>
 
@@ -46,7 +46,7 @@ you can view in your IDE.</p>
 
 <h3>Usage</h3>
 
-<p>Create an instance of the library with, for example <code>Jcpdf.jcpdf = new Jcpdf()</code>. You must call <code>startup()</code> to initialise the library prior to calling any other function.</p>
+<p>Create an instance of the library with, for example <code>Jcpdf.jcpdf = new Jcpdf()</code>. <b>You must call <code>startup()</code> to initialise the library prior to calling any other function.</b></p>
 
 <p>PDFs are of type <code>Jcpdf.Pdf</code>. Page ranges are of type <code>Jcpdf.Range</code>. Both PDFs and ranges are not automatically garbage-collected. Use <code>try</code> or the <code>close()</code> method to dispose of them.</p>
 
