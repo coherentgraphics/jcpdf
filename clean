@@ -2,12 +2,13 @@ rm -f Jcpdf.h com/coherentpdf/*.class com_coherentpdf_Jcpdf.h libjcpdf.dylib jcp
 rm -rf testoutputs/*.pdf testoutputs/*.json testoutputs/*.txt
 rm -f merged.pdf
 rm -f coherentpdf.jar
-rm -f *.html *.css *.js *.svg
+rm -f javadoc/*.html javadoc/*.css javadoc/*.js javadoc/*.svg
 rm -f *.class
-rm -rf element-list
-rm -rf resources
-rm -rf script-dir
-rm -rf legal
+rm -rf javadoc/element-list
+rm -rf javadoc/resources
+rm -rf javadoc/script-dir
+rm -rf javadoc/legal
+rm -rf javadoc/com
 rm -rf com/coherentpdf/Jcpdf.html
 rm -rf com/coherentpdf/Jcpdf.CpdfError.html
 rm -rf com/coherentpdf/Jcpdf.Pdf.html
