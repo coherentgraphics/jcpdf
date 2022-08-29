@@ -903,10 +903,10 @@ public class Testjcpdf
             jcpdf.removeDictEntrySearch(misc13, "/Producer", "1");
             jcpdf.toFile(misc13, "testoutputs/17removedictentrysearch.pdf", false, false);
             System.out.println("---cpdf_replaceDictEntry()");
-            jcpdf.replaceDictEntry(misc14, "/Producer", "{\"I\" : 1}");
+            jcpdf.replaceDictEntry(misc14, "/Producer", "\"NewProducer\"");
             jcpdf.toFile(misc14, "testoutputs/17replacedictentry.pdf", false, false);
             System.out.println("---cpdf_replaceDictEntrySearch()");
-            jcpdf.replaceDictEntrySearch(misc15, "/Producer", "1", "2");
+            jcpdf.replaceDictEntrySearch(misc15, "/Producer", "\"NewProducer2\"", "\"pdfTeX-1.40.22\"");
             jcpdf.toFile(misc15, "testoutputs/17replacedictentrysearch.pdf", false, false);
             System.out.println("---cpdf_getDictEntries()");
             byte[] entries = jcpdf.getDictEntries(misc16, "/Producer");
