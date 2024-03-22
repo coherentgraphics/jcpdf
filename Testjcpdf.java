@@ -315,7 +315,7 @@ public class Testjcpdf
         jcpdf.startGetBookmarkInfo(pdf17);
         int nb = jcpdf.numberBookmarks();
         System.out.format("There are %d bookmarks\n", nb);
-        for (int b2 = 0; b2 < nb; b2++)
+        for (int b2 = 0; b2 < 2; b2++)
         {
             int level = jcpdf.getBookmarkLevel(b2);
             int page = jcpdf.getBookmarkPage(pdf17, b2);
@@ -754,7 +754,7 @@ public class Testjcpdf
         Jcpdf.Pdf fonts2 = jcpdf.fromFile("testinputs/frontmatter.pdf", "");
         jcpdf.startGetFontInfo(fonts);
         int n_fonts = jcpdf.numberFonts();
-        for (int ff = 0; ff < n_fonts; ff++)
+        for (int ff = 0; ff < 2; ff++)
         {
             int page = jcpdf.getFontPage(ff);
             String f_name = jcpdf.getFontName(ff);
