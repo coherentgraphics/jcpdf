@@ -999,15 +999,20 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarksJSON
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtableOfContents
-  (JNIEnv * env, jobject jobj, jobject opdf, jint font, jdouble fontsize, jbyteArray data, jboolean bookmark)
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray font, jdouble fontsize, jbyteArray data, jboolean bookmark)
 {
     int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
-    cpdf_tableOfContents(pdf, font, fontsize, str, bookmark);
+    int length2 = (*env)->GetArrayLength(env, font);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, font, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    cpdf_tableOfContents(pdf, str2, fontsize, str, bookmark);
     free(str);
+    free(str2);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    (*env)->ReleaseByteArrayElements(env, font, (jbyte *) memory2, 0);
     checkerror(env);
 }
 
@@ -1059,7 +1064,7 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_combinePages
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XaddText
-  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jobject orange, jbyteArray data, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jint font, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jbyteArray data2, jdouble linewidth, jboolean embed_fonts)
+  (JNIEnv * env, jobject jobj, jboolean metrics, jobject opdf, jobject orange, jbyteArray data, jint anchor, jdouble p1, jdouble p2, jdouble linespacing, jint bates, jbyteArray data3, jdouble fontsize, jdouble r, jdouble g, jdouble b, jboolean underneath, jboolean cropbox, jboolean outline, jdouble opacity, jint justification, jboolean midline, jboolean topline, jbyteArray data2, jdouble linewidth, jboolean embed_fonts)
 {
     int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
@@ -1069,17 +1074,22 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XaddText
     int length2 = (*env)->GetArrayLength(env, data2);
     jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
     char* str2 = cstring_of_jbytes(memory2, length2);
+    int length3 = (*env)->GetArrayLength(env, data3);
+    jbyte* memory3 = (*env)->GetByteArrayElements(env, data3, 0);
+    char* str3 = cstring_of_jbytes(memory3, length3);
     struct cpdf_position p = {.cpdf_anchor = anchor, .cpdf_coord1 = p1, .cpdf_coord2 = p2};
-    cpdf_addText(metrics, pdf, range, str, p, linespacing, bates, font, fontsize, r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, str2, linewidth, embed_fonts);
+    cpdf_addText(metrics, pdf, range, str, p, linespacing, bates, str3, fontsize, r, g, b, underneath, cropbox, outline, opacity, justification, midline, topline, str2, linewidth, embed_fonts);
     free(str);
     free(str2);
+    free(str3);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
+    (*env)->ReleaseByteArrayElements(env, data3, (jbyte *) memory3, 0);
     checkerror(env);
 }
 
   JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XaddTextSimple
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jbyteArray data, jint anchor, jdouble p1, jdouble p2, jint font, jdouble fontsize)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jbyteArray data, jint anchor, jdouble p1, jdouble p2, jbyteArray data2, jdouble fontsize)
 {
     int range = getRange(env, jobj, orange);
     int pdf = getPDF(env, jobj, opdf);
@@ -1087,9 +1097,14 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XaddText
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
-    cpdf_addTextSimple(pdf, range, str, p, font, fontsize);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    cpdf_addTextSimple(pdf, range, str, p, str2, fontsize);
     free(str);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);    
     checkerror(env);
 }
 
@@ -1103,14 +1118,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeText
 }
 
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_XtextWidth
-  (JNIEnv * env, jobject jobj, jint font, jbyteArray data)
+  (JNIEnv * env, jobject jobj, jbyteArray data2, jbyteArray data)
 {
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
-    int w = cpdf_textWidth(font, str);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int w = cpdf_textWidth(str2, str);
     free(str);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     checkerror(env);
     return w;
 }
@@ -2393,27 +2413,37 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_blankDocumentPaper
 }
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XtextToPDF
-  (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jint font, jdouble fontsize, jbyteArray data)
+  (JNIEnv * env, jobject jobj, jdouble w, jdouble h, jbyteArray data2, jdouble fontsize, jbyteArray data)
 {
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
-    int result = cpdf_textToPDF(w, h, font, fontsize, str);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);    
+    int result = cpdf_textToPDF(w, h, str2, fontsize, str);
     free(str);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     checkerror(env);
     return makePDF(env, jobj, result);
 }
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XtextToPDFPaper
-  (JNIEnv * env, jobject jobj, jint papersize, jint font, jdouble fontsize, jbyteArray data)
+  (JNIEnv * env, jobject jobj, jint papersize, jbyteArray data2, jdouble fontsize, jbyteArray data)
 {
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
-    int result = cpdf_textToPDFPaper(papersize, font, fontsize, str);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);    
+    int result = cpdf_textToPDFPaper(papersize, str2, fontsize, str);
     free(str);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
     checkerror(env);
     return makePDF(env, jobj, result);
 }

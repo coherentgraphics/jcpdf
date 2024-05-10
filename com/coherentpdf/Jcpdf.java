@@ -168,29 +168,29 @@ public class Jcpdf {
     public static int uslegallandscape = 15;
 
     /** Standard font: Times Roman */
-    public static int timesRoman = 0;
+    public static String timesRoman = "Times-Roman";
     /** Standard font: Times Bold */
-    public static int timesBold = 1;
+    public static String timesBold = "Times-Bold";
     /** Standard font: Times Italic */
-    public static int timesItalic = 2;
+    public static String timesItalic = "Times-Italic";
     /** Standard font: Times Bold Italic */
-    public static int timesBoldItalic = 3;
+    public static String timesBoldItalic = "Times-BoldItalic";
     /** Standard font: Helvetica */
-    public static int helvetica = 4;
+    public static String helvetica = "Helvetica";
     /** Standard font: Helvetica Bold */
-    public static int helveticaBold = 5;
+    public static String helveticaBold = "Helvetica-Bold";
     /** Standard font: Helvetica Oblique */
-    public static int helveticaOblique = 6;
+    public static String helveticaOblique = "Helvetica-Oblique";
     /** Standard font: Helvetica Bold Oblique */
-    public static int helveticaBoldOblique = 7;
+    public static String helveticaBoldOblique = "Helvetica-BoldOblique";
     /** Standard font: Courier */
-    public static int courier = 8;
+    public static String courier = "Courier";
     /** Standard font: Courier Bold */
-    public static int courierBold = 9;
+    public static String courierBold = "Courier-Bold";
     /** Standard font: Courier Oblique */
-    public static int courierOblique = 10;
+    public static String courierOblique = "Courier-Oblique";
     /** Standard font: Courier Bold Oblique */
-    public static int courierBoldOblique = 11;
+    public static String courierBoldOblique = "Courier-BoldOblique";
 
     /** Position anchor: absolute centre. Takes two numbers, x and y. */
     public static int posCentre = 0;
@@ -877,7 +877,7 @@ public class Jcpdf {
     /** Sets the bookmarks from JSON bookmark data. */
     public native void setBookmarksJSON(Pdf pdf, byte[] data) throws CpdfError;
 
-    native void XtableOfContents(Pdf pdf, int font, double fontsize,
+    native void XtableOfContents(Pdf pdf, byte[] font, double fontsize,
                                  byte[] title, boolean bookmark)
         throws CpdfError;
     
@@ -889,11 +889,11 @@ public class Jcpdf {
     @param title table of contents title
     @param bookmark if <code>true</code>, the table of contents gets its own
     bookmark. */
-    public void tableOfContents(Pdf pdf, int font, double fontsize,
+    public void tableOfContents(Pdf pdf, String font, double fontsize,
                                 String title, boolean bookmark)
         throws CpdfError
     {
-        XtableOfContents(pdf, font, fontsize, encodeUTF8(title), bookmark);
+        XtableOfContents(pdf, encodeUTF8(font), fontsize, encodeUTF8(title), bookmark);
     }
 
     /* CHAPTER 7. Presentations */
@@ -945,7 +945,7 @@ public class Jcpdf {
     
     native void XaddText(boolean metrics, Pdf pdf, Range range, byte[] text,
                          int anchor, double p1, double p2, double linespacing,
-                         int bates, int font, double fontsize, double r,
+                         int bates, byte[] font, double fontsize, double r,
                          double g, double b, boolean underneath,
                          boolean cropbox, boolean outline, double opacity,
                          int justification, boolean midline, boolean topline,
@@ -982,7 +982,7 @@ public class Jcpdf {
     */
     public void addText(boolean metrics, Pdf pdf, Range range, String text,
                         int anchor, double p1, double p2, double linespacing,
-                        int bates, int font, double fontsize, double r,
+                        int bates, String font, double fontsize, double r,
                         double g, double b, boolean underneath,
                         boolean cropbox, boolean outline, double opacity,
                         int justification, boolean midline, boolean topline,
@@ -990,12 +990,12 @@ public class Jcpdf {
         throws CpdfError
     {
         XaddText(metrics, pdf, range, encodeUTF8(text), anchor, p1, p2,
-                 linespacing, bates, font, fontsize, r, g, b, underneath,
+                 linespacing, bates, encodeUTF8(font), fontsize, r, g, b, underneath,
                  cropbox, outline, opacity, justification, midline, topline,
                  encodeUTF8(filename), linewidth, embed_fonts);
     }
     native void XaddTextSimple(Pdf pdf, Range range, byte[] text, int anchor,
-                               double p1, double p2, int font, double fontsize)
+                               double p1, double p2, byte[] font, double fontsize)
         throws CpdfError;
     
     /** Adds text with most parameters default.
@@ -1009,25 +1009,25 @@ public class Jcpdf {
     @param fontsize font size
     */
     public void addTextSimple(Pdf pdf, Range range, String text, int anchor,
-                              double p1, double p2, int font, double fontsize)
+                              double p1, double p2, String font, double fontsize)
         throws CpdfError
     {
-        XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, font,
+        XaddTextSimple(pdf, range, encodeUTF8(text), anchor, p1, p2, encodeUTF8(font),
                        fontsize);
     }
     
     /** Removes any text added by Jcpdf from the given pages. */
     public native void removeText(Pdf pdf, Range range) throws CpdfError;
 
-    native int XtextWidth(int font, byte[] text) throws CpdfError;
+    native int XtextWidth(byte[] font, byte[] text) throws CpdfError;
     
     /** Returns the width of a given string in the given font in thousandths of
     a point.
     @param font font, such as {@link #timesRoman timesRoman}
     @param text text*/
-    public int textWidth(int font, String text) throws CpdfError
+    public int textWidth(String font, String text) throws CpdfError
     {
-        return XtextWidth(font, encodeUTF8(text));
+        return XtextWidth(encodeUTF8(font), encodeUTF8(text));
     }
 
     native void XaddContent(byte[] s, boolean before, Pdf pdf, Range range)
@@ -2016,10 +2016,10 @@ public class Jcpdf {
     public native Pdf blankDocumentPaper(int papersize, int pages)
         throws CpdfError;
     
-    native Pdf XtextToPDF(double w, double h, int font, double fontsize,
+    native Pdf XtextToPDF(double w, double h, byte[] font, double fontsize,
                           byte[] filename)
         throws CpdfError;
-    native Pdf XtextToPDFPaper(int papersize, int font, double fontsize,
+    native Pdf XtextToPDFPaper(int papersize, byte[] font, double fontsize,
                                byte[] filename)
         throws CpdfError;
     
@@ -2030,11 +2030,11 @@ public class Jcpdf {
     @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param filename file name */
-    public Pdf textToPDF(double w, double h, int font, double fontsize,
+    public Pdf textToPDF(double w, double h, String font, double fontsize,
                          String filename)
         throws CpdfError
     {
-        return XtextToPDF(w, h, font, fontsize, encodeUTF8(filename));
+        return XtextToPDF(w, h, encodeUTF8(font), fontsize, encodeUTF8(filename));
     }
     
     /** Typesets a UTF8 text file ragged right on a page of the given size in
@@ -2043,11 +2043,11 @@ public class Jcpdf {
     @param font font, such as {@link #timesRoman timesRoman}
     @param fontsize font size
     @param filename file name */
-    public Pdf textToPDFPaper(int papersize, int font, double fontsize,
+    public Pdf textToPDFPaper(int papersize, String font, double fontsize,
                               String filename)
         throws CpdfError
     {
-        return XtextToPDFPaper(papersize, font, fontsize,
+        return XtextToPDFPaper(papersize, encodeUTF8(font), fontsize,
                                encodeUTF8(filename));
     }
 
