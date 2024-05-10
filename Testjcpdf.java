@@ -828,8 +828,8 @@ public class Testjcpdf
             (Jcpdf.Pdf new1 = jcpdf.blankDocument(100.0, 200.0, 20);
              Jcpdf.Pdf new2 = jcpdf.blankDocumentPaper(jcpdf.a4portrait, 10))
         {
-            jcpdf.toFile(new1, "testoutputs/01blank.pdf", false, false);
-            jcpdf.toFile(new2, "testoutputs/01blanka4.pdf", false, false);
+            jcpdf.toFile(new1, "testoutputs/17blank.pdf", false, false);
+            jcpdf.toFile(new2, "testoutputs/17blanka4.pdf", false, false);
             System.out.println("---cpdf_textToPDF()");
             System.out.println("---cpdf_textToPDFPaper()");
         }
@@ -837,15 +837,15 @@ public class Testjcpdf
             (Jcpdf.Pdf ttpdf = jcpdf.textToPDF(500.0, 600.0, jcpdf.timesItalic, 8.0, "../cpdflib-source/cpdflibtest.c");
              Jcpdf.Pdf ttpdfpaper = jcpdf.textToPDFPaper(jcpdf.a4portrait, jcpdf.timesBoldItalic, 10.0, "../cpdflib-source/cpdflibtest.c"))
         {
-            jcpdf.toFile(ttpdf, "testoutputs/01ttpdf.pdf", false, false);
-            jcpdf.toFile(ttpdfpaper, "testoutputs/01ttpdfpaper.pdf", false, false);
+            jcpdf.toFile(ttpdf, "testoutputs/17ttpdf.pdf", false, false);
+            jcpdf.toFile(ttpdfpaper, "testoutputs/17ttpdfpaper.pdf", false, false);
         }
     }
 
     static void chapter18(Jcpdf jcpdf) throws Jcpdf.CpdfError
     {
         /* CHAPTER 18. Miscellaneous */
-        System.out.println("***** CHAPTER 18. Miscellaneous");
+        System.out.println("***** CHAPTER 19. Miscellaneous");
         try
             (Jcpdf.Pdf misc = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
              Jcpdf.Pdf misc2 = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
@@ -868,52 +868,52 @@ public class Testjcpdf
         {
             System.out.println("---cpdf_draft()");
             jcpdf.draft(misc, all, true);
-            jcpdf.toFile(misc, "testoutputs/17draft.pdf", false, false);
+            jcpdf.toFile(misc, "testoutputs/99draft.pdf", false, false);
             System.out.println("---cpdf_removeAllText()");
             jcpdf.removeAllText(misc2, all);
-            jcpdf.toFile(misc2, "testoutputs/17removealltext.pdf", false, false);
+            jcpdf.toFile(misc2, "testoutputs/99removealltext.pdf", false, false);
             System.out.println("---cpdf_blackText()");
             jcpdf.blackText(misc3, all);
-            jcpdf.toFile(misc3, "testoutputs/17blacktext.pdf", false, false);
+            jcpdf.toFile(misc3, "testoutputs/99blacktext.pdf", false, false);
             System.out.println("---cpdf_blackLines()");
             jcpdf.blackLines(misc4, all);
-            jcpdf.toFile(misc4, "testoutputs/17blacklines.pdf", false, false);
+            jcpdf.toFile(misc4, "testoutputs/99blacklines.pdf", false, false);
             System.out.println("---cpdf_blackFills()");
             jcpdf.blackFills(misc5, all);
-            jcpdf.toFile(misc5, "testoutputs/17blackfills.pdf", false, false);
+            jcpdf.toFile(misc5, "testoutputs/99blackfills.pdf", false, false);
             System.out.println("---cpdf_thinLines()");
             jcpdf.thinLines(misc6, all, 2.0);
-            jcpdf.toFile(misc6, "testoutputs/17thinlines.pdf", false, false);
+            jcpdf.toFile(misc6, "testoutputs/99thinlines.pdf", false, false);
             System.out.println("---cpdf_copyId()");
             jcpdf.copyId(misclogo, misc7);
-            jcpdf.toFile(misc7, "testoutputs/17copyid.pdf", false, false);
+            jcpdf.toFile(misc7, "testoutputs/99copyid.pdf", false, false);
             System.out.println("---cpdf_removeId()");
             jcpdf.removeId(misc8);
-            jcpdf.toFile(misc8, "testoutputs/17removeid.pdf", false, false);
+            jcpdf.toFile(misc8, "testoutputs/99removeid.pdf", false, false);
             System.out.println("---cpdf_setVersion()");
             jcpdf.setVersion(misc9, 1);
-            jcpdf.toFile(misc9, "testoutputs/17setversion.pdf", false, false);
+            jcpdf.toFile(misc9, "testoutputs/99setversion.pdf", false, false);
             System.out.println("---cpdf_setFullVersion()");
             jcpdf.setFullVersion(misc10, 2, 0);
-            jcpdf.toFile(misc10, "testoutputs/17setfullversion.pdf", false, false);
+            jcpdf.toFile(misc10, "testoutputs/99setfullversion.pdf", false, false);
             System.out.println("---cpdf_removeDictEntry()");
             jcpdf.removeDictEntry(misc11, "/Producer");
-            jcpdf.toFile(misc11, "testoutputs/17removedictentry.pdf", false, false);
+            jcpdf.toFile(misc11, "testoutputs/99removedictentry.pdf", false, false);
             System.out.println("---cpdf_removeDictEntrySearch()");
             jcpdf.removeDictEntrySearch(misc13, "/Producer", "1");
-            jcpdf.toFile(misc13, "testoutputs/17removedictentrysearch.pdf", false, false);
+            jcpdf.toFile(misc13, "testoutputs/99removedictentrysearch.pdf", false, false);
             System.out.println("---cpdf_replaceDictEntry()");
             jcpdf.replaceDictEntry(misc14, "/Producer", "\"NewProducer\"");
-            jcpdf.toFile(misc14, "testoutputs/17replacedictentry.pdf", false, false);
+            jcpdf.toFile(misc14, "testoutputs/99replacedictentry.pdf", false, false);
             System.out.println("---cpdf_replaceDictEntrySearch()");
             jcpdf.replaceDictEntrySearch(misc15, "/Producer", "\"NewProducer2\"", "\"pdfTeX-1.40.22\"");
-            jcpdf.toFile(misc15, "testoutputs/17replacedictentrysearch.pdf", false, false);
+            jcpdf.toFile(misc15, "testoutputs/99replacedictentrysearch.pdf", false, false);
             System.out.println("---cpdf_getDictEntries()");
             byte[] entries = jcpdf.getDictEntries(misc16, "/Producer");
             System.out.format("length of entries data = %d\n", entries.length);
             System.out.println("---cpdf_removeClipping()");
             jcpdf.removeClipping(misc12, all);
-            jcpdf.toFile(misc12, "testoutputs/17removeclipping.pdf", false, false);
+            jcpdf.toFile(misc12, "testoutputs/99removeclipping.pdf", false, false);
         }
     }
 
