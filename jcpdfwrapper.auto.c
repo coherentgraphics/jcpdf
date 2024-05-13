@@ -4,6 +4,33 @@
 #include <string.h>
 #include "cpdflibwrapper.h"
 
+/* __AUTODEF unit->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_~();
+    checkerror(env);
+}
+*/
+
+/* __AUTODEF unit->string
+JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj)
+{
+    jstring str = (*env)->NewStringUTF(env, cpdf_~());
+    checkerror(env);
+    return str;
+}
+*/
+
+/* __AUTODEF int->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_~(pdf);
+}
+*/
+
 /* Internal helper functions */
 
 jobject makePDF(JNIEnv * env, jobject jobj, jint pdf)
@@ -55,24 +82,6 @@ void checkerror(JNIEnv *env)
   }
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
-  (JNIEnv * env, jobject jobj, jint pdf)
-{
-    cpdf_deletePdf(pdf);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
-  (JNIEnv * env, jobject jobj, jint range)
-{
-    cpdf_deleteRange(range);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_onExit
-  (JNIEnv * env, jobject jobj)
-{
-    cpdf_onExit();
-}
-
 char * cstring_of_jbytes(jbyte * bytes, int length)
 {
     char* memory = (char *) bytes;
@@ -92,6 +101,10 @@ jbyteArray jbytearray_of_string(JNIEnv *env, char* str)
     return data;
 }
 
+/* __AUTO deletePdf int->unit */
+/* __AUTO deleteRange int->unit */
+/* __AUTO onExit unit->unit */
+
 /* CHAPTER 0. Preliminaries */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
@@ -102,31 +115,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
     checkerror(env);
 }
 
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_version
-  (JNIEnv * env, jobject jobj)
-{
-    jstring str = (*env)->NewStringUTF(env, cpdf_version());
-    checkerror(env);
-    return str;
-}
-
-/* __AUTODEF unit->unit
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
-  (JNIEnv * env, jobject jobj)
-{
-    cpdf_~();
-    checkerror(env);
-}
-*/
-
+/* __AUTO version unit->string */
 /* __AUTO setFast unit->unit */
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
-  (JNIEnv * env, jobject jobj)
-{
-    cpdf_setSlow();
-    checkerror(env);
-}
+/* __AUTO setSlow unit->unit */
 
 /* CHAPTER 1. Basics */
 

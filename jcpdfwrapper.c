@@ -55,24 +55,6 @@ void checkerror(JNIEnv *env)
   }
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
-  (JNIEnv * env, jobject jobj, jint pdf)
-{
-    cpdf_deletePdf(pdf);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
-  (JNIEnv * env, jobject jobj, jint range)
-{
-    cpdf_deleteRange(range);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_onExit
-  (JNIEnv * env, jobject jobj)
-{
-    cpdf_onExit();
-}
-
 char * cstring_of_jbytes(jbyte * bytes, int length)
 {
     char* memory = (char *) bytes;
@@ -92,6 +74,23 @@ jbyteArray jbytearray_of_string(JNIEnv *env, char* str)
     return data;
 }
 
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deletePdf
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_deletePdf(pdf);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_deleteRange
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_deleteRange(pdf);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_onExit
+  (JNIEnv * env, jobject jobj)
+{
+    cpdf_onExit();
+    checkerror(env);
+}
+
 /* CHAPTER 0. Preliminaries */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
@@ -109,14 +108,12 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_version
     checkerror(env);
     return str;
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setFast
   (JNIEnv * env, jobject jobj)
 {
     cpdf_setFast();
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
   (JNIEnv * env, jobject jobj)
 {
