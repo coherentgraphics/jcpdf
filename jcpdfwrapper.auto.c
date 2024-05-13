@@ -31,6 +31,46 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
 }
 */
 
+/* __AUTODEF string->string->pdf
+JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_X~
+  (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    int length2 = (*env)->GetArrayLength(env, data2);
+    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
+    char* str2 = cstring_of_jbytes(memory2, length2);
+    int pdf = cpdf_fromFile(str, str2);
+    free(str);
+    free(str2);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
+    checkerror(env);
+    return makePDF(env, jobj, pdf);
+}
+*/
+
+/* __AUTODEF int->int
+JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    int i = cpdf_~(n);
+    checkerror(env);
+    return i;
+}
+*/
+
+/* __AUTODEF int->string
+JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    jstring result = (*env)->NewStringUTF(env, cpdf_~(n));
+    checkerror(env);
+    return result;
+}
+*/
+
 /* Internal helper functions */
 
 jobject makePDF(JNIEnv * env, jobject jobj, jint pdf)
@@ -121,41 +161,8 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
 
 /* CHAPTER 1. Basics */
 
-JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFile
-  (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
-{
-    int length = (*env)->GetArrayLength(env, data);
-    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
-    char* str = cstring_of_jbytes(memory, length);
-    int length2 = (*env)->GetArrayLength(env, data2);
-    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
-    char* str2 = cstring_of_jbytes(memory2, length2);
-    int pdf = cpdf_fromFile(str, str2);
-    free(str);
-    free(str2);
-    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
-    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
-    checkerror(env);
-    return makePDF(env, jobj, pdf);
-}
-
-JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFileLazy
-  (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
-{
-    int length = (*env)->GetArrayLength(env, data);
-    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
-    char* str = cstring_of_jbytes(memory, length);
-    int length2 = (*env)->GetArrayLength(env, data2);
-    jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
-    char* str2 = cstring_of_jbytes(memory2, length2);
-    int pdf = cpdf_fromFileLazy(str, str2);
-    free(str);
-    free(str2);
-    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
-    (*env)->ReleaseByteArrayElements(env, data2, (jbyte *) memory2, 0);
-    checkerror(env);
-    return makePDF(env, jobj, pdf);
-}
+/* __AUTO fromFile string->string->pdf */
+/* __AUTO fromFileLazy string->string->pdf */
 
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_toMemory
   (JNIEnv * env, jobject obj, jobject opdf, jboolean linearize, jboolean make_id)
@@ -218,77 +225,33 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startEnumeratePDFs
     return n;
 }
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_enumeratePDFsKey
-  (JNIEnv * env, jobject jobj, jint n)
-{
-    int i = cpdf_enumeratePDFsKey(n);
-    checkerror(env);
-    return i;
-}
-
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_enumeratePDFsInfo
-  (JNIEnv * env, jobject jobj, jint n)
-{
-    jstring result = (*env)->NewStringUTF(env, cpdf_enumeratePDFsInfo(n));
-    checkerror(env);
-    return result;
-}
+/* __AUTO enumeratePDFsKey int->int */
+/* __AUTO enumeratePDFsInfo int->string */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endEnumeratePDFs
-  (JNIEnv * env, jobject jobj, jint n)
+  (JNIEnv * env, jobject jobj, jint n) /* FIXME What is this number for? */
 {
     cpdf_endEnumeratePDFs();
     checkerror(env);
     return;
 }
 
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfCm
+/* __AUTODEF float->float
+JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_~
   (JNIEnv * env, jobject jobj, jdouble f)
 {
-    jdouble result = cpdf_ptOfCm(f);
+    jdouble result = cpdf_~(f);
     checkerror(env);
     return result;
 }
+*/
 
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfMm
-  (JNIEnv * env, jobject jobj, jdouble f)
-{
-    jdouble result = cpdf_ptOfMm(f);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfIn
-  (JNIEnv * env, jobject jobj, jdouble f)
-{
-    jdouble result = cpdf_ptOfIn(f);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_inOfPt
-  (JNIEnv * env, jobject jobj, jdouble f)
-{
-    jdouble result = cpdf_inOfPt(f);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_cmOfPt
-  (JNIEnv * env, jobject jobj, jdouble f)
-{
-    jdouble result = cpdf_cmOfPt(f);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_mmOfPt
-  (JNIEnv * env, jobject jobj, jdouble f)
-{
-    jdouble result = cpdf_mmOfPt(f);
-    checkerror(env);
-    return result;
-}
+/* __AUTO ptOfCm float->float */
+/* __AUTO ptOfMm float->float */
+/* __AUTO ptOfIn float->float */
+/* __AUTO inOfPt float->float */
+/* __AUTO cmOfPt float->float */
+/* __AUTO mmOfPt float->float */
 
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_range
   (JNIEnv * env, jobject jobj, jint f, jint t)

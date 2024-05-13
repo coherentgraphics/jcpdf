@@ -140,7 +140,6 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFile
     checkerror(env);
     return makePDF(env, jobj, pdf);
 }
-
 JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFileLazy
   (JNIEnv * env, jobject jobj, jbyteArray data, jbyteArray data2)
 {
@@ -150,7 +149,7 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFileLazy
     int length2 = (*env)->GetArrayLength(env, data2);
     jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
     char* str2 = cstring_of_jbytes(memory2, length2);
-    int pdf = cpdf_fromFileLazy(str, str2);
+    int pdf = cpdf_fromFile(str, str2);
     free(str);
     free(str2);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
@@ -227,7 +226,6 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_enumeratePDFsKey
     checkerror(env);
     return i;
 }
-
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_enumeratePDFsInfo
   (JNIEnv * env, jobject jobj, jint n)
 {
@@ -237,7 +235,7 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_enumeratePDFsInfo
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endEnumeratePDFs
-  (JNIEnv * env, jobject jobj, jint n)
+  (JNIEnv * env, jobject jobj, jint n) /* FIXME What is this number for? */
 {
     cpdf_endEnumeratePDFs();
     checkerror(env);
@@ -251,7 +249,6 @@ JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfCm
     checkerror(env);
     return result;
 }
-
 JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfMm
   (JNIEnv * env, jobject jobj, jdouble f)
 {
@@ -259,7 +256,6 @@ JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfMm
     checkerror(env);
     return result;
 }
-
 JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfIn
   (JNIEnv * env, jobject jobj, jdouble f)
 {
@@ -267,7 +263,6 @@ JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfIn
     checkerror(env);
     return result;
 }
-
 JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_inOfPt
   (JNIEnv * env, jobject jobj, jdouble f)
 {
@@ -275,7 +270,6 @@ JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_inOfPt
     checkerror(env);
     return result;
 }
-
 JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_cmOfPt
   (JNIEnv * env, jobject jobj, jdouble f)
 {
@@ -283,7 +277,6 @@ JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_cmOfPt
     checkerror(env);
     return result;
 }
-
 JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_mmOfPt
   (JNIEnv * env, jobject jobj, jdouble f)
 {
