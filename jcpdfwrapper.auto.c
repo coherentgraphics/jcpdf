@@ -110,12 +110,16 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_version
     return str;
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setFast
+/* __AUTODEF unit->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
   (JNIEnv * env, jobject jobj)
 {
-    cpdf_setFast();
+    cpdf_~();
     checkerror(env);
 }
+*/
+
+/* __AUTO setFast unit->unit */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
   (JNIEnv * env, jobject jobj)
