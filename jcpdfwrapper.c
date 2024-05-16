@@ -525,20 +525,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtoFileEncryptedExt
     checkerror(env);
 }
 
+JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_encryptionKind
+  (JNIEnv * env, jobject jobj, jobject opdf)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    jint result = cpdf_encryptionKind(pdf);
+    checkerror(env);
+    return result;
+}
 JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasPermission
   (JNIEnv * env, jobject jobj, jobject opdf, jint permission)
 {
     int pdf = getPDF(env, jobj, opdf);
     int result = cpdf_hasPermission(pdf, permission);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_encryptionKind
-  (JNIEnv * env, jobject jobj, jobject opdf)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    int result = cpdf_encryptionKind(pdf);
     checkerror(env);
     return result;
 }
@@ -569,7 +568,7 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XdecryptPdfOwner
     checkerror(env);
 }
 
-JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_isEncrypted
+JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_isEncrypted
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
@@ -736,6 +735,7 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotateContents
     checkerror(env);
 }
 
+
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_upright
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
@@ -744,16 +744,14 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_upright
     cpdf_upright(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hFlip
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
-    int pdf = getPDF(env, jobj, opdf);
     int range = getRange(env, jobj, or);
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_hFlip(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_vFlip
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
@@ -780,7 +778,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeCrop
     cpdf_removeCrop(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeTrim
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
@@ -789,7 +786,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeTrim
     cpdf_removeTrim(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeArt
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
@@ -798,30 +794,27 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeArt
     cpdf_removeArt(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeBleed
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
-    int pdf = getPDF(env, jobj, opdf);
     int range = getRange(env, jobj, or);
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_removeBleed(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_trimMarks
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
-    int pdf = getPDF(env, jobj, opdf);
     int range = getRange(env, jobj, or);
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_trimMarks(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_showBoxes
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
-    int pdf = getPDF(env, jobj, opdf);
     int range = getRange(env, jobj, or);
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_showBoxes(pdf, range);
     checkerror(env);
 }
@@ -845,7 +838,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_compress
     cpdf_compress(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decompress
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -853,7 +845,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_decompress
     cpdf_decompress(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_squeezeInMemory
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -981,7 +972,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_getBookmarksJSON
     checkerror(env);
     return b;
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBookmarksJSON
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1172,7 +1162,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_twoUp
     cpdf_twoUp(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_twoUpStack
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1180,21 +1169,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_twoUpStack
     cpdf_twoUpStack(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padBefore
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
+    int range = getRange(env, jobj, or);
     int pdf = getPDF(env, jobj, opdf);
-    int range = getRange(env, jobj, orange);
     cpdf_padBefore(pdf, range);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padAfter
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
 {
+    int range = getRange(env, jobj, or);
     int pdf = getPDF(env, jobj, opdf);
-    int range = getRange(env, jobj, orange);
     cpdf_padAfter(pdf, range);
     checkerror(env);
 }
@@ -1240,24 +1227,22 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_annotationsJSON
 
 /* CHAPTER 11. Document Information and Metadata */
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getVersion
+JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_getVersion
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    int result = cpdf_getVersion(pdf);
+    jint result = cpdf_getVersion(pdf);
     checkerror(env);
     return result;
 }
-
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getMajorVersion
+JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_getMajorVersion
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
     int pdf = getPDF(env, jobj, opdf);
-    int result = cpdf_getMajorVersion(pdf);
+    jint result = cpdf_getMajorVersion(pdf);
     checkerror(env);
     return result;
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetTitle
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1266,7 +1251,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetTitle
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetAuthor
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1275,7 +1259,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetAuthor
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetSubject
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1284,7 +1267,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetSubject
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetKeywords
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1293,7 +1275,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetKeywords
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreator
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1302,7 +1283,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreator
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetProducer
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1311,7 +1291,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetProducer
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreationDate
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1320,7 +1299,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreationDate
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDate
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1337,7 +1315,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetTitleXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetAuthorXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1346,7 +1323,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetAuthorXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetSubjectXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1355,7 +1331,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetSubjectXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetKeywordsXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1364,7 +1339,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetKeywordsXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreatorXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1373,7 +1347,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreatorXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetProducerXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1382,7 +1355,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetProducerXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreationDateXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1391,7 +1363,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetCreationDateXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDateXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1400,7 +1371,6 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDateXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitle
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1413,7 +1383,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitle
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetAuthor
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1426,7 +1395,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetAuthor
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetSubject
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1439,7 +1407,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetSubject
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetKeywords
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1452,7 +1419,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetKeywords
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreator
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1465,7 +1431,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreator
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetProducer
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1478,7 +1443,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetProducer
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreationDate
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1491,7 +1455,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreationDate
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetModificationDate
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1504,7 +1467,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetModificationDate
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitleXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1517,7 +1479,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitleXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetAuthorXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1530,7 +1491,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetAuthorXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetSubjectXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1543,7 +1503,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetSubjectXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetKeywordsXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1556,7 +1515,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetKeywordsXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreatorXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1569,7 +1527,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreatorXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetProducerXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1582,7 +1539,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetProducerXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreationDateXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1595,7 +1551,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetCreationDateXMP
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetModificationDateXMP
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
