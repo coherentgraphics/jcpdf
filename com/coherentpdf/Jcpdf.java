@@ -719,6 +719,16 @@ public class Jcpdf {
                                      double dy)
         throws CpdfError;
 
+    /** Shifts the boxes of the pages in the range.
+    @param pdf PDF document
+    @param range page range
+    @param dx X shift
+    @param dy Y shift
+    */
+    public native void shiftBoxes(Pdf pdf, Range range, double dx,
+                                  double dy)
+        throws CpdfError;
+
     /** Changes the viewing rotation to an absolute value. Appropriate
     rotations are 0, 90, 180, 270.
     @param pdf PDF document

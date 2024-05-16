@@ -4,6 +4,74 @@
 #include <string.h>
 #include "cpdflibwrapper.h"
 
+/* __AUTODEF float->float
+JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jdouble f)
+{
+    jdouble result = cpdf_~(f);
+    checkerror(env);
+    return result;
+}
+*/
+
+/* __AUTODEF pdf->int->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf, jint layout)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_~(pdf, layout);
+    checkerror(env);
+}
+*/
+
+/* __AUTODEF pdf->bool->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_~(pdf, flag);
+    checkerror(env);
+}
+*/
+
+/* __AUTODEF pdf->int->write4
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    double da, db, dc, dd;
+    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
+    cpdf_~(pdf, pagenumber, &da, &db, &dc, &dd);
+    a[0] = da;
+    a[1] = db;
+    a[2] = dc;
+    a[3] = dd;
+    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
+    checkerror(env);
+}
+*/
+
+/* __AUTODEF pdf->range->4doubles->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    int range = getRange(env, jobj, orange);
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_~(pdf, range, minx, maxx, miny, maxy);
+    checkerror(env);
+}
+*/
+
+/* __AUTODEF pdf->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_~(pdf);
+    checkerror(env);
+}
+*/
+
 /* __AUTODEF unit->unit
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
   (JNIEnv * env, jobject jobj)
@@ -227,25 +295,7 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startEnumeratePDFs
 
 /* __AUTO enumeratePDFsKey int->int */
 /* __AUTO enumeratePDFsInfo int->string */
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endEnumeratePDFs
-  (JNIEnv * env, jobject jobj, jint n) /* FIXME What is this number for? */
-{
-    cpdf_endEnumeratePDFs();
-    checkerror(env);
-    return;
-}
-
-/* __AUTODEF float->float
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_~
-  (JNIEnv * env, jobject jobj, jdouble f)
-{
-    jdouble result = cpdf_~(f);
-    checkerror(env);
-    return result;
-}
-*/
-
+/* __AUTO endEnumeratePDFs unit->unit */
 /* __AUTO ptOfCm float->float */
 /* __AUTO ptOfMm float->float */
 /* __AUTO ptOfIn float->float */
@@ -653,14 +703,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scaleToFitPaper
     checkerror(env);
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_shiftContents
+/* __AUTODEF pdf->range->double->double->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jdouble dx, jdouble dy)
 {
     int range = getRange(env, jobj, or);
     int pdf = getPDF(env, jobj, opdf);
-    cpdf_shiftContents(pdf, range, dx, dy);
+    cpdf_~(pdf, range, dx, dy);
     checkerror(env);
 }
+*/
+
+/* __AUTO shiftContents pdf->range->double->double->unit */
+/* __AUTO shiftBoxes pdf->range->double->double->unit */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scaleContents
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jint anchor, jdouble p1, jdouble p2, jdouble scale)
@@ -1620,220 +1675,28 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasBox
     return result;
 }
 
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getMediaBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    double da, db, dc, dd;
-    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
-    cpdf_getMediaBox(pdf, pagenumber, &da, &db, &dc, &dd);
-    a[0] = da;
-    a[1] = db;
-    a[2] = dc;
-    a[3] = dd;
-    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getCropBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    double da, db, dc, dd;
-    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
-    cpdf_getCropBox(pdf, pagenumber, &da, &db, &dc, &dd);
-    a[0] = da;
-    a[1] = db;
-    a[2] = dc;
-    a[3] = dd;
-    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getArtBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    double da, db, dc, dd;
-    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
-    cpdf_getArtBox(pdf, pagenumber, &da, &db, &dc, &dd);
-    a[0] = da;
-    a[1] = db;
-    a[2] = dc;
-    a[3] = dd;
-    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getTrimBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    double da, db, dc, dd;
-    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
-    cpdf_getTrimBox(pdf, pagenumber, &da, &db, &dc, &dd);
-    a[0] = da;
-    a[1] = db;
-    a[2] = dc;
-    a[3] = dd;
-    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getBleedBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    double da, db, dc, dd;
-    double* a = (*env)->GetDoubleArrayElements(env, data, 0); 
-    cpdf_getBleedBox(pdf, pagenumber, &da, &db, &dc, &dd);
-    a[0] = da;
-    a[1] = db;
-    a[2] = dc;
-    a[3] = dd;
-    (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMediabox
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
-{
-    int range = getRange(env, jobj, orange);
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setMediabox(pdf, range, minx, maxx, miny, maxy);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCropBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
-{
-    int range = getRange(env, jobj, orange);
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setCropBox(pdf, range, minx, maxx, miny, maxy);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTrimBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
-{
-    int range = getRange(env, jobj, orange);
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setTrimBox(pdf, range, minx, maxx, miny, maxy);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setArtBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
-{
-    int range = getRange(env, jobj, orange);
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setArtBox(pdf, range, minx, maxx, miny, maxy);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBleedBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
-{
-    int range = getRange(env, jobj, orange);
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setBleedBox(pdf, range, minx, maxx, miny, maxy);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrapped
-  (JNIEnv * env, jobject jobj, jobject opdf)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_markTrapped(pdf);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrapped
-  (JNIEnv * env, jobject jobj, jobject opdf)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_markUntrapped(pdf);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrappedXMP
-  (JNIEnv * env, jobject jobj, jobject opdf)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_markTrappedXMP(pdf);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrappedXMP
-  (JNIEnv * env, jobject jobj, jobject opdf)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_markUntrappedXMP(pdf);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageLayout
-  (JNIEnv * env, jobject jobj, jobject opdf, jint layout)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setPageLayout(pdf, layout);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageMode
-  (JNIEnv * env, jobject jobj, jobject opdf, jint mode)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setPageMode(pdf, mode);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideToolbar
-  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_hideToolbar(pdf, flag);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideMenubar
-  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_hideMenubar(pdf, flag);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideWindowUi
-  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_hideWindowUi(pdf, flag);
-    checkerror(env);
-}
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_fitWindow
-  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_fitWindow(pdf, flag);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_centerWindow
-  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_centerWindow(pdf, flag);
-    checkerror(env);
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_displayDocTitle
-  (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_displayDocTitle(pdf, flag);
-    checkerror(env);
-}
+/* __AUTO getMediaBox pdf->int->write4 */
+/* __AUTO getCropBox pdf->int->write4 */
+/* __AUTO getArtBox pdf->int->write4 */
+/* __AUTO getTrimBox pdf->int->write4 */
+/* __AUTO getBleedBox pdf->int->write4 */
+/* __AUTO setMediabox pdf->range->4doubles->unit */
+/* __AUTO setCropBox pdf->range->4doubles->unit */
+/* __AUTO setArtBox pdf->range->4doubles->unit */
+/* __AUTO setBleedBox pdf->range->4doubles->unit */
+/* __AUTO setTrimBox pdf->range->4doubles->unit */
+/* __AUTO markTrapped pdf->unit */
+/* __AUTO markUntrapped pdf->unit */
+/* __AUTO markTrappedXMP pdf->unit */
+/* __AUTO markUntrappedXMP pdf->unit */
+/* __AUTO setPageLayout pdf->int->unit */
+/* __AUTO setPageMode pdf->int->unit */
+/* __AUTO hideToolbar pdf->bool->unit */
+/* __AUTO hideMenubar pdf->bool->unit */
+/* __AUTO hideWindowUi pdf->bool->unit */
+/* __AUTO fitWindow pdf->bool->unit */
+/* __AUTO centerWindow pdf->bool->unit */
+/* __AUTO displayDocTitle pdf->bool->unit */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_openAtPage
   (JNIEnv * env, jobject jobj, jobject opdf, jboolean fit, jint pagenumber)

@@ -237,6 +237,9 @@ public class Testjcpdf
             System.out.println("---cpdf_shiftContents()");
             jcpdf.shiftContents(pagespdf5, r5, 1.5, 1.25);
             jcpdf.toFile(pagespdf5, "testoutputs/03shiftcontents.pdf", false, false);
+            System.out.println("---cpdf_shiftBoxes()");
+            jcpdf.shiftBoxes(pagespdf5, r5, 100, 100);
+            jcpdf.toFile(pagespdf5, "testoutputs/03shiftboxes.pdf", false, false);
             System.out.println("---cpdf_rotate()");
             jcpdf.rotate(pagespdf6, r6, 90);
             jcpdf.toFile(pagespdf6, "testoutputs/03rotate.pdf", false, false);
@@ -391,6 +394,7 @@ public class Testjcpdf
         jcpdf.toFile(textfile, "testoutputs/08removed_text.pdf", false, false);
         System.out.println("---cpdf_textWidth()");
         int w = jcpdf.textWidth(jcpdf.timesRoman, "What is the width of this?");
+        System.out.format("width is %d thousandths of a point\n", w);
         Jcpdf.Pdf stamp = jcpdf.fromFile("testinputs/logo.pdf", "");
         Jcpdf.Pdf stampee = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         Jcpdf.Range stamp_range = jcpdf.all(stamp);

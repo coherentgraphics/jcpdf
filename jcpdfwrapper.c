@@ -233,15 +233,12 @@ JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_enumeratePDFsInfo
     checkerror(env);
     return result;
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endEnumeratePDFs
-  (JNIEnv * env, jobject jobj, jint n) /* FIXME What is this number for? */
+  (JNIEnv * env, jobject jobj)
 {
     cpdf_endEnumeratePDFs();
     checkerror(env);
-    return;
 }
-
 JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_ptOfCm
   (JNIEnv * env, jobject jobj, jdouble f)
 {
@@ -691,6 +688,14 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_shiftContents
     int range = getRange(env, jobj, or);
     int pdf = getPDF(env, jobj, opdf);
     cpdf_shiftContents(pdf, range, dx, dy);
+    checkerror(env);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_shiftBoxes
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jdouble dx, jdouble dy)
+{
+    int range = getRange(env, jobj, or);
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_shiftBoxes(pdf, range, dx, dy);
     checkerror(env);
 }
 
@@ -1666,7 +1671,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getMediaBox
     (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getCropBox
   (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
@@ -1681,7 +1685,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getCropBox
     (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getArtBox
   (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
@@ -1696,7 +1699,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getArtBox
     (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getTrimBox
   (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
@@ -1711,7 +1713,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getTrimBox
     (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getBleedBox
   (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {
@@ -1726,7 +1727,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getBleedBox
     (*env)->ReleaseDoubleArrayElements(env, data, a, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMediabox
   (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
@@ -1735,7 +1735,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setMediabox
     cpdf_setMediabox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCropBox
   (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
@@ -1744,16 +1743,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setCropBox
     cpdf_setCropBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTrimBox
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
-{
-    int range = getRange(env, jobj, orange);
-    int pdf = getPDF(env, jobj, opdf);
-    cpdf_setTrimBox(pdf, range, minx, maxx, miny, maxy);
-    checkerror(env);
-}
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setArtBox
   (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
@@ -1762,7 +1751,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setArtBox
     cpdf_setArtBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBleedBox
   (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
 {
@@ -1771,7 +1759,14 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setBleedBox
     cpdf_setBleedBox(pdf, range, minx, maxx, miny, maxy);
     checkerror(env);
 }
-
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setTrimBox
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject orange, jdouble minx, jdouble maxx, jdouble miny, jdouble maxy)
+{
+    int range = getRange(env, jobj, orange);
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_setTrimBox(pdf, range, minx, maxx, miny, maxy);
+    checkerror(env);
+}
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrapped
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1779,7 +1774,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrapped
     cpdf_markTrapped(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrapped
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1787,7 +1781,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrapped
     cpdf_markUntrapped(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrappedXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1795,7 +1788,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markTrappedXMP
     cpdf_markTrappedXMP(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrappedXMP
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -1803,7 +1795,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_markUntrappedXMP
     cpdf_markUntrappedXMP(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageLayout
   (JNIEnv * env, jobject jobj, jobject opdf, jint layout)
 {
@@ -1811,15 +1802,13 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageLayout
     cpdf_setPageLayout(pdf, layout);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setPageMode
-  (JNIEnv * env, jobject jobj, jobject opdf, jint mode)
+  (JNIEnv * env, jobject jobj, jobject opdf, jint layout)
 {
     int pdf = getPDF(env, jobj, opdf);
-    cpdf_setPageMode(pdf, mode);
+    cpdf_setPageMode(pdf, layout);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideToolbar
   (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
@@ -1827,7 +1816,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideToolbar
     cpdf_hideToolbar(pdf, flag);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideMenubar
   (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
@@ -1835,7 +1823,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideMenubar
     cpdf_hideMenubar(pdf, flag);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_hideWindowUi
   (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
@@ -1850,7 +1837,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_fitWindow
     cpdf_fitWindow(pdf, flag);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_centerWindow
   (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
@@ -1858,7 +1844,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_centerWindow
     cpdf_centerWindow(pdf, flag);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_displayDocTitle
   (JNIEnv * env, jobject jobj, jobject opdf, jboolean flag)
 {
