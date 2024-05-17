@@ -4,6 +4,9 @@
 #include <string.h>
 #include "cpdflibwrapper.h"
 
+/* RESOLVE jboolean vs jint - is it a problem? */
+/* RESOLVE the X thing - what's that? */
+
 /* Internal helper functions */
 
 jobject makePDF(JNIEnv * env, jobject jobj, jint pdf)
@@ -119,6 +122,27 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setSlow
 {
     cpdf_setSlow();
     checkerror(env);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_embedStd14
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_embedStd14(pdf);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XembedStd14Dir
+  (JNIEnv * env, jobject jobj, jbyteArray data)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_embedStd14Dir(str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    checkerror(env);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_JSONUTF8
+  (JNIEnv * env, jobject jobj, jint pdf)
+{
+    cpdf_JSONUTF8(pdf);
 }
 
 /* CHAPTER 1. Basics */

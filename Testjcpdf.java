@@ -14,6 +14,12 @@ public class Testjcpdf
         jcpdf.setFast();
         System.out.println("---cpdf_setSlow()");
         jcpdf.setSlow();
+        System.out.println("---cpdf_embedStd14()");
+        jcpdf.embedStd14(true);
+        System.out.println("---cpdf_embedStd14Dir()");
+        jcpdf.embedStd14Dir("fonts");
+        System.out.println("---cpdf_JSONUTF8()");
+        jcpdf.JSONUTF8(true);
         System.out.println("---cpdf_clearError()");
     }
 

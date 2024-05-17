@@ -257,7 +257,22 @@ public class Jcpdf {
     section 1.13 of the CPDF manual. This functions sets the mode to slow
     globally. */
     public native void setSlow() throws CpdfError;
-    
+   
+    /** FIXME */
+    public native void embedStd14(boolean embed) throws CpdfError;
+
+
+    public native void XembedStd14Dir(byte[] dir) throws CpdfError; 
+
+    /** FIXME */
+    public void embedStd14Dir(String dir) throws CpdfError
+    {
+      XembedStd14Dir(encodeUTF8(dir));
+    }
+
+    /** FIXME */
+    public native void JSONUTF8(boolean utf8) throws CpdfError;
+
     /** Prints some information about
     resource usage. This can be used to detect if PDFs or ranges are being
     deallocated properly. Contrary to its name, it may be run at any time. */

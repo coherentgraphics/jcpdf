@@ -4,6 +4,23 @@
 #include <string.h>
 #include "cpdflibwrapper.h"
 
+/* RESOLVE jboolean vs jint - is it a problem? */
+/* RESOLVE the X thing - what's that? */
+
+/* __AUTODEF string->unit
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jbyteArray data)
+{
+    int length = (*env)->GetArrayLength(env, data);
+    jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
+    char* str = cstring_of_jbytes(memory, length);
+    cpdf_#(str);
+    free(str);
+    (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
+    checkerror(env);
+}
+*/
+
 /* __AUTODEF pdf->string->unit(X)
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_X~
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
@@ -324,6 +341,9 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startup
 /* __AUTO version unit->string */
 /* __AUTO setFast unit->unit */
 /* __AUTO setSlow unit->unit */
+/* __AUTO embedStd14 int->unit */
+/* __AUTO XembedStd14Dir string->unit */
+/* __AUTO JSONUTF8 int->unit */
 
 /* CHAPTER 1. Basics */
 

@@ -28,6 +28,10 @@ let store_auto h t =
     Hashtbl.add autos typ (rev (tl (rev autodef)));
     more
 
+let stripx s =
+  match explode s with
+  | 'X'::l | l -> implode l
+
 let use_auto h =
   let name, typ =
     let both = drop (explode h) 10 in
@@ -36,8 +40,10 @@ let use_auto h =
       implode name, implode typ
   in
     map
-      (string_replace_all "~" name)
-      (try Hashtbl.find autos typ with Not_found -> prerr_endline ("Missing auto: " ^ typ); exit 1)
+      (string_replace_all "#" (stripx name))
+      (map
+        (string_replace_all "~" name)
+        (try Hashtbl.find autos typ with Not_found -> prerr_endline ("Missing auto: " ^ typ); exit 1))
 
 let rec process a = function
   | [] -> rev (map (fun x -> x ^ "\n") a)
