@@ -5,7 +5,6 @@
 #include "cpdflibwrapper.h"
 
 /* RESOLVE jboolean vs jint - is it a problem? */
-/* RESOLVE the X thing - what's that? */
 
 /* Internal helper functions */
 
@@ -173,7 +172,7 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_XfromFileLazy
     int length2 = (*env)->GetArrayLength(env, data2);
     jbyte* memory2 = (*env)->GetByteArrayElements(env, data2, 0);
     char* str2 = cstring_of_jbytes(memory2, length2);
-    int pdf = cpdf_fromFile(str, str2);
+    int pdf = cpdf_fromFileLazy(str, str2);
     free(str);
     free(str2);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
@@ -565,33 +564,30 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasPermission
     checkerror(env);
     return result;
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XdecryptPdf
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
-    int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
+    int pdf = getPDF(env, jobj, opdf);
     cpdf_decryptPdf(pdf, str);
     free(str);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XdecryptPdfOwner
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
-    int pdf = getPDF(env, jobj, opdf);
     int length = (*env)->GetArrayLength(env, data);
     jbyte* memory = (*env)->GetByteArrayElements(env, data, 0);
     char* str = cstring_of_jbytes(memory, length);
-    cpdf_decryptPdf(pdf, str);
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_decryptPdfOwner(pdf, str);
     free(str);
     (*env)->ReleaseByteArrayElements(env, data, (jbyte *) memory, 0);
     checkerror(env);
 }
-
 JNIEXPORT jint JNICALL Java_com_coherentpdf_Jcpdf_isEncrypted
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
@@ -679,11 +675,11 @@ JNIEXPORT jobject JNICALL Java_com_coherentpdf_Jcpdf_selectPages
 /* CHAPTER 3. Pages */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scalePages
-  (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jdouble sx, jdouble sy)
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jdouble dx, jdouble dy)
 {
     int range = getRange(env, jobj, or);
     int pdf = getPDF(env, jobj, opdf);
-    cpdf_scalePages(pdf, range, sx, sy);
+    cpdf_scalePages(pdf, range, dx, dy);
     checkerror(env);
 }
 
@@ -732,6 +728,8 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_scaleContents
     checkerror(env);
 }
 
+
+
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotate
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jint angle)
 {
@@ -740,7 +738,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotate
     cpdf_rotate(pdf, range, angle);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_rotateBy
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jint angle)
 {
@@ -1883,7 +1880,6 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeMetadata
     cpdf_removeMetadata(pdf);
     checkerror(env);
 }
-
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_createMetadata
   (JNIEnv * env, jobject jobj, jobject opdf)
 {
