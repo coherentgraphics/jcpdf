@@ -1258,6 +1258,9 @@ public class Jcpdf {
         return decodeUTF8(XgetModificationDateXMP(pdf)); 
     }
 
+    /** Returns the page info in JSON format. */
+    public native byte[] pageInfoJSON(Pdf pdf) throws CpdfError;
+
     native void XsetTitle(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetAuthor(Pdf pdf, byte[] str) throws CpdfError;
     native void XsetSubject(Pdf pdf, byte[] str) throws CpdfError;
@@ -1565,6 +1568,8 @@ public class Jcpdf {
     {
         return decodeUTF8(XgetPageLabelStringForPage(pdf, pagenumber));
     }
+    
+    public native byte[] compositionJSON(Pdf pdf, int filesize) throws CpdfError;
     
     /** Gets page label data. Call {@link #startGetPageLabels(Pdf)
     startGetPageLabels} to find out how many there are, then use these serial
@@ -1938,7 +1943,10 @@ public class Jcpdf {
     <code>0...n - 1</code> to return information. Finally, call
     {@link #endGetFontInfo() endGetFontInfo} to clean up. */
     public native void endGetFontInfo() throws CpdfError;
-    
+   
+    /** Returns the font information in JSON format. */
+    public native byte[] fontsJSON(Pdf pdf) throws CpdfError;
+
     /** Removes all font data from a file. */
     public native void removeFonts(Pdf pdf) throws CpdfError;
     

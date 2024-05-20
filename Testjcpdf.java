@@ -556,6 +556,10 @@ public class Testjcpdf
         System.out.println("---cpdf_getModificationDateXMP()");
         String modificationdatexmp = jcpdf.getModificationDateXMP(pdf30);
         System.out.format("modificationdateXMP: %s\n", modificationdatexmp);
+        System.out.println("---cpdf_pageInfoJSON()");
+        Jcpdf.Pdf pijson = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        byte[] pidata = jcpdf.pageInfoJSON(pijson);
+        System.out.format("Contains %d bytes of data\n", pidata.length);
         System.out.println("---cpdf_setTitle()");
         jcpdf.setTitle(pdf30, "title");
         System.out.println("---cpdf_setAuthor()");
@@ -695,8 +699,12 @@ public class Testjcpdf
         System.out.println("---cpdf_getPageLabelStringForPage()");
         String pl = jcpdf.getPageLabelStringForPage(pdf30, 1);
         System.out.format("Label string is %s\n", pl);
+        Jcpdf.Pdf pdfcomp = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
+        System.out.println("---cpdf_compositionJSON()");
+        byte[] compdata = jcpdf.compositionJSON(pdfcomp, 1000000);
+        System.out.format("Contains %d bytes of data\n", compdata.length);
         pdf30.close();
-        pdf30all.close();
+        pdf30all.close(); 
     }
    
     static void chapter12(Jcpdf jcpdf) throws Jcpdf.CpdfError
@@ -773,6 +781,9 @@ public class Testjcpdf
             System.out.format("Page %d, font %s has type %s and encoding %s\n", page, f_name, type, encoding);
         }
         jcpdf.endGetFontInfo();
+        System.out.println("---cpdf_fontsJSON()");
+        byte[] fontdata = jcpdf.fontsJSON(fonts);
+        System.out.format("Contains %d bytes of data\n", fontdata.length);
         System.out.println("---cpdf_removeFonts()");
         jcpdf.removeFonts(fonts);
         jcpdf.toFile(fonts, "testoutputs/14remove_fonts.pdf", false, false);

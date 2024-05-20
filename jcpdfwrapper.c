@@ -1392,6 +1392,18 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetModificationDateXMP
     checkerror(env);
     return jbytearray_of_string(env, result);
 }
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_pageInfoJSON
+  (JNIEnv * env, jobject jobj, jobject opdf)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int len = 0;
+    void* memory = cpdf_pageInfoJSON(pdf, &len);
+    jbyteArray b = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+    free(memory);
+    checkerror(env);
+    return b;
+}
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XsetTitle
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -1977,6 +1989,19 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_XgetPageLabelStringForPa
     return jbytearray_of_string(env, result);
 }
 
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_compositionJSON
+  (JNIEnv * env, jobject jobj, jobject opdf, jint filesize)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int len = 0;
+    void* memory = cpdf_compositionJSON(filesize, pdf, &len);
+    jbyteArray b = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+    free(memory);
+    checkerror(env);
+    return b;
+}
+
 /* CHAPTER 12. File Attachments */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XattachFile
@@ -2217,6 +2242,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endGetFontInfo
 {
     cpdf_endGetFontInfo();
     checkerror(env);
+}
+
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_fontsJSON
+  (JNIEnv * env, jobject jobj, jobject opdf)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int len = 0;
+    void* memory = cpdf_fontsJSON(pdf, &len);
+    jbyteArray b = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+    free(memory);
+    checkerror(env);
+    return b;
 }
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeFonts
