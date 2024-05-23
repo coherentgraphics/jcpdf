@@ -1127,7 +1127,13 @@ public class Jcpdf {
     
     /** Returns the annotations from a PDF in JSON format. */
     public native byte[] annotationsJSON(Pdf pdf) throws CpdfError;
-    
+   
+    /** FIXME */
+    public native void removeAnnotations(Pdf pdf, Range range) throws CpdfError;
+
+    /** FIXME */
+    public native void setAnnotationsJSON(Pdf pdf, byte[] data) throws CpdfError;
+
     /* CHAPTER 11. Document Information and Metadata */
     
     native boolean XisLinearized(byte[] filename) throws CpdfError;
@@ -1400,6 +1406,10 @@ public class Jcpdf {
     @param boxname box name, e.g "/CropBox" */
     public native boolean hasBox(Pdf pdf, int pagenumber, String boxname)
         throws CpdfError;
+
+    /** FIXME */
+
+    public native int numAnnots(Pdf pdf, int pagenumber) throws CpdfError;
 
     /** These functions get a box given the document. The values are returned
     in a given array of length 4: min x, max x, min y, max y in points. Only

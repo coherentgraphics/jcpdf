@@ -1245,6 +1245,24 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_annotationsJSON
     checkerror(env);
     return b;
 }
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_removeAnnotations
+  (JNIEnv * env, jobject jobj, jobject opdf, jobject or)
+{
+    int range = getRange(env, jobj, or);
+    int pdf = getPDF(env, jobj, opdf);
+    cpdf_removeAnnotations(pdf, range);
+    checkerror(env);
+}
+JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_setAnnotationsJSON
+  (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int length = (*env)->GetArrayLength(env, data);
+    void* memory = (*env)->GetByteArrayElements(env, data, 0); 
+    cpdf_setAnnotationsJSON(pdf, memory, length);
+    (*env)->ReleaseByteArrayElements(env, data, memory, 0);
+    checkerror(env);
+}
 
 /* CHAPTER 11. Document Information and Metadata */
 
@@ -1645,6 +1663,14 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasBox
     return result;
 }
 
+JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_numAnnots
+  (JNIEnv * env, jobject jobj, jobject opdf, jint permission)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int result = cpdf_numAnnots(pdf, permission);
+    checkerror(env);
+    return result;
+}
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_getMediaBox
   (JNIEnv * env, jobject jobj, jobject opdf, jint pagenumber, jdoubleArray data)
 {

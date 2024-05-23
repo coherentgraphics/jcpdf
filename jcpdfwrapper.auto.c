@@ -94,7 +94,7 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_~
 }
 */
 
-/* __AUTODEF data->pdf->unit
+/* __AUTODEF pdf->data->unit
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray data)
 {
@@ -972,7 +972,7 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endSetBookmarkInfo
 }
 
 /* __AUTO getBookmarksJSON pdf->data */
-/* __AUTO setBookmarksJSON data->pdf->unit */
+/* __AUTO setBookmarksJSON pdf->data->unit */
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_XtableOfContents
   (JNIEnv * env, jobject jobj, jobject opdf, jbyteArray font, jdouble fontsize, jbyteArray data, jboolean bookmark)
@@ -1178,6 +1178,8 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_padMultipleBefore
 /* CHAPTER 10. Annotations */
 
 /* __AUTO annotationsJSON pdf->data */
+/* __AUTO removeAnnotations pdf->range->unit */
+/* __AUTO setAnnotationsJSON pdf->data->unit */
 
 /* CHAPTER 11. Document Information and Metadata */
 
@@ -1265,6 +1267,7 @@ JNIEXPORT jboolean JNICALL Java_com_coherentpdf_Jcpdf_hasBox
     return result;
 }
 
+/* __AUTO numAnnots pdf->int->int */
 /* __AUTO getMediaBox pdf->int->write4 */
 /* __AUTO getCropBox pdf->int->write4 */
 /* __AUTO getArtBox pdf->int->write4 */

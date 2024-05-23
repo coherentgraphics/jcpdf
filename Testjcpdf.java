@@ -493,7 +493,13 @@ public class Testjcpdf
         Jcpdf.Pdf annot = jcpdf.fromFile("testinputs/cpdflibmanual.pdf", "");
         byte[] annotjson = jcpdf.annotationsJSON(annot);
         System.out.format("Contains %d bytes of data\n", annotjson.length);
+        System.out.println("---cpdf_removeAnnotations()");
+        Jcpdf.Range r = jcpdf.range(1, 1);
+        jcpdf.removeAnnotations(annot, r);
+        System.out.println("---cpdf_setAnnotationsJSON()");
+        jcpdf.setAnnotationsJSON(annot, annotjson);
         annot.close();
+        r.close();
     }
    
     static void chapter11(Jcpdf jcpdf) throws Jcpdf.CpdfError
@@ -606,6 +612,9 @@ public class Testjcpdf
         System.out.println("---cpdf_hasBox()");
         boolean hasbox = jcpdf.hasBox(pdf30, 1, "/CropBox");
         System.out.format("hasbox: %d\n", hasbox ? 1 : 0);
+        System.out.println("---cpdf_numAnnots()");
+        int n = jcpdf.numAnnots(pdf30, 1);
+        System.out.format("numAnnots: %d\n", n);
         System.out.println("---cpdf_getMediaBox()");
         double[] b4 = {0.0, 0.0, 0.0, 0.0};
         jcpdf.getMediaBox(pdf30, 1, b4);
