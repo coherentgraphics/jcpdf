@@ -2157,64 +2157,87 @@ JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startGetImageResolution
     checkerror(env);
     return result;
 }
-
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionPageNumber
-  (JNIEnv * env, jobject jobj, jint serial)
+  (JNIEnv * env, jobject jobj, jint n)
 {
-    int result = cpdf_getImageResolutionPageNumber(serial);
+    int i = cpdf_getImageResolutionPageNumber(n);
     checkerror(env);
-    return result;
+    return i;
 }
-
 JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionImageName
-  (JNIEnv * env, jobject jobj, jint serial)
+  (JNIEnv * env, jobject jobj, jint n)
 {
-    jstring result = (*env)->NewStringUTF(env, cpdf_getImageResolutionImageName(serial));
+    jstring result = (*env)->NewStringUTF(env, cpdf_getImageResolutionImageName(n));
     checkerror(env);
     return result;
 }
-
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionXPixels
-  (JNIEnv * env, jobject jobj, jint serial)
+  (JNIEnv * env, jobject jobj, jint n)
 {
-    int result = cpdf_getImageResolutionXPixels(serial);
+    int i = cpdf_getImageResolutionXPixels(n);
     checkerror(env);
-    return result;
+    return i;
 }
-
 JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionYPixels
-  (JNIEnv * env, jobject jobj, jint serial)
+  (JNIEnv * env, jobject jobj, jint n)
 {
-    int result = cpdf_getImageResolutionYPixels(serial);
+    int i = cpdf_getImageResolutionYPixels(n);
     checkerror(env);
-    return result;
+    return i;
 }
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionXRes
-  (JNIEnv * env, jobject jobj, jint serial)
+JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionXRes
+  (JNIEnv * env, jobject jobj, jint n)
 {
-    double result = cpdf_getImageResolutionXRes(serial);
+    int i = cpdf_getImageResolutionXRes(n);
     checkerror(env);
-    return result;
+    return i;
 }
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionYRes
-  (JNIEnv * env, jobject jobj, jint serial)
+JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionYRes
+  (JNIEnv * env, jobject jobj, jint n)
 {
-    double result = cpdf_getImageResolutionYRes(serial);
+    int i = cpdf_getImageResolutionYRes(n);
     checkerror(env);
-    return result;
+    return i;
 }
-
+JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionObjNum
+  (JNIEnv * env, jobject jobj, jint n)
+{
+    int i = cpdf_getImageResolutionObjNum(n);
+    checkerror(env);
+    return i;
+}
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endGetImageResolution
   (JNIEnv * env, jobject jobj)
 {
     cpdf_endGetImageResolution();
     checkerror(env);
 }
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_imagesJSON
+  (JNIEnv * env, jobject jobj, jobject opdf)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int len = 0;
+    void* memory = cpdf_imagesJSON(pdf, &len);
+    jbyteArray b = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+    free(memory);
+    checkerror(env);
+    return b;
+}
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_imageResolutionJSON
+  (JNIEnv * env, jobject jobj, jobject opdf, jdouble res)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int len = 0;
+    void* memory = cpdf_imageResolutionJSON(pdf, &len, res);
+    jbyteArray b = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+    free(memory);
+    checkerror(env);
+    return b;
+}
 
 /* CHAPTER 14. Fonts */
-
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startGetFontInfo
   (JNIEnv * env, jobject jobj, jobject opdf)

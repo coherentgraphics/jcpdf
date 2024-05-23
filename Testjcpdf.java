@@ -766,9 +766,16 @@ public class Testjcpdf
             int im_yp = jcpdf.getImageResolutionYPixels(im);
             double im_xres = jcpdf.getImageResolutionXRes(im);
             double im_yres = jcpdf.getImageResolutionYRes(im);
-            System.out.format("IMAGE: %d, %s, %d, %d, %f, %f\n", im_p, im_name, im_xp, im_yp, im_xres, im_yres);
+            int im_objnum = jcpdf.getImageResolutionObjNum(im);
+            System.out.format("IMAGE: %d, %s, %d, %d, %f, %f, %d\n", im_p, im_name, im_xp, im_yp, im_xres, im_yres, im_objnum);
         }
         jcpdf.endGetImageResolution();
+        System.out.println("---cpdf_imageResolutionJSON()");
+        byte[] irjson = jcpdf.imageResolutionJSON(image_pdf, 300.0);
+        System.out.format("Contains %d bytes of data\n", irjson.length);
+        System.out.println("---cpdf_imagesJSON()");
+        byte[] ijson = jcpdf.imagesJSON(image_pdf);
+        System.out.format("Contains %d bytes of data\n", ijson.length);
         image_pdf.close();
     }
    

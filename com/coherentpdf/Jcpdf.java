@@ -1882,6 +1882,14 @@ public class Jcpdf {
     {@link #endGetImageResolution() endGetImageResolution} to clean up. */
     public native void endGetImageResolution() throws CpdfError;
 
+    /** FIXME */
+    public native int getImageResolutionObjNum(int serial) throws CpdfError;
+
+    /** FIXME */
+    public native byte[] imagesJSON(Pdf pdf) throws CpdfError;
+
+    public native byte[] imageResolutionJSON(Pdf pdf, double resolution) throws CpdfError;
+
     /* CHAPTER 14. Fonts. */
     
     /** Retrieves font information. First, call {@link #startGetFontInfo(Pdf)

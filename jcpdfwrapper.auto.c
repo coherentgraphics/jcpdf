@@ -6,6 +6,17 @@
 
 /* RESOLVE jboolean vs jint - is it a problem? */
 
+/* __AUTODEF pdf->float->unit
+JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf, jdouble res)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int result = cpdf_#(pdf, res);
+    checkerror(env);
+    return result;
+}
+*/
+
 /* __AUTODEF pdf->range->int->unit
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_~
   (JNIEnv * env, jobject jobj, jobject opdf, jobject or, jint angle)
@@ -114,6 +125,21 @@ JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_~
     int pdf = getPDF(env, jobj, opdf);
     int len = 0;
     void* memory = cpdf_#(pdf, &len);
+    jbyteArray b = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
+    free(memory);
+    checkerror(env);
+    return b;
+}
+*/
+
+/* __AUTODEF pdf->float->data
+JNIEXPORT jbyteArray JNICALL Java_com_coherentpdf_Jcpdf_~
+  (JNIEnv * env, jobject jobj, jobject opdf, jdouble res)
+{
+    int pdf = getPDF(env, jobj, opdf);
+    int len = 0;
+    void* memory = cpdf_#(pdf, &len, res);
     jbyteArray b = (*env)->NewByteArray(env, len);
     (*env)->SetByteArrayRegion(env, b, 0, len, memory); 
     free(memory);
@@ -1545,72 +1571,19 @@ JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endGetAttachments
 
 /* CHAPTER 13. Images */
 
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_startGetImageResolution
-  (JNIEnv * env, jobject jobj, jobject opdf, jdouble res)
-{
-    int pdf = getPDF(env, jobj, opdf);
-    int result = cpdf_startGetImageResolution(pdf, res);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionPageNumber
-  (JNIEnv * env, jobject jobj, jint serial)
-{
-    int result = cpdf_getImageResolutionPageNumber(serial);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jstring JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionImageName
-  (JNIEnv * env, jobject jobj, jint serial)
-{
-    jstring result = (*env)->NewStringUTF(env, cpdf_getImageResolutionImageName(serial));
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionXPixels
-  (JNIEnv * env, jobject jobj, jint serial)
-{
-    int result = cpdf_getImageResolutionXPixels(serial);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT int JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionYPixels
-  (JNIEnv * env, jobject jobj, jint serial)
-{
-    int result = cpdf_getImageResolutionYPixels(serial);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionXRes
-  (JNIEnv * env, jobject jobj, jint serial)
-{
-    double result = cpdf_getImageResolutionXRes(serial);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT jdouble JNICALL Java_com_coherentpdf_Jcpdf_getImageResolutionYRes
-  (JNIEnv * env, jobject jobj, jint serial)
-{
-    double result = cpdf_getImageResolutionYRes(serial);
-    checkerror(env);
-    return result;
-}
-
-JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_endGetImageResolution
-  (JNIEnv * env, jobject jobj)
-{
-    cpdf_endGetImageResolution();
-    checkerror(env);
-}
+/* __AUTO startGetImageResolution pdf->float->unit */
+/* __AUTO getImageResolutionPageNumber int->int */
+/* __AUTO getImageResolutionImageName int->string */
+/* __AUTO getImageResolutionXPixels int->int */
+/* __AUTO getImageResolutionYPixels int->int */
+/* __AUTO getImageResolutionXRes int->int */
+/* __AUTO getImageResolutionYRes int->int */
+/* __AUTO getImageResolutionObjNum int->int */
+/* __AUTO endGetImageResolution unit->unit */
+/* __AUTO imagesJSON pdf->data */
+/* __AUTO imageResolutionJSON pdf->float->data */
 
 /* CHAPTER 14. Fonts */
-
 
 JNIEXPORT void JNICALL Java_com_coherentpdf_Jcpdf_startGetFontInfo
   (JNIEnv * env, jobject jobj, jobject opdf)
